@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: pydwarf-app
+    volumes:
+      # Source-Code wird gemountet - Änderungen bleiben aktuell
+      - ./backend:/app/backend
+      - ./frontend:/app/frontend
+      - ./database:/app/database
+      - ./doc:/app/doc
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DATABASE_URL=sqlite+aiosqlite:///./database/dwarf.db
+    restart: unless-stopped

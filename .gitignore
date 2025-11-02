@@ -1,0 +1,36 @@
+# Dokumentation (große Dateien)
+/doc/DWARF API2.0*
+/doc/dwarf_api_extracted.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Database
+database/*.db
+database/*.db-journal
+database/*.db-wal
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
+.env
