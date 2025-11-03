@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DWARF II Control</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <header class="header">
+        <h1>🔭 DWARF II Control</h1>
+        <div class="connection-status">
+            <span class="status-indicator" id="statusIndicator"></span>
+            <span id="statusText">Nicht verbunden</span>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <button class="nav-btn active" data-view="connection">🔌 Verbindung</button>
+        <button class="nav-btn" data-view="camera">📷 Kamera</button>
+        <button class="nav-btn" data-view="astro">🌌 Astro</button>
+        <button class="nav-btn" data-view="focus">🎯 Fokus</button>
+        <button class="nav-btn" data-view="motor">🕹️ Motor</button>
+        <button class="nav-btn" data-view="album">📁 Album</button>
+    </nav>
+
+    <main class="main">
+        <!-- Connection View -->
+        <section class="view active" id="connectionView">
+            <h2>Verbindung</h2>
+            <div class="card">
+                <h3>Gerät verbinden</h3>
+                <div class="form-group">
+                    <label>IP-Adresse</label>
+                    <input type="text" id="deviceIp" value="192.168.88.1" placeholder="192.168.88.1">
+                </div>
+                <div class="form-group">
+                    <label>Port</label>
+                    <input type="number" id="devicePort" value="8082" placeholder="8082">
+                </div>
+                <button class="btn btn-primary" id="connectBtn">Verbinden</button>
+            </div>
+            <div class="card" id="deviceInfoCard" style="display:none;">
+                <h3>Geräte-Informationen</h3>
+                <div id="deviceInfo"></div>
+            </div>
+        </section>
+
+        <!-- Camera View -->
+        <section class="view" id="cameraView">
+            <h2>Kamera-Steuerung</h2>
+            
+            <div class="card">
+                <h3>Teleobjektiv</h3>
+                <div class="button-row">
+                    <button class="btn" id="teleOpenBtn">Kamera öffnen</button>
+                    <button class="btn" id="teleCloseBtn">Kamera schließen</button>
+                </div>
+                <div class="button-row">
+                    <button class="btn btn-primary" id="telePhotoBtn">📷 Foto</button>
+                    <button class="btn btn-primary" id="teleVideoStartBtn">🎥 Video Start</button>
+                    <button class="btn" id="teleVideoStopBtn">⏹️ Video Stop</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Live-Stream</h3>
+                <div class="stream-container">
+                    <img id="liveStream" alt="Live-Stream">
+                    <div class="stream-placeholder" id="streamPlaceholder">
+                        <p>📷</p>
+                        <p>Stream nicht aktiv</p>
+                    </div>
+                </div>
+                <div class="button-row">
+                    <button class="btn" id="streamStartBtn">Stream starten</button>
+                    <button class="btn" id="streamStopBtn">Stream stoppen</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Kamera-Parameter</h3>
+                <div class="form-group">
+                    <label>Belichtung</label>
+                    <input type="range" id="expSlider" min="0" max="100" value="50">
+                </div>
+                <div class="form-group">
+                    <label>Verstärkung</label>
+                    <input type="range" id="gainSlider" min="0" max="100" value="50">
+                </div>
+                <button class="btn" id="paramsSetBtn">Parameter setzen</button>
+            </div>
+        </section>
+
+        <!-- Astro View -->
+        <section class="view" id="astroView">
+            <h2>Astronomie</h2>
+            
+            <div class="card">
+                <h3>Kalibrierung</h3>
+                <div class="button-row">
+                    <button class="btn btn-primary" id="calibrationStartBtn">Kalibrierung starten</button>
+                    <button class="btn" id="calibrationStopBtn">Stoppen</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>GOTO Deep-Sky-Objekt</h3>
+                <div class="form-group">
+                    <label>Rektaszension (RA)</label>
+                    <input type="number" id="gotoRa" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Deklination (Dec)</label>
+                    <input type="number" id="gotoDec" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>Zielname</label>
+                    <input type="text" id="gotoTarget" placeholder="M31">
+                </div>
+                <div class="button-row">
+                    <button class="btn btn-primary" id="gotoDsoBtn">GOTO starten</button>
+                    <button class="btn" id="gotoStopBtn">GOTO stoppen</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Ein-Klick GOTO</h3>
+                <p class="info-text">Automatischer Workflow: Sky Detection → Fokus → Kalibrierung → GOTO</p>
+                <div class="button-row">
+                    <button class="btn btn-primary" id="oneClickGotoBtn">Ein-Klick GOTO</button>
+                    <button class="btn" id="oneClickStopBtn">Stoppen</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Live-Stacking</h3>
+                <div class="button-row">
+                    <button class="btn btn-primary" id="stackingStartBtn">Stacking starten</button>
+                    <button class="btn" id="stackingStopBtn">Stacking stoppen</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Focus View -->
+        <section class="view" id="focusView">
+            <h2>Fokus-Steuerung</h2>
+            
+            <div class="card">
+                <h3>Normal-Autofokus</h3>
+                <div class="button-row">
+                    <button class="btn btn-primary" id="autoFocusBtn">Auto-Fokus (Global)</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Astro-Autofokus</h3>
+                <div class="button-row">
+                    <button class="btn btn-primary" id="astroFocusSlowBtn">Langsam (präzise)</button>
+                    <button class="btn btn-primary" id="astroFocusFastBtn">Schnell</button>
+                    <button class="btn" id="astroFocusStopBtn">Stoppen</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Manueller Fokus</h3>
+                <div class="button-row">
+                    <button class="btn" id="focusFarBtn">← Fern</button>
+                    <button class="btn" id="focusNearBtn">Nah →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Motor View -->
+        <section class="view" id="motorView">
+            <h2>Motor-Steuerung</h2>
+            
+            <div class="card">
+                <h3>Joystick-Steuerung</h3>
+                <div class="joystick-container">
+                    <div class="joystick" id="joystick">
+                        <div class="joystick-handle" id="joystickHandle"></div>
+                    </div>
+                </div>
+                <div class="button-row">
+                    <button class="btn" id="motorStopBtn">⏹️ Stop</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Direkte Steuerung</h3>
+                <div class="direction-pad">
+                    <button class="btn dir-btn" id="motorUpBtn">↑</button>
+                    <div class="dir-row">
+                        <button class="btn dir-btn" id="motorLeftBtn">←</button>
+                        <button class="btn dir-btn" id="motorRightBtn">→</button>
+                    </div>
+                    <button class="btn dir-btn" id="motorDownBtn">↓</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Album View -->
+        <section class="view" id="albumView">
+            <h2>Album</h2>
+            
+            <div class="card">
+                <h3>Medien-Übersicht</h3>
+                <div id="mediaCounts" class="media-counts">
+                    <div class="count-item">
+                        <span class="count-label">Fotos</span>
+                        <span class="count-value" id="photoCount">-</span>
+                    </div>
+                    <div class="count-item">
+                        <span class="count-label">Videos</span>
+                        <span class="count-value" id="videoCount">-</span>
+                    </div>
+                    <div class="count-item">
+                        <span class="count-label">Stacking</span>
+                        <span class="count-value" id="stackCount">-</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="loadMediaBtn">Medien laden</button>
+            </div>
+
+            <div class="card">
+                <h3>Medien-Filter</h3>
+                <div class="button-row">
+                    <button class="btn filter-btn active" data-type="0">Alle</button>
+                    <button class="btn filter-btn" data-type="1">Fotos</button>
+                    <button class="btn filter-btn" data-type="2">Videos</button>
+                    <button class="btn filter-btn" data-type="3">Stacking</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Medien-Liste</h3>
+                <div id="mediaGrid" class="media-grid">
+                    <div class="media-placeholder">
+                        <p>📁</p>
+                        <p>Keine Medien geladen</p>
+                        <p class="info-text">Klicke auf "Medien laden"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
