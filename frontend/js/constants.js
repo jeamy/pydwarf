@@ -19,6 +19,11 @@ export const ENDPOINTS = {
     CAMERA_TELE_VIDEO_STOP: '/camera/tele/video/stop',
     CAMERA_STREAM: '/camera/stream',
     
+    // Album
+    ALBUM_COUNTS: '/album/counts',
+    ALBUM_LIST: '/album/list',
+    ALBUM_DELETE: '/album/delete',
+    
     // Astro
     ASTRO_CALIBRATION_START: '/astro/calibration/start',
     ASTRO_CALIBRATION_STOP: '/astro/calibration/stop',

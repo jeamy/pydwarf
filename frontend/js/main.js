@@ -10,6 +10,20 @@ class App {
         this.currentIP = null;
         this.connectionStatus = STATUS.DISCONNECTED;
         this.cameraOpen = false;
+        this.albumState = {
+            mediaType: 1,
+            pageIndex: 0,
+            pageSize: 12,
+            hasMore: false
+        };
+        this.mediaTypeLabels = {
+            0: 'Alle',
+            1: 'Fotos',
+            2: 'Videos',
+            3: 'Serien',
+            4: 'Astro',
+            5: 'Panorama'
+        };
         this.init();
     }
 
@@ -56,6 +70,26 @@ class App {
         document.getElementById('teleVideoStopBtn').addEventListener('click', () => this.stopVideo());
         document.getElementById('streamStartBtn').addEventListener('click', () => this.startStream());
         document.getElementById('streamStopBtn').addEventListener('click', () => this.stopStream());
+
+        // Album
+        document.getElementById('albumRefreshBtn').addEventListener('click', () => this.loadAlbum(true));
+        document.getElementById('albumMediaType').addEventListener('change', (event) => {
+            this.albumState.mediaType = parseInt(event.target.value, 10);
+            this.albumState.pageIndex = 0;
+            this.loadAlbum(true);
+        });
+        document.getElementById('albumPrevBtn').addEventListener('click', () => {
+            if (this.albumState.pageIndex > 0) {
+                this.albumState.pageIndex -= 1;
+                this.loadAlbum();
+            }
+        });
+        document.getElementById('albumNextBtn').addEventListener('click', () => {
+            if (this.albumState.hasMore) {
+                this.albumState.pageIndex += 1;
+                this.loadAlbum();
+            }
+        });
         
         // Astro
         document.getElementById('calibrationStartBtn').addEventListener('click', () => this.startCalibration());
@@ -158,6 +192,11 @@ class App {
         document.querySelectorAll('.camera-required').forEach(el => {
             el.style.display = 'block';
         });
+
+        // Aktualisiere Album bei Verbindung
+        if (this.currentIP) {
+            this.loadAlbum(true);
+        }
     }
 
     hideControls() {
@@ -198,6 +237,44 @@ class App {
         document.querySelectorAll('.camera-controls').forEach(el => {
             el.style.display = 'none';
         });
+    }
+
+    showSuccess(message) {
+        this.showToast(message, 'success');
+    }
+
+    showError(message) {
+        this.showToast(message, 'error');
+    }
+
+    showInfo(message) {
+        this.showToast(message, 'info');
+    }
+
+    showToast(message, type = 'info') {
+        if (!message) return;
+
+        let container = document.getElementById('toastContainer');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toastContainer';
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+
+        requestAnimationFrame(() => {
+            toast.classList.add('visible');
+        });
+
+        setTimeout(() => {
+            toast.classList.remove('visible');
+            setTimeout(() => toast.remove(), 300);
+        }, 4000);
     }
 
     async scanNetwork() {
@@ -380,6 +457,7 @@ class App {
             if (result.status === 'success') {
                 console.log('✅ [CAMERA] Foto aufgenommen');
                 this.showSuccess('Foto aufgenommen');
+                await this.loadAlbum(true);
             }
         } catch (error) {
             console.error('❌ [CAMERA] Fehler:', error);
@@ -658,14 +736,118 @@ class App {
         `;
     }
 
-    showSuccess(message) {
-        console.log('✅', message);
-        // TODO: Toast-Notification
+    async loadAlbum(resetPage = false) {
+        if (!this.checkConnection()) return;
+
+        const listEl = document.getElementById('albumList');
+        const countsEl = document.getElementById('albumCounts');
+        const pageInfoEl = document.getElementById('albumPageInfo');
+        const prevBtn = document.getElementById('albumPrevBtn');
+        const nextBtn = document.getElementById('albumNextBtn');
+
+        if (resetPage) {
+            this.albumState.pageIndex = 0;
+        }
+
+        pageInfoEl.textContent = `Seite ${this.albumState.pageIndex + 1}`;
+        listEl.innerHTML = '<div class="album-empty">Lade Medien...</div>';
+
+        try {
+            const [countsResponse, listResponse] = await Promise.all([
+                api.getAlbumCounts(this.currentIP),
+                api.getAlbumList(this.currentIP, {
+                    media_type: this.albumState.mediaType,
+                    page_index: this.albumState.pageIndex,
+                    page_size: this.albumState.pageSize
+                })
+            ]);
+
+            this.renderAlbumCounts(countsResponse, countsEl);
+            const items = this.extractAlbumItems(listResponse);
+            this.albumState.hasMore = items.length === this.albumState.pageSize;
+            prevBtn.disabled = this.albumState.pageIndex === 0;
+            nextBtn.disabled = !this.albumState.hasMore;
+            this.renderAlbumList(items, listEl);
+        } catch (error) {
+            console.error('❌ [ALBUM] Fehler:', error);
+            listEl.innerHTML = '<div class="album-empty">Fehler beim Laden der Medien</div>';
+            this.showError('Album konnte nicht geladen werden: ' + error.message);
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+        }
     }
 
-    showError(message) {
-        console.error('❌', message);
-        alert(message);
+    renderAlbumCounts(response, container) {
+        const data = response?.data || response;
+
+        if (!Array.isArray(data) || data.length === 0) {
+            container.innerHTML = '<div class="album-empty">Keine Medien gefunden</div>';
+            return;
+        }
+
+        container.innerHTML = data
+            .map(item => {
+                const label = this.mediaTypeLabels[item.mediaType] || `Typ ${item.mediaType}`;
+                return `<div class="album-count"><strong>${label}:</strong> ${item.count}</div>`;
+            })
+            .join('');
+    }
+
+    extractAlbumItems(response) {
+        if (!response) return [];
+        if (Array.isArray(response.data)) return response.data;
+        if (Array.isArray(response.list)) return response.list;
+        if (response.data?.list) return response.data.list;
+        if (response.mediaInfos) return response.mediaInfos;
+        return [];
+    }
+
+    renderAlbumList(items, container) {
+        if (!items || items.length === 0) {
+            container.innerHTML = '<div class="album-empty">Keine Medien auf dieser Seite</div>';
+            return;
+        }
+
+        container.innerHTML = items.map(item => {
+            const name = item.fileName || item.file_name || 'Unbekannt';
+            const path = item.filePath || item.file_path || '';
+            const size = this.formatBytes(item.fileSize || item.file_size || 0);
+            const timestamp = item.modificationTime || item.modification_time || item.createTime || null;
+            const date = timestamp ? new Date(timestamp * 1000).toLocaleString() : '—';
+            return `
+                <div class="album-card">
+                    <div class="album-card-thumb">${this.getAlbumIcon()}</div>
+                    <div class="album-card-meta">
+                        <div class="album-card-title">${name}</div>
+                        <div class="album-card-path">${path}</div>
+                        <div class="album-card-info">${date} • ${size}</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    getAlbumIcon() {
+        const type = this.albumState.mediaType;
+        switch (type) {
+            case 2:
+                return '🎥';
+            case 3:
+                return '📸';
+            case 4:
+                return '🌌';
+            case 5:
+                return '📷';
+            default:
+                return '🖼️';
+        }
+    }
+
+    formatBytes(bytes) {
+        if (!bytes) return '0 B';
+        const sizes = ['B', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(1024));
+        return `${(bytes / Math.pow(1024, i)).toFixed(1)} ${sizes[i]}`;
     }
 }
 

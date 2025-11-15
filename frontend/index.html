@@ -21,6 +21,7 @@
         <button class="nav-btn" data-view="astro">🌌 Astro</button>
         <button class="nav-btn" data-view="focus">🎯 Fokus</button>
         <button class="nav-btn" data-view="motor">🕹️ Motor</button>
+        <button class="nav-btn" data-view="album">🖼️ Album</button>
     </nav>
 
     <main class="main">
@@ -54,6 +55,45 @@
                 </div>
             </div>
             <div class="card" id="deviceInfo" style="display:none;"></div>
+        </section>
+
+        <section class="view" id="albumView">
+            <h2>Album</h2>
+            <div class="card connection-required" style="display:none;">
+                <p class="info-text" style="text-align:center; color:var(--text-secondary);">
+                    ⚠️ Bitte erst verbinden unter "🔌 Verbindung"
+                </p>
+            </div>
+            <div class="card controls-container" style="display:none;">
+                <div class="album-toolbar">
+                    <div class="form-group">
+                        <label>Medientyp</label>
+                        <select id="albumMediaType">
+                            <option value="1">📷 Fotos</option>
+                            <option value="2">🎥 Videos</option>
+                            <option value="3">📸 Serien</option>
+                            <option value="4">🌌 Astro</option>
+                            <option value="5">📸 Panorama</option>
+                            <option value="0">📁 Alle</option>
+                        </select>
+                    </div>
+                    <div class="album-toolbar-actions">
+                        <button class="btn" id="albumRefreshBtn">🔄 Aktualisieren</button>
+                    </div>
+                </div>
+
+                <div class="album-counts" id="albumCounts"></div>
+
+                <div class="album-pagination">
+                    <button class="btn" id="albumPrevBtn">← Zurück</button>
+                    <span id="albumPageInfo">Seite 1</span>
+                    <button class="btn" id="albumNextBtn">Weiter →</button>
+                </div>
+
+                <div class="album-list" id="albumList">
+                    <div class="album-empty">Noch keine Medien geladen</div>
+                </div>
+            </div>
         </section>
 
         <section class="view" id="cameraView">

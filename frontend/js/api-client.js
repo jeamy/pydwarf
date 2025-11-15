@@ -92,6 +92,22 @@ class APIClient {
         });
     }
 
+    // Album
+    async getAlbumCounts(ip) {
+        return this.request(`${ENDPOINTS.ALBUM_COUNTS}?ip=${ip}`);
+    }
+
+    async getAlbumList(ip, { media_type = 1, page_index = 0, page_size = 20 } = {}) {
+        return this.request(`${ENDPOINTS.ALBUM_LIST}?ip=${ip}`, {
+            method: 'POST',
+            body: {
+                media_type,
+                page_index,
+                page_size
+            }
+        });
+    }
+
     // Astro
     async startCalibration(ip) {
         return this.request(`${ENDPOINTS.ASTRO_CALIBRATION_START}?ip=${ip}`, {

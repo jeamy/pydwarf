@@ -194,21 +194,26 @@ async def take_photo(ip: str):
     response_event = asyncio.Event()
     
     def message_callback(txt_info, result_data):
+        if result_data.get("module_id") != MODULE_CAMERA_TELE:
+            return
+        if result_data.get("cmd") != CMD_CAMERA_TELE_PHOTOGRAPH:
+            return
         code = result_data.get("code")
-        if code is not None:
-            if code == 0:
-                response_data["status"] = "success"
-                response_data["code"] = 0
-                response_data["message"] = "Foto aufgenommen"
-            elif code == 374:
-                response_data["status"] = "success"
-                response_data["code"] = 374
-                response_data["message"] = "Kamera bereits ausgelöst"
-            else:
-                response_data["status"] = "error"
-                response_data["code"] = code
-                response_data["message"] = f"Fehler (Code {code})"
-            response_event.set()
+        if code is None:
+            return
+        if code == 0:
+            response_data["status"] = "success"
+            response_data["code"] = 0
+            response_data["message"] = "Foto aufgenommen"
+        elif code == 374:
+            response_data["status"] = "success"
+            response_data["code"] = 374
+            response_data["message"] = "Kamera bereits ausgelöst"
+        else:
+            response_data["status"] = "error"
+            response_data["code"] = code
+            response_data["message"] = f"Fehler (Code {code})"
+        response_event.set()
     
     try:
         ws_handler = await connection_manager.get_connection(ip)
