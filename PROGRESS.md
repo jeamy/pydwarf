@@ -222,84 +222,34 @@
 
 ---
 
-## ✅ Phase 3 - Tag 7: Erweiterte Komponenten (ABGESCHLOSSEN)
-
-### Camera-Control (erweitert)
-- ✅ Video Start/Stop
-- ✅ Live-Stream-Integration (JPG-Stream)
-- ✅ Stream-Placeholder mit Status
-- ✅ Kamera-Parameter-Slider (Belichtung, Verstärkung)
-
-### Astro-Control (vollständig)
-- ✅ Kalibrierung Start/Stop
-- ✅ GOTO DSO-Formular (RA, Dec, Target)
-- ✅ GOTO Start/Stop
-- ✅ Ein-Klick GOTO (automatischer Workflow)
-- ✅ Ein-Klick GOTO Stop
-- ✅ Stacking Start/Stop
-
-### Focus-Control (vollständig)
-- ✅ Normal-Autofokus (Global)
-- ✅ Astro-Autofokus (Langsam/Schnell)
-- ✅ Astro-Fokus Stop
-- ✅ Manueller Fokus (Fern/Nah Einzelschritte)
-
-### Motor-Control (vollständig)
-- ✅ Joystick-Steuerung (Drag & Drop)
-- ✅ Joystick-Physik (Begrenzung, Winkel-Berechnung)
-- ✅ Throttled API-Calls (100ms)
-- ✅ Richtungs-Pad (↑↓←→)
-- ✅ Motor Stop
-
-### JavaScript-Erweiterungen
-- ✅ 15+ neue Event-Handler
-- ✅ Joystick-Setup mit Mouse-Events
-- ✅ Stream-Management
-- ✅ GOTO-Formular-Validierung
-- ✅ Throttling für Joystick-Inputs
-
----
-
-## ✅ Phase 3 - Tag 8: Album-View (ABGESCHLOSSEN)
-
-### Album-View (vollständig)
-- ✅ Medien-Übersicht mit Zählern (Fotos, Videos, Stacking)
-- ✅ Medien-Filter (Alle, Fotos, Videos, Stacking)
-- ✅ Medien-Grid mit Responsive-Layout
-- ✅ Media-Items mit Thumbnails
-- ✅ Dateiname & Dateigröße-Anzeige
-- ✅ Download-Button (vorbereitet)
-- ✅ Löschen-Funktion mit Bestätigung
-- ✅ Icon-basierte Medien-Typen (📷🎥🌌)
-- ✅ Dateigrößen-Formatierung (B, KB, MB, GB)
-
-### JavaScript-Erweiterungen
-- ✅ loadMedia() - Medien-Zähler & Liste laden
-- ✅ renderMediaGrid() - Dynamisches Grid-Rendering
-- ✅ getMediaIcon() - Typ-basierte Icons
-- ✅ formatFileSize() - Dateigrößen-Formatierung
-- ✅ deleteMediaItem() - Löschen mit Bestätigung
-- ✅ Filter-Event-Handler
-- ✅ State-Management für currentMediaType
-
-### API-Client-Erweiterungen
-- ✅ getMediaCounts() - Medien-Anzahl abrufen
-- ✅ getMediaList() - Medien-Liste mit Paginierung
-- ✅ deleteMedia() - Medien löschen
-
----
-
 ## 📊 Status
 
-**Abgeschlossen**: Phase 1 (Tag 1-2), Phase 2 (Tag 3-5), Phase 3 (Tag 6-8) ✅  
-**Aktuell**: Frontend VOLLSTÄNDIG implementiert!  
+**Abgeschlossen**: Phase 1 (Tag 1-2), Phase 2 (Tag 3-5), Phase 3 Tag 6 ✅  
+**Aktuell**: Basis-System funktionsfähig!  
 **Container**: ✅ Läuft auf http://localhost:8000  
 **Frontend**: ✅ http://localhost:8000/static/index.html  
 **API-Docs**: http://localhost:8000/docs  
 **Health-Check**: ✅ OK  
 **Endpoints**: 70+ API-Endpoints verfügbar  
-**Module**: 7 (Device, Camera, Album, Astro, Focus, Motor, System)  
-**UI-Komponenten**: 6 Views vollständig (Connection, Camera, Astro, Focus, Motor, Album)
+**Module**: 7 (Device, Camera, Album, Astro, Focus, Motor, System)
+
+## ⚠️ Wichtige Hinweise
+
+### Gerät antwortet nicht?
+**Lösung**: Kamera muss ZUERST geöffnet werden!
+```bash
+curl -X POST "http://localhost:8000/api/camera/tele/open?ip=192.168.88.1" \
+  -H "Content-Type: application/json" \
+  -d '{"binning": false, "rtsp_encode_type": 0}'
+```
+
+### Workflow für erfolgreiche Befehle:
+1. ✅ Verbinden (`/api/device/connect`)
+2. ✅ Kamera öffnen (`/api/camera/tele/open`)
+3. ✅ 2-3 Sekunden warten
+4. ✅ Befehle senden (Foto, Astro, etc.)
+
+**Siehe**: `TROUBLESHOOTING.md` für detaillierte Hilfe
 
 ---
 

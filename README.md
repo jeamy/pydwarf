@@ -81,8 +81,8 @@ API-Dokumentation: http://localhost:8000/docs
 
 ### Frontend öffnen
 
-1. **Lokale Datei**: `frontend/index.html` im Browser öffnen
-2. **Mit Webserver**:
+1. **Über Backend**: http://localhost:8000/static/ im Browser öffnen (liefert das Frontend aus)
+2. **Direkt**: `frontend/index.html` lokal öffnen oder eigenen Webserver nutzen:
    ```bash
    cd frontend
    python -m http.server 8080

@@ -140,25 +140,6 @@ class APIClient {
         });
     }
 
-    // Album
-    async getMediaCounts(ip) {
-        return this.request(`/album/counts?ip=${ip}`);
-    }
-
-    async getMediaList(ip, mediaType = 0, pageIndex = 0, pageSize = 50) {
-        return this.request('/album/list?ip=' + ip, {
-            method: 'POST',
-            body: { media_type: mediaType, page_index: pageIndex, page_size: pageSize }
-        });
-    }
-
-    async deleteMedia(ip, items) {
-        return this.request('/album/delete?ip=' + ip, {
-            method: 'POST',
-            body: { items }
-        });
-    }
-
     // System
     async shutdown(ip) {
         return this.request(`${ENDPOINTS.SYSTEM_SHUTDOWN}?ip=${ip}`, {

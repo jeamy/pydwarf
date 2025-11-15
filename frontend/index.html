@@ -21,13 +21,23 @@
         <button class="nav-btn" data-view="astro">🌌 Astro</button>
         <button class="nav-btn" data-view="focus">🎯 Fokus</button>
         <button class="nav-btn" data-view="motor">🕹️ Motor</button>
-        <button class="nav-btn" data-view="album">📁 Album</button>
     </nav>
 
     <main class="main">
-        <!-- Connection View -->
         <section class="view active" id="connectionView">
             <h2>Verbindung</h2>
+            <div class="card">
+                <h3>Gerät suchen</h3>
+                <p class="info-text">Sucht automatisch nach DWARF II im Netzwerk (scannt alle 254 IPs)</p>
+                <div class="form-group">
+                    <label>Netzwerk (optional)</label>
+                    <input type="text" id="scanSubnet" placeholder="z.B. 192.168.8 oder leer für Auto-Scan">
+                    <small style="color: var(--text-secondary);">Leer = Scannt 192.168.88, 192.168.8, 192.168.1, etc.</small>
+                </div>
+                <button class="btn btn-primary" id="scanBtn">🔍 Netzwerk scannen</button>
+                <div id="scanResults" class="scan-results"></div>
+            </div>
+
             <div class="card">
                 <h3>Gerät verbinden</h3>
                 <div class="form-group">
@@ -38,131 +48,128 @@
                     <label>Port</label>
                     <input type="number" id="devicePort" value="8082" placeholder="8082">
                 </div>
-                <button class="btn btn-primary" id="connectBtn">Verbinden</button>
+                <div class="button-row">
+                    <button class="btn btn-primary" id="connectBtn">Verbinden</button>
+                    <button class="btn" id="disconnectBtn" style="display:none;">Trennen</button>
+                </div>
             </div>
-            <div class="card" id="deviceInfoCard" style="display:none;">
-                <h3>Geräte-Informationen</h3>
-                <div id="deviceInfo"></div>
-            </div>
+            <div class="card" id="deviceInfo" style="display:none;"></div>
         </section>
 
-        <!-- Camera View -->
         <section class="view" id="cameraView">
-            <h2>Kamera-Steuerung</h2>
-            
-            <div class="card">
-                <h3>Teleobjektiv</h3>
+            <h2>Kamera</h2>
+            <div class="card connection-required" style="display:none;">
+                <p class="info-text" style="text-align:center; color:var(--text-secondary);">
+                    ⚠️ Bitte erst verbinden unter "🔌 Verbindung"
+                </p>
+            </div>
+            <div class="card controls-container" style="display:none;">
+                <h3>Kamera-Steuerung</h3>
                 <div class="button-row">
-                    <button class="btn" id="teleOpenBtn">Kamera öffnen</button>
-                    <button class="btn" id="teleCloseBtn">Kamera schließen</button>
+                    <button class="btn" id="teleOpenBtn">Öffnen</button>
+                    <button class="btn" id="teleCloseBtn">Schließen</button>
                 </div>
+            </div>
+            
+            <div class="card camera-required" style="display:none;">
+                <p class="info-text" style="text-align:center; color:var(--text-secondary);">
+                    📷 Bitte erst Kamera öffnen (Button oben)
+                </p>
+            </div>
+            
+            <div class="card camera-controls" style="display:none;">
+                <h3>Aufnahme</h3>
                 <div class="button-row">
                     <button class="btn btn-primary" id="telePhotoBtn">📷 Foto</button>
-                    <button class="btn btn-primary" id="teleVideoStartBtn">🎥 Video Start</button>
+                    <button class="btn" id="teleVideoStartBtn">🎥 Video Start</button>
                     <button class="btn" id="teleVideoStopBtn">⏹️ Video Stop</button>
                 </div>
             </div>
-
-            <div class="card">
+            
+            <div class="card camera-controls" style="display:none;">
                 <h3>Live-Stream</h3>
                 <div class="stream-container">
-                    <img id="liveStream" alt="Live-Stream">
+                    <img id="liveStream" alt="Live Stream">
                     <div class="stream-placeholder" id="streamPlaceholder">
-                        <p>📷</p>
-                        <p>Stream nicht aktiv</p>
+                        <p>📹</p>
+                        <p>Kein Stream</p>
                     </div>
                 </div>
                 <div class="button-row">
-                    <button class="btn" id="streamStartBtn">Stream starten</button>
+                    <button class="btn btn-primary" id="streamStartBtn">Stream starten</button>
                     <button class="btn" id="streamStopBtn">Stream stoppen</button>
                 </div>
             </div>
-
-            <div class="card">
-                <h3>Kamera-Parameter</h3>
-                <div class="form-group">
-                    <label>Belichtung</label>
-                    <input type="range" id="expSlider" min="0" max="100" value="50">
-                </div>
-                <div class="form-group">
-                    <label>Verstärkung</label>
-                    <input type="range" id="gainSlider" min="0" max="100" value="50">
-                </div>
-                <button class="btn" id="paramsSetBtn">Parameter setzen</button>
-            </div>
         </section>
 
-        <!-- Astro View -->
         <section class="view" id="astroView">
             <h2>Astronomie</h2>
+            <div class="card connection-required" style="display:none;">
+                <p class="info-text" style="text-align:center; color:var(--text-secondary);">
+                    ⚠️ Bitte erst verbinden unter "🔌 Verbindung"
+                </p>
+            </div>
             
-            <div class="card">
+            <div class="card controls-container" style="display:none;">
                 <h3>Kalibrierung</h3>
                 <div class="button-row">
-                    <button class="btn btn-primary" id="calibrationStartBtn">Kalibrierung starten</button>
-                    <button class="btn" id="calibrationStopBtn">Stoppen</button>
+                    <button class="btn btn-primary" id="calibrationStartBtn">Start</button>
+                    <button class="btn" id="calibrationStopBtn">Stop</button>
                 </div>
             </div>
-
-            <div class="card">
-                <h3>GOTO Deep-Sky-Objekt</h3>
+            
+            <div class="card controls-container" style="display:none;">
+                <h3>GOTO</h3>
                 <div class="form-group">
-                    <label>Rektaszension (RA)</label>
-                    <input type="number" id="gotoRa" step="0.01" placeholder="0.00">
-                </div>
-                <div class="form-group">
-                    <label>Deklination (Dec)</label>
-                    <input type="number" id="gotoDec" step="0.01" placeholder="0.00">
-                </div>
-                <div class="form-group">
-                    <label>Zielname</label>
+                    <label>Target Name</label>
                     <input type="text" id="gotoTarget" placeholder="M31">
                 </div>
+                <div class="form-group">
+                    <label>RA (Stunden)</label>
+                    <input type="number" id="gotoRa" placeholder="0.712" step="0.001">
+                </div>
+                <div class="form-group">
+                    <label>Dec (Grad)</label>
+                    <input type="number" id="gotoDec" placeholder="41.269" step="0.001">
+                </div>
                 <div class="button-row">
-                    <button class="btn btn-primary" id="gotoDsoBtn">GOTO starten</button>
-                    <button class="btn" id="gotoStopBtn">GOTO stoppen</button>
+                    <button class="btn btn-primary" id="gotoDsoBtn">GOTO Start</button>
+                    <button class="btn" id="gotoStopBtn">GOTO Stop</button>
                 </div>
             </div>
-
-            <div class="card">
-                <h3>Ein-Klick GOTO</h3>
-                <p class="info-text">Automatischer Workflow: Sky Detection → Fokus → Kalibrierung → GOTO</p>
+            
+            <div class="card controls-container" style="display:none;">
+                <h3>Stacking</h3>
                 <div class="button-row">
-                    <button class="btn btn-primary" id="oneClickGotoBtn">Ein-Klick GOTO</button>
-                    <button class="btn" id="oneClickStopBtn">Stoppen</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>Live-Stacking</h3>
-                <div class="button-row">
-                    <button class="btn btn-primary" id="stackingStartBtn">Stacking starten</button>
-                    <button class="btn" id="stackingStopBtn">Stacking stoppen</button>
+                    <button class="btn btn-primary" id="stackingStartBtn">Start</button>
+                    <button class="btn" id="stackingStopBtn">Stop</button>
                 </div>
             </div>
         </section>
 
-        <!-- Focus View -->
         <section class="view" id="focusView">
-            <h2>Fokus-Steuerung</h2>
+            <h2>Fokus</h2>
+            <div class="card connection-required" style="display:none;">
+                <p class="info-text" style="text-align:center; color:var(--text-secondary);">
+                    ⚠️ Bitte erst verbinden unter "🔌 Verbindung"
+                </p>
+            </div>
             
-            <div class="card">
-                <h3>Normal-Autofokus</h3>
+            <div class="card controls-container" style="display:none;">
+                <h3>Auto-Fokus</h3>
+                <button class="btn btn-primary" id="autoFocusBtn">Auto-Fokus starten</button>
+            </div>
+            
+            <div class="card controls-container" style="display:none;">
+                <h3>Astro-Fokus</h3>
                 <div class="button-row">
-                    <button class="btn btn-primary" id="autoFocusBtn">Auto-Fokus (Global)</button>
+                    <button class="btn" id="astroFocusSlowBtn">Langsam</button>
+                    <button class="btn" id="astroFocusFastBtn">Schnell</button>
+                    <button class="btn" id="astroFocusStopBtn">Stop</button>
                 </div>
             </div>
-
-            <div class="card">
-                <h3>Astro-Autofokus</h3>
-                <div class="button-row">
-                    <button class="btn btn-primary" id="astroFocusSlowBtn">Langsam (präzise)</button>
-                    <button class="btn btn-primary" id="astroFocusFastBtn">Schnell</button>
-                    <button class="btn" id="astroFocusStopBtn">Stoppen</button>
-                </div>
-            </div>
-
-            <div class="card">
+            
+            <div class="card controls-container" style="display:none;">
                 <h3>Manueller Fokus</h3>
                 <div class="button-row">
                     <button class="btn" id="focusFarBtn">← Fern</button>
@@ -171,75 +178,27 @@
             </div>
         </section>
 
-        <!-- Motor View -->
         <section class="view" id="motorView">
-            <h2>Motor-Steuerung</h2>
-            
-            <div class="card">
-                <h3>Joystick-Steuerung</h3>
-                <div class="joystick-container">
-                    <div class="joystick" id="joystick">
-                        <div class="joystick-handle" id="joystickHandle"></div>
-                    </div>
-                </div>
-                <div class="button-row">
-                    <button class="btn" id="motorStopBtn">⏹️ Stop</button>
-                </div>
+            <h2>Motor</h2>
+            <div class="card connection-required" style="display:none;">
+                <p class="info-text" style="text-align:center; color:var(--text-secondary);">
+                    ⚠️ Bitte erst verbinden unter "🔌 Verbindung"
+                </p>
             </div>
-
-            <div class="card">
-                <h3>Direkte Steuerung</h3>
+            
+            <div class="card controls-container" style="display:none;">
+                <h3>Richtungs-Steuerung</h3>
                 <div class="direction-pad">
-                    <button class="btn dir-btn" id="motorUpBtn">↑</button>
+                    <div class="dir-row">
+                        <button class="btn dir-btn" id="motorUpBtn">↑</button>
+                    </div>
                     <div class="dir-row">
                         <button class="btn dir-btn" id="motorLeftBtn">←</button>
+                        <button class="btn" id="motorStopBtn">⏹️ Stop</button>
                         <button class="btn dir-btn" id="motorRightBtn">→</button>
                     </div>
-                    <button class="btn dir-btn" id="motorDownBtn">↓</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Album View -->
-        <section class="view" id="albumView">
-            <h2>Album</h2>
-            
-            <div class="card">
-                <h3>Medien-Übersicht</h3>
-                <div id="mediaCounts" class="media-counts">
-                    <div class="count-item">
-                        <span class="count-label">Fotos</span>
-                        <span class="count-value" id="photoCount">-</span>
-                    </div>
-                    <div class="count-item">
-                        <span class="count-label">Videos</span>
-                        <span class="count-value" id="videoCount">-</span>
-                    </div>
-                    <div class="count-item">
-                        <span class="count-label">Stacking</span>
-                        <span class="count-value" id="stackCount">-</span>
-                    </div>
-                </div>
-                <button class="btn btn-primary" id="loadMediaBtn">Medien laden</button>
-            </div>
-
-            <div class="card">
-                <h3>Medien-Filter</h3>
-                <div class="button-row">
-                    <button class="btn filter-btn active" data-type="0">Alle</button>
-                    <button class="btn filter-btn" data-type="1">Fotos</button>
-                    <button class="btn filter-btn" data-type="2">Videos</button>
-                    <button class="btn filter-btn" data-type="3">Stacking</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>Medien-Liste</h3>
-                <div id="mediaGrid" class="media-grid">
-                    <div class="media-placeholder">
-                        <p>📁</p>
-                        <p>Keine Medien geladen</p>
-                        <p class="info-text">Klicke auf "Medien laden"</p>
+                    <div class="dir-row">
+                        <button class="btn dir-btn" id="motorDownBtn">↓</button>
                     </div>
                 </div>
             </div>

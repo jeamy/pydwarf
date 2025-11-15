@@ -4,6 +4,18 @@ Alle Module-IDs, Befehle und Fehlercodes
 """
 
 # ============================================================================
+# Error Codes
+# ============================================================================
+ERROR_CODES = {
+    0: "Erfolg",
+    27: "Kamera-Fehler (Gerät nicht bereit oder Befehl abgelehnt)",
+    56: "Kamera-Fehler (möglicherweise bereits geöffnet oder Gerät beschäftigt)",
+    57: "Kamera-Fehler (Gerät beschäftigt oder Befehl nicht möglich)",
+    374: "Kamera bereits geöffnet oder beschäftigt",
+    # Weitere Codes werden bei Bedarf hinzugefügt
+}
+
+# ============================================================================
 # Module IDs
 # ============================================================================
 MODULE_NONE = 0
