@@ -138,6 +138,83 @@ def message_astro_go_live() -> bytes:
     logger.debug(f"ReqGoLive serialized: {serialized.hex()}")
     return serialized
 
+def message_astro_track_special_target(index: int, lat: float, lon: float) -> bytes:
+    """
+    Create Encoded Packet for CMD_ASTRO_START_TRACK_SPECIAL_TARGET
+    Track Sun (0) or Moon (1)
+    """
+    message = astro_pb2.ReqTrackSpecialTarget()
+    message.index = index
+    message.lat = lat
+    message.lon = lon
+    
+    serialized = message.SerializeToString()
+    logger.debug(f"ReqTrackSpecialTarget serialized: {serialized.hex()}")
+    return serialized
+
+def message_astro_stop_track_special_target() -> bytes:
+    """
+    Create Encoded Packet for CMD_ASTRO_STOP_TRACK_SPECIAL_TARGET
+    """
+    message = astro_pb2.ReqStopTrackSpecialTarget()
+    serialized = message.SerializeToString()
+    logger.debug(f"ReqStopTrackSpecialTarget serialized: {serialized.hex()}")
+    return serialized
+
+def message_astro_one_click_goto_dso(ra: float, dec: float, target_name: str = "") -> bytes:
+    """
+    Create Encoded Packet for CMD_ASTRO_START_ONE_CLICK_GOTO_DSO
+    """
+    message = astro_pb2.ReqOneClickGotoDSO()
+    message.ra = ra
+    message.dec = dec
+    message.target_name = target_name
+    
+    serialized = message.SerializeToString()
+    logger.debug(f"ReqOneClickGotoDSO serialized: {serialized.hex()}")
+    return serialized
+
+def message_astro_one_click_goto_solar(index: int, lat: float, lon: float, target_name: str = "") -> bytes:
+    """
+    Create Encoded Packet for CMD_ASTRO_START_ONE_CLICK_GOTO_SOLAR_SYSTEM
+    """
+    message = astro_pb2.ReqOneClickGotoSolarSystem()
+    message.index = index
+    message.lat = lat
+    message.lon = lon
+    message.target_name = target_name
+    
+    serialized = message.SerializeToString()
+    logger.debug(f"ReqOneClickGotoSolarSystem serialized: {serialized.hex()}")
+    return serialized
+
+def message_astro_stop_one_click_goto() -> bytes:
+    """
+    Create Encoded Packet for CMD_ASTRO_STOP_ONE_CLICK_GOTO
+    """
+    message = astro_pb2.ReqStopOneClickGoto()
+    serialized = message.SerializeToString()
+    logger.debug(f"ReqStopOneClickGoto serialized: {serialized.hex()}")
+    return serialized
+
+def message_astro_start_eq_solving() -> bytes:
+    """
+    Create Encoded Packet for CMD_ASTRO_START_EQ_SOLVING
+    """
+    message = astro_pb2.ReqStartEQSolving()
+    serialized = message.SerializeToString()
+    logger.debug(f"ReqStartEQSolving serialized: {serialized.hex()}")
+    return serialized
+
+def message_astro_stop_eq_solving() -> bytes:
+    """
+    Create Encoded Packet for CMD_ASTRO_STOP_EQ_SOLVING
+    """
+    message = astro_pb2.ReqStopEQSolving()
+    serialized = message.SerializeToString()
+    logger.debug(f"ReqStopEQSolving serialized: {serialized.hex()}")
+    return serialized
+
 # ============================================================================
 # Helper Functions
 # ============================================================================
@@ -292,6 +369,152 @@ async def go_live(ws_handler, callback=None):
     packet = ws_handler.create_packet(
         MODULE_ASTRO,
         CMD_ASTRO_GO_LIVE,
+        message_data
+    )
+    ws_handler.send_packet(packet)
+    
+    if callback:
+        callback()
+
+async def track_special_target(
+    ws_handler,
+    index: int,
+    lat: float,
+    lon: float,
+    callback=None
+):
+    """Track Sun (0) or Moon (1)"""
+    if not ws_handler.ip_dwarf:
+        return
+        
+    target_name = "Sun" if index == 0 else "Moon"
+    logger.info(f"🌞 Tracking {target_name}")
+    
+    message_data = message_astro_track_special_target(index, lat, lon)
+    packet = ws_handler.create_packet(
+        MODULE_ASTRO,
+        CMD_ASTRO_START_TRACK_SPECIAL_TARGET,
+        message_data
+    )
+    ws_handler.send_packet(packet)
+    
+    if callback:
+        callback()
+
+async def stop_track_special_target(ws_handler, callback=None):
+    """Stop tracking Sun/Moon"""
+    if not ws_handler.ip_dwarf:
+        return
+        
+    logger.info("🌞 Stop tracking special target")
+    
+    message_data = message_astro_stop_track_special_target()
+    packet = ws_handler.create_packet(
+        MODULE_ASTRO,
+        CMD_ASTRO_STOP_TRACK_SPECIAL_TARGET,
+        message_data
+    )
+    ws_handler.send_packet(packet)
+    
+    if callback:
+        callback()
+
+async def one_click_goto_dso(
+    ws_handler,
+    ra: float,
+    dec: float,
+    target_name: str = "",
+    callback=None
+):
+    """One-Click GoTo DSO (includes calibration, focus, goto)"""
+    if not ws_handler.ip_dwarf:
+        return
+        
+    logger.info(f"🚀 One-Click GoTo DSO: {target_name} (RA={ra}, DEC={dec})")
+    
+    message_data = message_astro_one_click_goto_dso(ra, dec, target_name)
+    packet = ws_handler.create_packet(
+        MODULE_ASTRO,
+        CMD_ASTRO_START_ONE_CLICK_GOTO_DSO,
+        message_data
+    )
+    ws_handler.send_packet(packet)
+    
+    if callback:
+        callback()
+
+async def one_click_goto_solar(
+    ws_handler,
+    index: int,
+    lat: float,
+    lon: float,
+    target_name: str = "",
+    callback=None
+):
+    """One-Click GoTo Solar System Object"""
+    if not ws_handler.ip_dwarf:
+        return
+        
+    logger.info(f"🚀 One-Click GoTo Solar: {target_name} (Index={index})")
+    
+    message_data = message_astro_one_click_goto_solar(index, lat, lon, target_name)
+    packet = ws_handler.create_packet(
+        MODULE_ASTRO,
+        CMD_ASTRO_START_ONE_CLICK_GOTO_SOLAR_SYSTEM,
+        message_data
+    )
+    ws_handler.send_packet(packet)
+    
+    if callback:
+        callback()
+
+async def stop_one_click_goto(ws_handler, callback=None):
+    """Stop One-Click GoTo"""
+    if not ws_handler.ip_dwarf:
+        return
+        
+    logger.info("🛑 Stopping One-Click GoTo")
+    
+    message_data = message_astro_stop_one_click_goto()
+    packet = ws_handler.create_packet(
+        MODULE_ASTRO,
+        CMD_ASTRO_STOP_ONE_CLICK_GOTO,
+        message_data
+    )
+    ws_handler.send_packet(packet)
+    
+    if callback:
+        callback()
+
+async def start_eq_solving(ws_handler, callback=None):
+    """Start EQ Solving (Equatorial Mount Plate Solving)"""
+    if not ws_handler.ip_dwarf:
+        return
+        
+    logger.info("🔭 Starting EQ Solving")
+    
+    message_data = message_astro_start_eq_solving()
+    packet = ws_handler.create_packet(
+        MODULE_ASTRO,
+        CMD_ASTRO_START_EQ_SOLVING,
+        message_data
+    )
+    ws_handler.send_packet(packet)
+    
+    if callback:
+        callback()
+
+async def stop_eq_solving(ws_handler, callback=None):
+    """Stop EQ Solving"""
+    if not ws_handler.ip_dwarf:
+        return
+        
+    logger.info("🔭 Stopping EQ Solving")
+    
+    message_data = message_astro_stop_eq_solving()
+    packet = ws_handler.create_packet(
+        MODULE_ASTRO,
+        CMD_ASTRO_STOP_EQ_SOLVING,
         message_data
     )
     ws_handler.send_packet(packet)
