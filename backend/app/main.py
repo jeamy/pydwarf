@@ -48,15 +48,18 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 # API-Router
-from .api import device, camera, album, astro, focus, motor, system, scanner
+from .api import device, camera, album, astro, focus, motor, system, scanner, tracking, panorama, camera_params
 app.include_router(device.router, prefix="/api/device", tags=["device"])
 app.include_router(camera.router, prefix="/api/camera", tags=["camera"])
+app.include_router(camera_params.router, prefix="/api/camera/params", tags=["camera-params"])
 app.include_router(album.router, prefix="/api/album", tags=["album"])
 app.include_router(astro.router, prefix="/api/astro", tags=["astro"])
 app.include_router(focus.router, prefix="/api/focus", tags=["focus"])
 app.include_router(motor.router, prefix="/api/motor", tags=["motor"])
 app.include_router(system.router, prefix="/api/system", tags=["system"])
 app.include_router(scanner.router, prefix="/api/scanner", tags=["scanner"])
+app.include_router(tracking.router, prefix="/api/tracking", tags=["tracking"])
+app.include_router(panorama.router, prefix="/api/panorama", tags=["panorama"])
 
 
 @app.get("/")
