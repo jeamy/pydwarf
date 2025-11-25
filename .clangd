@@ -4,7 +4,6 @@ CompileFlags:
     - -Isrc
     - -Isrc/net
     - -Isrc/proto
-    - -Ibuild/src/proto
     - -Ibuild
     - -Ibuild/DwarfController_autogen/include
     - -I/usr/include/qt6
@@ -21,5 +20,4 @@ CompileFlags:
     - -DQT_MULTIMEDIA_LIB
     - -DQT_WEBSOCKETS_LIB
   Compiler: g++
-  # Optional: set the path to the compile_commands.json if it exists
   CompilationDatabase: build/compile_commands.json
