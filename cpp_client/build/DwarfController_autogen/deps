@@ -22,6 +22,8 @@ DwarfController_autogen/timestamp: \
 	/media/data/programming/pydwarf/cpp_client/src/MainWindow.cpp \
 	/media/data/programming/pydwarf/cpp_client/src/MainWindow.h \
 	/media/data/programming/pydwarf/cpp_client/src/main.cpp \
+	/media/data/programming/pydwarf/cpp_client/src/net/DwarfWebSocketClient.cpp \
+	/media/data/programming/pydwarf/cpp_client/src/net/DwarfWebSocketClient.h \
 	/usr/include/alloca.h \
 	/usr/include/asm-generic/bitsperlong.h \
 	/usr/include/asm-generic/errno-base.h \
@@ -98,8 +100,10 @@ DwarfController_autogen/timestamp: \
 	/usr/include/bits/waitflags.h \
 	/usr/include/bits/waitstatus.h \
 	/usr/include/bits/wchar.h \
+	/usr/include/bits/wctype-wchar.h \
 	/usr/include/bits/wordsize.h \
 	/usr/include/bits/xopen_lim.h \
+	/usr/include/byteswap.h \
 	/usr/include/c++/15/algorithm \
 	/usr/include/c++/15/array \
 	/usr/include/c++/15/atomic \
@@ -113,6 +117,8 @@ DwarfController_autogen/timestamp: \
 	/usr/include/c++/15/bits/allocator.h \
 	/usr/include/c++/15/bits/atomic_base.h \
 	/usr/include/c++/15/bits/atomic_lockfree_defines.h \
+	/usr/include/c++/15/bits/basic_ios.h \
+	/usr/include/c++/15/bits/basic_ios.tcc \
 	/usr/include/c++/15/bits/basic_string.h \
 	/usr/include/c++/15/bits/basic_string.tcc \
 	/usr/include/c++/15/bits/char_traits.h \
@@ -134,9 +140,12 @@ DwarfController_autogen/timestamp: \
 	/usr/include/c++/15/bits/hashtable_policy.h \
 	/usr/include/c++/15/bits/invoke.h \
 	/usr/include/c++/15/bits/ios_base.h \
+	/usr/include/c++/15/bits/istream.tcc \
 	/usr/include/c++/15/bits/list.tcc \
 	/usr/include/c++/15/bits/locale_classes.h \
 	/usr/include/c++/15/bits/locale_classes.tcc \
+	/usr/include/c++/15/bits/locale_facets.h \
+	/usr/include/c++/15/bits/locale_facets.tcc \
 	/usr/include/c++/15/bits/localefwd.h \
 	/usr/include/c++/15/bits/memory_resource.h \
 	/usr/include/c++/15/bits/memoryfwd.h \
@@ -144,6 +153,8 @@ DwarfController_autogen/timestamp: \
 	/usr/include/c++/15/bits/nested_exception.h \
 	/usr/include/c++/15/bits/new_allocator.h \
 	/usr/include/c++/15/bits/node_handle.h \
+	/usr/include/c++/15/bits/ostream.h \
+	/usr/include/c++/15/bits/ostream.tcc \
 	/usr/include/c++/15/bits/ostream_insert.h \
 	/usr/include/c++/15/bits/parse_numbers.h \
 	/usr/include/c++/15/bits/postypes.h \
@@ -158,6 +169,7 @@ DwarfController_autogen/timestamp: \
 	/usr/include/c++/15/bits/specfun.h \
 	/usr/include/c++/15/bits/std_abs.h \
 	/usr/include/c++/15/bits/std_function.h \
+	/usr/include/c++/15/bits/std_mutex.h \
 	/usr/include/c++/15/bits/stl_algo.h \
 	/usr/include/c++/15/bits/stl_algobase.h \
 	/usr/include/c++/15/bits/stl_bvector.h \
@@ -186,6 +198,7 @@ DwarfController_autogen/timestamp: \
 	/usr/include/c++/15/bits/string_view.tcc \
 	/usr/include/c++/15/bits/stringfwd.h \
 	/usr/include/c++/15/bits/uniform_int_dist.h \
+	/usr/include/c++/15/bits/unique_lock.h \
 	/usr/include/c++/15/bits/unique_ptr.h \
 	/usr/include/c++/15/bits/unordered_map.h \
 	/usr/include/c++/15/bits/unordered_set.h \
@@ -210,6 +223,7 @@ DwarfController_autogen/timestamp: \
 	/usr/include/c++/15/cstring \
 	/usr/include/c++/15/ctime \
 	/usr/include/c++/15/cwchar \
+	/usr/include/c++/15/cwctype \
 	/usr/include/c++/15/debug/assertions.h \
 	/usr/include/c++/15/debug/debug.h \
 	/usr/include/c++/15/exception \
@@ -222,15 +236,20 @@ DwarfController_autogen/timestamp: \
 	/usr/include/c++/15/ext/type_traits.h \
 	/usr/include/c++/15/functional \
 	/usr/include/c++/15/initializer_list \
+	/usr/include/c++/15/ios \
 	/usr/include/c++/15/iosfwd \
+	/usr/include/c++/15/iostream \
+	/usr/include/c++/15/istream \
 	/usr/include/c++/15/iterator \
 	/usr/include/c++/15/limits \
 	/usr/include/c++/15/list \
 	/usr/include/c++/15/map \
 	/usr/include/c++/15/memory \
+	/usr/include/c++/15/mutex \
 	/usr/include/c++/15/new \
 	/usr/include/c++/15/numeric \
 	/usr/include/c++/15/optional \
+	/usr/include/c++/15/ostream \
 	/usr/include/c++/15/pstl/execution_defs.h \
 	/usr/include/c++/15/pstl/glue_numeric_defs.h \
 	/usr/include/c++/15/pstl/pstl_config.h \
@@ -267,6 +286,8 @@ DwarfController_autogen/timestamp: \
 	/usr/include/c++/15/x86_64-redhat-linux/bits/c++config.h \
 	/usr/include/c++/15/x86_64-redhat-linux/bits/c++locale.h \
 	/usr/include/c++/15/x86_64-redhat-linux/bits/cpu_defines.h \
+	/usr/include/c++/15/x86_64-redhat-linux/bits/ctype_base.h \
+	/usr/include/c++/15/x86_64-redhat-linux/bits/ctype_inline.h \
 	/usr/include/c++/15/x86_64-redhat-linux/bits/error_constants.h \
 	/usr/include/c++/15/x86_64-redhat-linux/bits/gthr-default.h \
 	/usr/include/c++/15/x86_64-redhat-linux/bits/gthr.h \
@@ -278,6 +299,53 @@ DwarfController_autogen/timestamp: \
 	/usr/include/features.h \
 	/usr/include/gnu/stubs-64.h \
 	/usr/include/gnu/stubs.h \
+	/usr/include/google/protobuf/any.h \
+	/usr/include/google/protobuf/arena.h \
+	/usr/include/google/protobuf/arena_impl.h \
+	/usr/include/google/protobuf/arenastring.h \
+	/usr/include/google/protobuf/descriptor.h \
+	/usr/include/google/protobuf/explicitly_constructed.h \
+	/usr/include/google/protobuf/extension_set.h \
+	/usr/include/google/protobuf/generated_enum_reflection.h \
+	/usr/include/google/protobuf/generated_enum_util.h \
+	/usr/include/google/protobuf/generated_message_reflection.h \
+	/usr/include/google/protobuf/generated_message_table_driven.h \
+	/usr/include/google/protobuf/generated_message_util.h \
+	/usr/include/google/protobuf/has_bits.h \
+	/usr/include/google/protobuf/implicit_weak_message.h \
+	/usr/include/google/protobuf/inlined_string_field.h \
+	/usr/include/google/protobuf/io/coded_stream.h \
+	/usr/include/google/protobuf/io/zero_copy_stream.h \
+	/usr/include/google/protobuf/io/zero_copy_stream_impl_lite.h \
+	/usr/include/google/protobuf/map.h \
+	/usr/include/google/protobuf/map_entry_lite.h \
+	/usr/include/google/protobuf/map_field_lite.h \
+	/usr/include/google/protobuf/map_type_handler.h \
+	/usr/include/google/protobuf/message.h \
+	/usr/include/google/protobuf/message_lite.h \
+	/usr/include/google/protobuf/metadata_lite.h \
+	/usr/include/google/protobuf/parse_context.h \
+	/usr/include/google/protobuf/port.h \
+	/usr/include/google/protobuf/port_def.inc \
+	/usr/include/google/protobuf/port_undef.inc \
+	/usr/include/google/protobuf/repeated_field.h \
+	/usr/include/google/protobuf/repeated_ptr_field.h \
+	/usr/include/google/protobuf/stubs/callback.h \
+	/usr/include/google/protobuf/stubs/casts.h \
+	/usr/include/google/protobuf/stubs/common.h \
+	/usr/include/google/protobuf/stubs/hash.h \
+	/usr/include/google/protobuf/stubs/logging.h \
+	/usr/include/google/protobuf/stubs/macros.h \
+	/usr/include/google/protobuf/stubs/mutex.h \
+	/usr/include/google/protobuf/stubs/once.h \
+	/usr/include/google/protobuf/stubs/platform_macros.h \
+	/usr/include/google/protobuf/stubs/port.h \
+	/usr/include/google/protobuf/stubs/status.h \
+	/usr/include/google/protobuf/stubs/stl_util.h \
+	/usr/include/google/protobuf/stubs/stringpiece.h \
+	/usr/include/google/protobuf/stubs/strutil.h \
+	/usr/include/google/protobuf/unknown_field_set.h \
+	/usr/include/google/protobuf/wire_format_lite.h \
 	/usr/include/limits.h \
 	/usr/include/linux/errno.h \
 	/usr/include/linux/limits.h \
@@ -287,6 +355,13 @@ DwarfController_autogen/timestamp: \
 	/usr/include/linux/types.h \
 	/usr/include/locale.h \
 	/usr/include/pthread.h \
+	/usr/include/qt6/QtCore/QFlags \
+	/usr/include/qt6/QtCore/QObject \
+	/usr/include/qt6/QtCore/QSharedDataPointer \
+	/usr/include/qt6/QtCore/QString \
+	/usr/include/qt6/QtCore/QTimer \
+	/usr/include/qt6/QtCore/QUrl \
+	/usr/include/qt6/QtCore/QVariant \
 	/usr/include/qt6/QtCore/q17memory.h \
 	/usr/include/qt6/QtCore/q20functional.h \
 	/usr/include/qt6/QtCore/q20iterator.h \
@@ -295,6 +370,8 @@ DwarfController_autogen/timestamp: \
 	/usr/include/qt6/QtCore/q20utility.h \
 	/usr/include/qt6/QtCore/q23type_traits.h \
 	/usr/include/qt6/QtCore/q23utility.h \
+	/usr/include/qt6/QtCore/q26numeric.h \
+	/usr/include/qt6/QtCore/qabstracteventdispatcher.h \
 	/usr/include/qt6/QtCore/qalgorithms.h \
 	/usr/include/qt6/QtCore/qalloc.h \
 	/usr/include/qt6/QtCore/qanystringview.h \
@@ -305,11 +382,13 @@ DwarfController_autogen/timestamp: \
 	/usr/include/qt6/QtCore/qatomic.h \
 	/usr/include/qt6/QtCore/qatomic_cxx11.h \
 	/usr/include/qt6/QtCore/qbasicatomic.h \
+	/usr/include/qt6/QtCore/qbasictimer.h \
 	/usr/include/qt6/QtCore/qbindingstorage.h \
 	/usr/include/qt6/QtCore/qbytearray.h \
 	/usr/include/qt6/QtCore/qbytearrayalgorithms.h \
 	/usr/include/qt6/QtCore/qbytearraylist.h \
 	/usr/include/qt6/QtCore/qbytearrayview.h \
+	/usr/include/qt6/QtCore/qcalendar.h \
 	/usr/include/qt6/QtCore/qchar.h \
 	/usr/include/qt6/QtCore/qcheckedint_impl.h \
 	/usr/include/qt6/QtCore/qcompare.h \
@@ -323,10 +402,14 @@ DwarfController_autogen/timestamp: \
 	/usr/include/qt6/QtCore/qcontainerinfo.h \
 	/usr/include/qt6/QtCore/qcontainertools_impl.h \
 	/usr/include/qt6/QtCore/qcontiguouscache.h \
+	/usr/include/qt6/QtCore/qcryptographichash.h \
 	/usr/include/qt6/QtCore/qdarwinhelpers.h \
 	/usr/include/qt6/QtCore/qdatastream.h \
+	/usr/include/qt6/QtCore/qdatetime.h \
+	/usr/include/qt6/QtCore/qdeadlinetimer.h \
 	/usr/include/qt6/QtCore/qdebug.h \
 	/usr/include/qt6/QtCore/qendian.h \
+	/usr/include/qt6/QtCore/qeventloop.h \
 	/usr/include/qt6/QtCore/qexceptionhandling.h \
 	/usr/include/qt6/QtCore/qflags.h \
 	/usr/include/qt6/QtCore/qfloat16.h \
@@ -345,12 +428,14 @@ DwarfController_autogen/timestamp: \
 	/usr/include/qt6/QtCore/qlatin1stringview.h \
 	/usr/include/qt6/QtCore/qline.h \
 	/usr/include/qt6/QtCore/qlist.h \
+	/usr/include/qt6/QtCore/qlocale.h \
 	/usr/include/qt6/QtCore/qlogging.h \
 	/usr/include/qt6/QtCore/qmalloc.h \
 	/usr/include/qt6/QtCore/qmap.h \
 	/usr/include/qt6/QtCore/qmargins.h \
 	/usr/include/qt6/QtCore/qmath.h \
 	/usr/include/qt6/QtCore/qmetacontainer.h \
+	/usr/include/qt6/QtCore/qmetaobject.h \
 	/usr/include/qt6/QtCore/qmetatype.h \
 	/usr/include/qt6/QtCore/qminmax.h \
 	/usr/include/qt6/QtCore/qnamespace.h \
@@ -400,6 +485,7 @@ DwarfController_autogen/timestamp: \
 	/usr/include/qt6/QtCore/qtenvironmentvariables.h \
 	/usr/include/qt6/QtCore/qtextstream.h \
 	/usr/include/qt6/QtCore/qtformat_impl.h \
+	/usr/include/qt6/QtCore/qtimer.h \
 	/usr/include/qt6/QtCore/qtmetamacros.h \
 	/usr/include/qt6/QtCore/qtnoop.h \
 	/usr/include/qt6/QtCore/qtpreprocessorsupport.h \
@@ -431,6 +517,7 @@ DwarfController_autogen/timestamp: \
 	/usr/include/qt6/QtGui/qkeysequence.h \
 	/usr/include/qt6/QtGui/qpaintdevice.h \
 	/usr/include/qt6/QtGui/qpalette.h \
+	/usr/include/qt6/QtGui/qpen.h \
 	/usr/include/qt6/QtGui/qpicture.h \
 	/usr/include/qt6/QtGui/qpixelformat.h \
 	/usr/include/qt6/QtGui/qpixmap.h \
@@ -438,17 +525,49 @@ DwarfController_autogen/timestamp: \
 	/usr/include/qt6/QtGui/qregion.h \
 	/usr/include/qt6/QtGui/qrgb.h \
 	/usr/include/qt6/QtGui/qrgba64.h \
+	/usr/include/qt6/QtGui/qtextcursor.h \
 	/usr/include/qt6/QtGui/qtextdocument.h \
+	/usr/include/qt6/QtGui/qtextformat.h \
+	/usr/include/qt6/QtGui/qtextoption.h \
 	/usr/include/qt6/QtGui/qtgui-config.h \
 	/usr/include/qt6/QtGui/qtguiexports.h \
 	/usr/include/qt6/QtGui/qtguiglobal.h \
 	/usr/include/qt6/QtGui/qtransform.h \
 	/usr/include/qt6/QtGui/qwindowdefs.h \
+	/usr/include/qt6/QtNetwork/QAbstractSocket \
+	/usr/include/qt6/QtNetwork/QNetworkProxy \
+	/usr/include/qt6/QtNetwork/QNetworkRequest \
+	/usr/include/qt6/QtNetwork/QSslConfiguration \
+	/usr/include/qt6/QtNetwork/QSslError \
+	/usr/include/qt6/QtNetwork/qabstractsocket.h \
+	/usr/include/qt6/QtNetwork/qhostaddress.h \
+	/usr/include/qt6/QtNetwork/qhttpheaders.h \
+	/usr/include/qt6/QtNetwork/qnetworkproxy.h \
+	/usr/include/qt6/QtNetwork/qnetworkrequest.h \
+	/usr/include/qt6/QtNetwork/qssl.h \
+	/usr/include/qt6/QtNetwork/qsslcertificate.h \
+	/usr/include/qt6/QtNetwork/qsslconfiguration.h \
+	/usr/include/qt6/QtNetwork/qsslerror.h \
+	/usr/include/qt6/QtNetwork/qsslsocket.h \
+	/usr/include/qt6/QtNetwork/qtcpsocket.h \
+	/usr/include/qt6/QtNetwork/qtnetwork-config.h \
+	/usr/include/qt6/QtNetwork/qtnetworkexports.h \
+	/usr/include/qt6/QtNetwork/qtnetworkglobal.h \
+	/usr/include/qt6/QtWebSockets/QWebSocket \
+	/usr/include/qt6/QtWebSockets/qtwebsocketsexports.h \
+	/usr/include/qt6/QtWebSockets/qwebsocket.h \
+	/usr/include/qt6/QtWebSockets/qwebsocketprotocol.h \
+	/usr/include/qt6/QtWebSockets/qwebsockets_global.h \
 	/usr/include/qt6/QtWidgets/QLabel \
+	/usr/include/qt6/QtWidgets/QLineEdit \
 	/usr/include/qt6/QtWidgets/QMainWindow \
+	/usr/include/qt6/QtWidgets/QPushButton \
+	/usr/include/qt6/QtWidgets/qabstractbutton.h \
 	/usr/include/qt6/QtWidgets/qframe.h \
 	/usr/include/qt6/QtWidgets/qlabel.h \
+	/usr/include/qt6/QtWidgets/qlineedit.h \
 	/usr/include/qt6/QtWidgets/qmainwindow.h \
+	/usr/include/qt6/QtWidgets/qpushbutton.h \
 	/usr/include/qt6/QtWidgets/qsizepolicy.h \
 	/usr/include/qt6/QtWidgets/qtabwidget.h \
 	/usr/include/qt6/QtWidgets/qtwidgets-config.h \
@@ -468,6 +587,7 @@ DwarfController_autogen/timestamp: \
 	/usr/include/sys/types.h \
 	/usr/include/time.h \
 	/usr/include/wchar.h \
+	/usr/include/wctype.h \
 	/usr/lib/gcc/x86_64-redhat-linux/15/include/stdarg.h \
 	/usr/lib/gcc/x86_64-redhat-linux/15/include/stdbool.h \
 	/usr/lib/gcc/x86_64-redhat-linux/15/include/stddef.h \
@@ -760,6 +880,14 @@ DwarfController_autogen/timestamp: \
 	/usr/lib64/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginConfig.cmake \
 	/usr/lib64/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets-relwithdebinfo.cmake \
 	/usr/lib64/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets.cmake \
+	/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsAdditionalTargetInfo.cmake \
+	/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsConfig.cmake \
+	/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsConfigVersion.cmake \
+	/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsConfigVersionImpl.cmake \
+	/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsDependencies.cmake \
+	/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsTargets-relwithdebinfo.cmake \
+	/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsTargets.cmake \
+	/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsVersionlessAliasTargets.cmake \
 	/usr/lib64/cmake/Qt6Widgets/Qt6WidgetsAdditionalTargetInfo.cmake \
 	/usr/lib64/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake \
 	/usr/lib64/cmake/Qt6Widgets/Qt6WidgetsConfigVersion.cmake \

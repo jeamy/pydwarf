@@ -462,6 +462,15 @@
 		"/usr/lib64/cmake/Qt6Multimedia/Qt6QGstreamerMediaPluginTargets-relwithdebinfo.cmake",
 		"/usr/lib64/cmake/Qt6Multimedia/Qt6QGstreamerMediaPluginAdditionalTargetInfo.cmake",
 		"/usr/lib64/cmake/Qt6Multimedia/Qt6MultimediaVersionlessAliasTargets.cmake",
+		"/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsConfigVersion.cmake",
+		"/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsConfigVersionImpl.cmake",
+		"/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsConfig.cmake",
+		"/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake",
+		"/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsDependencies.cmake",
+		"/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsTargets.cmake",
+		"/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsTargets-relwithdebinfo.cmake",
+		"/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsAdditionalTargetInfo.cmake",
+		"/usr/lib64/cmake/Qt6WebSockets/Qt6WebSocketsVersionlessAliasTargets.cmake",
 		"/usr/share/cmake/Modules/FindProtobuf.cmake",
 		"/usr/share/cmake/Modules/SelectLibraryConfigurations.cmake",
 		"/usr/share/cmake/Modules/FindThreads.cmake",
@@ -532,6 +541,12 @@
 			"MU",
 			"UVLADIE3JM/moc_MainWindow.cpp",
 			null
+		],
+		[
+			"/media/data/programming/pydwarf/cpp_client/src/net/DwarfWebSocketClient.h",
+			"MU",
+			"7OIUYE7PDQ/moc_DwarfWebSocketClient.cpp",
+			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
@@ -544,6 +559,7 @@
 		"QT_MULTIMEDIA_LIB",
 		"QT_NETWORK_LIB",
 		"QT_NO_DEBUG",
+		"QT_WEBSOCKETS_LIB",
 		"QT_WIDGETS_LIB"
 	],
 	"MOC_DEPEND_FILTERS" : 
@@ -564,6 +580,7 @@
 		"/usr/include/qt6/QtGui",
 		"/usr/include/qt6/QtNetwork",
 		"/usr/include/qt6/QtMultimedia",
+		"/usr/include/qt6/QtWebSockets",
 		"/usr/include",
 		"/usr/include/c++/15",
 		"/usr/include/c++/15/x86_64-redhat-linux",
@@ -649,7 +666,12 @@
 			"MU",
 			null
 		],
-		[ "/media/data/programming/pydwarf/cpp_client/src/main.cpp", "MU", null ]
+		[ "/media/data/programming/pydwarf/cpp_client/src/main.cpp", "MU", null ],
+		[
+			"/media/data/programming/pydwarf/cpp_client/src/net/DwarfWebSocketClient.cpp",
+			"MU",
+			null
+		]
 	],
 	"UIC_OPTIONS" : [],
 	"UIC_SEARCH_PATHS" : [],

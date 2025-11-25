@@ -18,6 +18,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/media/data/programming/pydwarf/cpp_client/build/panorama.pb.cc" "CMakeFiles/DwarfController.dir/panorama.pb.cc.o" "gcc" "CMakeFiles/DwarfController.dir/panorama.pb.cc.o.d"
   "/media/data/programming/pydwarf/cpp_client/src/MainWindow.cpp" "CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o.d"
   "/media/data/programming/pydwarf/cpp_client/src/main.cpp" "CMakeFiles/DwarfController.dir/src/main.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/main.cpp.o.d"
+  "/media/data/programming/pydwarf/cpp_client/src/net/DwarfWebSocketClient.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfWebSocketClient.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfWebSocketClient.cpp.o.d"
   "/media/data/programming/pydwarf/cpp_client/build/system.pb.cc" "CMakeFiles/DwarfController.dir/system.pb.cc.o" "gcc" "CMakeFiles/DwarfController.dir/system.pb.cc.o.d"
   "/media/data/programming/pydwarf/cpp_client/build/tracking.pb.cc" "CMakeFiles/DwarfController.dir/tracking.pb.cc.o" "gcc" "CMakeFiles/DwarfController.dir/tracking.pb.cc.o.d"
   "" "DwarfController" "gcc" "CMakeFiles/DwarfController.dir/link.d"

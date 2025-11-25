@@ -371,6 +371,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/net/DwarfWebSocketClient.o: src/net/DwarfWebSocketClient.cpp.o
+.PHONY : src/net/DwarfWebSocketClient.o
+
+# target to build an object file
+src/net/DwarfWebSocketClient.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfWebSocketClient.cpp.o
+.PHONY : src/net/DwarfWebSocketClient.cpp.o
+
+src/net/DwarfWebSocketClient.i: src/net/DwarfWebSocketClient.cpp.i
+.PHONY : src/net/DwarfWebSocketClient.i
+
+# target to preprocess a source file
+src/net/DwarfWebSocketClient.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfWebSocketClient.cpp.i
+.PHONY : src/net/DwarfWebSocketClient.cpp.i
+
+src/net/DwarfWebSocketClient.s: src/net/DwarfWebSocketClient.cpp.s
+.PHONY : src/net/DwarfWebSocketClient.s
+
+# target to generate assembly for a file
+src/net/DwarfWebSocketClient.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfWebSocketClient.cpp.s
+.PHONY : src/net/DwarfWebSocketClient.cpp.s
+
 system.pb.o: system.pb.cc.o
 .PHONY : system.pb.o
 
@@ -457,6 +481,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/net/DwarfWebSocketClient.o"
+	@echo "... src/net/DwarfWebSocketClient.i"
+	@echo "... src/net/DwarfWebSocketClient.s"
 	@echo "... system.pb.o"
 	@echo "... system.pb.i"
 	@echo "... system.pb.s"
