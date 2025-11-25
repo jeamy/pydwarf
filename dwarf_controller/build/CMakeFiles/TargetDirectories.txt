@@ -1,5 +1,0 @@
-/media/data/programming/pydwarf/cpp_client/build/CMakeFiles/DwarfController.dir
-/media/data/programming/pydwarf/cpp_client/build/CMakeFiles/edit_cache.dir
-/media/data/programming/pydwarf/cpp_client/build/CMakeFiles/rebuild_cache.dir
-/media/data/programming/pydwarf/cpp_client/build/CMakeFiles/DwarfController_autogen_timestamp_deps.dir
-/media/data/programming/pydwarf/cpp_client/build/CMakeFiles/DwarfController_autogen.dir
