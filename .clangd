@@ -1,0 +1,25 @@
+CompileFlags:
+  Add:
+    - -std=c++17
+    - -Isrc
+    - -Isrc/net
+    - -Isrc/proto
+    - -Ibuild/src/proto
+    - -Ibuild
+    - -Ibuild/DwarfController_autogen/include
+    - -I/usr/include/qt6
+    - -I/usr/include/qt6/QtCore
+    - -I/usr/include/qt6/QtGui
+    - -I/usr/include/qt6/QtWidgets
+    - -I/usr/include/qt6/QtNetwork
+    - -I/usr/include/qt6/QtMultimedia
+    - -I/usr/include/qt6/QtWebSockets
+    - -DQT_CORE_LIB
+    - -DQT_GUI_LIB
+    - -DQT_WIDGETS_LIB
+    - -DQT_NETWORK_LIB
+    - -DQT_MULTIMEDIA_LIB
+    - -DQT_WEBSOCKETS_LIB
+  Compiler: g++
+  # Optional: set the path to the compile_commands.json if it exists
+  CompilationDatabase: build/compile_commands.json

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package dwarf;
+
+// Normal-Autofokus
+message ReqNormalAutoFocus {
+  uint32 mode = 1;      // 0: Global, 1: Bereich
+  uint32 center_x = 2;  // X-Koordinate (bei Bereich)
+  uint32 center_y = 3;  // Y-Koordinate (bei Bereich)
+}
+
+// Astro-Autofokus
+message ReqAstroAutoFocus {
+  uint32 mode = 1;  // 0: Langsam, 1: Schnell
+}
+
+// Manueller Einzelschritt
+message ReqManualSingleStepFocus {
+  uint32 direction = 1;  // 0: Fern, 1: Nah
+}
+
+// Manueller Dauerfokus starten
+message ReqStartManualContinuFocus {
+  uint32 direction = 1;  // 0: Fern, 1: Nah
+}
+
+// Manueller Dauerfokus stoppen
+message ReqStopManualContinuFocus {
+}
+
+// Astro-Autofokus stoppen
+message ReqStopAstroAutoFocus {
+}

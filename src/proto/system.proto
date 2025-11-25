@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package dwarf;
+
+// Zeit setzen
+message ReqSetTime {
+  uint64 timestamp = 1;  // Unix-Timestamp in Sekunden
+}
+
+// Zeitzone setzen
+message ReqSetTimezone {
+  string timezone = 1;  // z.B. "Europe/Berlin"
+}
+
+// MTP-Modus setzen
+message ReqSetMtpMode {
+  int32 mode = 1;  // Standard: 1 (an)
+}
+
+// CPU-Modus setzen
+message ReqSetCpuMode {
+  int32 mode = 1;  // 0: Normal, 1: Performance
+}
+
+// Host sperren/entsperren
+message ReqsetMasterLock {
+  bool lock = 1;  // true: sperren, false: entsperren
+}
+
+// RGB-Licht einschalten
+message ReqOpenRgb {
+}
+
+// RGB-Licht ausschalten
+message ReqCloseRgb {
+}
+
+// Batterie-Anzeige einschalten
+message ReqOpenPowerInd {
+}
+
+// Batterie-Anzeige ausschalten
+message ReqClosePowerInd {
+}
+
+// Herunterfahren
+message ReqPowerDown {
+}
+
+// Neustart
+message ReqReboot {
+}

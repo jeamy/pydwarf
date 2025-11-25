@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package dwarf;
+
+// Motor bewegen
+message ReqMotorRun {
+  int32 id = 1;                    // 0: Rotation, 1: Pitch
+  double speed = 2;                // Geschwindigkeit
+  bool direction = 3;              // 0: links/unten, 1: rechts/oben
+  int32 speed_ramping = 4;         // Beschleunigung (0-1000)
+  int32 resolution_level = 5;      // Subdivision (0-8)
+}
+
+message ResMotor {
+  int32 id = 1;
+  int32 code = 2;
+}
+
+// Motor stoppen
+message ReqMotorStop {
+  int32 id = 1;  // 0: Rotation, 1: Pitch
+}
+
+// Joystick-Steuerung
+message ReqMotorServiceJoystick {
+  double vector_angle = 1;   // Richtungs-Winkel (0-360°)
+  double vector_length = 2;  // Länge (0-1)
+  double speed = 3;          // Geschwindigkeit (0.1-30 °/s)
+}
+
+// Joystick Fixed Angle
+message ReqMotorServiceJoystickFixedAngle {
+  double vector_angle = 1;
+  double vector_length = 2;
+  double speed = 3;
+}
+
+// Joystick stoppen
+message ReqMotorServiceJoystickStop {
+}
+
+// Dual-Kamera-Linkage
+message ReqDualCameraLinkage {
+  int32 x = 1;
+  int32 y = 2;
+}
