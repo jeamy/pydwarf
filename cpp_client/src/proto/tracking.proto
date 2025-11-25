@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package dwarf;
+
+// Tracking messages
+
+message ReqStartTrack {
+    int32 x = 1;  // x-coordinate of the top-left corner of the target box
+    int32 y = 2;  // y-coordinate of the top-left corner of the target box
+    int32 w = 3;  // Width of the target box
+    int32 h = 4;  // Height of the target box
+}
+
+message ReqStopTrack {
+}
+
+message ReqStartSentryMode {
+    int32 mode = 1;  // Reserved field, can pass 0 for now
+}
+
+message ReqStopSentryMode {
+}
+
+message ReqMOTStart {
+}
+
+message ReqMOTTrackOne {
+    int32 id = 1;
+}
