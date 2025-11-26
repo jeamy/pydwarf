@@ -1,0 +1,41 @@
+/* Global application styles (Qt Style Sheet)
+ * Control Deck / dock panels
+ */
+
+QDockWidget {
+    background-color: #2D2D30;
+}
+
+QDockWidget::title {
+    background-color: #2D2D30;
+    color: #E0E0E0;
+    padding: 4px;
+}
+
+/* Status label styling */
+QLabel#statusLabel {
+    font-weight: bold;
+}
+
+/* Error/cancelled/disconnected states (red) */
+QLabel#statusLabel[status="disconnected"],
+QLabel#statusLabel[status="cancelled"],
+QLabel#statusLabel[status="noDevices"] {
+    color: #FF5555;
+}
+
+/* Warning states (orange) */
+QLabel#statusLabel[status="scanning"],
+QLabel#statusLabel[status="connecting"] {
+    color: #FFA500;
+}
+
+/* OK state (green) */
+QLabel#statusLabel[status="ok"] {
+    color: #55FF55;
+}
+
+/* Critical error state (bright red) */
+QLabel#statusLabel[status="error"] {
+    color: #FF0000;
+}
