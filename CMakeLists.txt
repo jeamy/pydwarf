@@ -66,6 +66,16 @@ add_custom_command(TARGET DwarfController POST_BUILD
           ${I18N_BINARY_DIR}
 )
 
+set(STYLES_SOURCE_DIR ${CMAKE_SOURCE_DIR}/styles)
+set(STYLES_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/styles)
+
+add_custom_command(TARGET DwarfController POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${STYLES_BINARY_DIR}
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+          ${STYLES_SOURCE_DIR}/app.qss
+          ${STYLES_BINARY_DIR}/app.qss
+)
+
 # Qt specific settings
 set_target_properties(DwarfController PROPERTIES
     WIN32_EXECUTABLE ON

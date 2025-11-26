@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QStatusBar>
+#include <QStyle>
 #include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -28,6 +29,15 @@ MainWindow::~MainWindow() {
     m_wsClient->disconnect();
     delete m_wsClient;
   }
+}
+
+void MainWindow::updateStatusStyle(const char *statusKey) {
+  if (!m_statusLabel)
+    return;
+  m_statusLabel->setProperty("status", statusKey);
+  m_statusLabel->style()->unpolish(m_statusLabel);
+  m_statusLabel->style()->polish(m_statusLabel);
+  m_statusLabel->update();
 }
 
 void MainWindow::setupUi() {
@@ -110,8 +120,9 @@ void MainWindow::setupUi() {
 
   // Status Label
   m_statusLabel = new QLabel(tr("Disconnected"), this);
-  m_statusLabel->setStyleSheet("QLabel { color: #FF5555; font-weight: bold; }");
+  m_statusLabel->setObjectName("statusLabel");
   m_statusLabel->setAlignment(Qt::AlignCenter);
+  updateStatusStyle("disconnected");
 
   QWidget *systemMediaTab = new QWidget(this);
   QVBoxLayout *systemMediaLayout = new QVBoxLayout(systemMediaTab);
@@ -125,10 +136,120 @@ void MainWindow::setupUi() {
 
   QWidget *cameraTab = new QWidget(this);
   QVBoxLayout *cameraLayout = new QVBoxLayout(cameraTab);
-  QLabel *cameraControlsLabel =
-      new QLabel(tr("Camera controls (TODO)"), cameraTab);
-  cameraControlsLabel->setAlignment(Qt::AlignCenter);
-  cameraLayout->addWidget(cameraControlsLabel);
+
+  QHBoxLayout *sourceLayout = new QHBoxLayout();
+  QLabel *sourceLabel = new QLabel(tr("Stream source:"), cameraTab);
+  m_teleButton = new QPushButton(tr("TELE"), cameraTab);
+  m_wideButton = new QPushButton(tr("WIDE"), cameraTab);
+  m_teleButton->setCheckable(true);
+  m_wideButton->setCheckable(true);
+  m_teleButton->setChecked(true);
+  sourceLayout->addWidget(sourceLabel);
+  sourceLayout->addWidget(m_teleButton);
+  sourceLayout->addWidget(m_wideButton);
+  sourceLayout->addStretch();
+  connect(m_teleButton, &QPushButton::clicked, this,
+          &MainWindow::onCameraSourceTele);
+  connect(m_wideButton, &QPushButton::clicked, this,
+          &MainWindow::onCameraSourceWide);
+
+  QHBoxLayout *captureLayout = new QHBoxLayout();
+  m_photoButton = new QPushButton(tr("PHOTO"), cameraTab);
+  m_recButton = new QPushButton(tr("REC"), cameraTab);
+  m_photoButton->setMinimumHeight(40);
+  m_recButton->setMinimumHeight(40);
+  captureLayout->addWidget(m_photoButton);
+  captureLayout->addWidget(m_recButton);
+  connect(m_photoButton, &QPushButton::clicked, this,
+          &MainWindow::onCameraPhotoClicked);
+  connect(m_recButton, &QPushButton::clicked, this,
+          &MainWindow::onCameraRecClicked);
+
+  QGroupBox *exposureGroup = new QGroupBox(tr("Exposure"), cameraTab);
+  QGridLayout *exposureLayout = new QGridLayout(exposureGroup);
+  QLabel *modeLabel = new QLabel(tr("Mode:"), exposureGroup);
+  m_exposureModeCombo = new QComboBox(exposureGroup);
+  m_exposureModeCombo->addItem(tr("Auto"));
+  m_exposureModeCombo->addItem(tr("Manual"));
+  connect(m_exposureModeCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
+          this, &MainWindow::onExposureModeChanged);
+
+  QLabel *shutterLabel = new QLabel(tr("Shutter"), exposureGroup);
+  m_shutterSlider = new QSlider(Qt::Horizontal, exposureGroup);
+  m_shutterSlider->setRange(1, 100);
+  connect(m_shutterSlider, &QSlider::valueChanged, this,
+          &MainWindow::onShutterSliderChanged);
+
+  QLabel *gainLabel = new QLabel(tr("Gain"), exposureGroup);
+  m_gainSlider = new QSlider(Qt::Horizontal, exposureGroup);
+  m_gainSlider->setRange(0, 100);
+  connect(m_gainSlider, &QSlider::valueChanged, this,
+          &MainWindow::onGainSliderChanged);
+
+  exposureLayout->addWidget(modeLabel, 0, 0);
+  exposureLayout->addWidget(m_exposureModeCombo, 0, 1);
+  exposureLayout->addWidget(shutterLabel, 1, 0);
+  exposureLayout->addWidget(m_shutterSlider, 1, 1);
+  exposureLayout->addWidget(gainLabel, 2, 0);
+  exposureLayout->addWidget(m_gainSlider, 2, 1);
+  exposureGroup->setLayout(exposureLayout);
+
+  QGroupBox *imageGroup = new QGroupBox(tr("Image parameters"), cameraTab);
+  QGridLayout *imageLayout = new QGridLayout(imageGroup);
+
+  m_irCutCheckBox = new QCheckBox(tr("IR-Cut"), imageGroup);
+  connect(m_irCutCheckBox, &QCheckBox::toggled, this,
+          &MainWindow::onIrCutToggled);
+
+  QLabel *binningLabel = new QLabel(tr("Binning"), imageGroup);
+  m_binningCombo = new QComboBox(imageGroup);
+  m_binningCombo->addItem(tr("4K"));
+  m_binningCombo->addItem(tr("2K"));
+  connect(m_binningCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
+          this, &MainWindow::onBinningChanged);
+
+  QLabel *contrastLabel = new QLabel(tr("Contrast"), imageGroup);
+  m_contrastSlider = new QSlider(Qt::Horizontal, imageGroup);
+  m_contrastSlider->setRange(0, 100);
+  connect(m_contrastSlider, &QSlider::valueChanged, this,
+          &MainWindow::onContrastSliderChanged);
+
+  QLabel *saturationLabel = new QLabel(tr("Saturation"), imageGroup);
+  m_saturationSlider = new QSlider(Qt::Horizontal, imageGroup);
+  m_saturationSlider->setRange(0, 100);
+  connect(m_saturationSlider, &QSlider::valueChanged, this,
+          &MainWindow::onSaturationSliderChanged);
+
+  QLabel *sharpnessLabel = new QLabel(tr("Sharpness"), imageGroup);
+  m_sharpnessSlider = new QSlider(Qt::Horizontal, imageGroup);
+  m_sharpnessSlider->setRange(0, 100);
+  connect(m_sharpnessSlider, &QSlider::valueChanged, this,
+          &MainWindow::onSharpnessSliderChanged);
+
+  QLabel *hueLabel = new QLabel(tr("Hue"), imageGroup);
+  m_hueSlider = new QSlider(Qt::Horizontal, imageGroup);
+  m_hueSlider->setRange(0, 100);
+  connect(m_hueSlider, &QSlider::valueChanged, this,
+          &MainWindow::onHueSliderChanged);
+
+  imageLayout->addWidget(m_irCutCheckBox, 0, 0, 1, 2);
+  imageLayout->addWidget(binningLabel, 1, 0);
+  imageLayout->addWidget(m_binningCombo, 1, 1);
+  imageLayout->addWidget(contrastLabel, 2, 0);
+  imageLayout->addWidget(m_contrastSlider, 2, 1);
+  imageLayout->addWidget(saturationLabel, 3, 0);
+  imageLayout->addWidget(m_saturationSlider, 3, 1);
+  imageLayout->addWidget(sharpnessLabel, 4, 0);
+  imageLayout->addWidget(m_sharpnessSlider, 4, 1);
+  imageLayout->addWidget(hueLabel, 5, 0);
+  imageLayout->addWidget(m_hueSlider, 5, 1);
+  imageGroup->setLayout(imageLayout);
+
+  cameraLayout->addLayout(sourceLayout);
+  cameraLayout->addLayout(captureLayout);
+  cameraLayout->addWidget(exposureGroup);
+  cameraLayout->addWidget(imageGroup);
+  cameraLayout->addStretch();
   cameraTab->setLayout(cameraLayout);
 
   QWidget *astroTab = new QWidget(this);
@@ -149,7 +270,7 @@ void MainWindow::setupUi() {
 
   m_tabWidget->addTab(systemMediaTab, tr("System & Media"));
   m_tabWidget->addTab(motorFocusTab, tr("Motor & Focus"));
-m_tabWidget->addTab(cameraTab, tr("Camera & Capture"));
+  m_tabWidget->addTab(cameraTab, tr("Camera & Capture"));
   m_tabWidget->addTab(astroTab, tr("Astro & Navigation"));
   
   m_tabWidget->setTabPosition(QTabWidget::East);
@@ -178,7 +299,7 @@ void MainWindow::onScanClicked() {
   m_scanButton->setEnabled(false);
   m_cancelScanButton->setEnabled(true);
   m_statusLabel->setText(tr("Scanning %1.0/24...").arg(subnet));
-  m_statusLabel->setStyleSheet("QLabel { color: #FFA500; font-weight: bold; }");
+  updateStatusStyle("scanning");
   m_finder->startScan(subnet);
 }
 
@@ -186,7 +307,7 @@ void MainWindow::onCancelScanClicked() {
   m_finder->stopScan();
   m_scanCancelled = true;
   m_statusLabel->setText(tr("Scan Cancelled"));
-  m_statusLabel->setStyleSheet("QLabel { color: #FF5555; font-weight: bold; }");
+  updateStatusStyle("cancelled");
 }
 
 void MainWindow::onScanProgress(int percent) {
@@ -212,14 +333,12 @@ void MainWindow::onScanFinished() {
     qDebug() << "Scan was cancelled";
   } else if (m_deviceList->count() == 0) {
     m_statusLabel->setText(tr("No devices found"));
-    m_statusLabel->setStyleSheet(
-        "QLabel { color: #FF5555; font-weight: bold; }");
+    updateStatusStyle("noDevices");
     qDebug() << "No devices found";
   } else {
     m_statusLabel->setText(
         tr("Found %1 devices").arg(m_deviceList->count()));
-    m_statusLabel->setStyleSheet(
-        "QLabel { color: #55FF55; font-weight: bold; }");
+    updateStatusStyle("ok");
     qDebug() << "Found" << m_deviceList->count() << "devices";
   }
 }
@@ -246,8 +365,7 @@ void MainWindow::onConnectClicked() {
     m_connectButton->setText(tr("Connect"));
     m_cancelConnectButton->setEnabled(false);
     m_statusLabel->setText(tr("Disconnected"));
-    m_statusLabel->setStyleSheet(
-        "QLabel { color: #FF5555; font-weight: bold; }");
+    updateStatusStyle("disconnected");
     statusBar()->showMessage(tr("Disconnected"));
   } else {
     m_wsClient = new DwarfWebSocketClient(ip, this);
@@ -270,8 +388,7 @@ void MainWindow::onConnectClicked() {
     m_connectButton->setEnabled(false); // Disable connect while connecting
     m_cancelConnectButton->setEnabled(true);
     m_statusLabel->setText(tr("Connecting..."));
-    m_statusLabel->setStyleSheet(
-        "QLabel { color: #FFA500; font-weight: bold; }");
+    updateStatusStyle("connecting");
     statusBar()->showMessage(tr("Connecting to %1").arg(ip));
   }
 }
@@ -290,7 +407,7 @@ void MainWindow::onCancelConnectClicked() {
   m_connectButton->setText(tr("Connect"));
   m_cancelConnectButton->setEnabled(false);
   m_statusLabel->setText(tr("Cancelled"));
-  m_statusLabel->setStyleSheet("QLabel { color: #FF5555; font-weight: bold; }");
+  updateStatusStyle("cancelled");
   statusBar()->showMessage(tr("Connection cancelled"));
 }
 
@@ -310,7 +427,7 @@ void MainWindow::onWebSocketConnected() {
   m_cancelConnectButton->setEnabled(
       false); // Can't cancel if already connected, use Disconnect
   m_statusLabel->setText(tr("Connected"));
-  m_statusLabel->setStyleSheet("QLabel { color: #55FF55; font-weight: bold; }");
+  updateStatusStyle("ok");
   statusBar()->showMessage(tr("Connected to DWARF II"));
 }
 
@@ -319,7 +436,7 @@ void MainWindow::onWebSocketDisconnected() {
   m_connectButton->setText(tr("Connect"));
   m_cancelConnectButton->setEnabled(false);
   m_statusLabel->setText(tr("Disconnected"));
-  m_statusLabel->setStyleSheet("QLabel { color: #FF5555; font-weight: bold; }");
+  updateStatusStyle("disconnected");
   statusBar()->showMessage(tr("Disconnected from DWARF II"));
 }
 
@@ -329,6 +446,58 @@ void MainWindow::onWebSocketError(const QString &error) {
   m_connectButton->setText(tr("Connect"));
   m_cancelConnectButton->setEnabled(false);
   m_statusLabel->setText(tr("Error"));
-  m_statusLabel->setStyleSheet("QLabel { color: #FF0000; font-weight: bold; }");
+  updateStatusStyle("error");
   statusBar()->showMessage(tr("Error: %1").arg(error));
+}
+
+void MainWindow::onCameraSourceTele() {
+  qDebug() << "Camera source set to TELE";
+}
+
+void MainWindow::onCameraSourceWide() {
+  qDebug() << "Camera source set to WIDE";
+}
+
+void MainWindow::onCameraPhotoClicked() {
+  qDebug() << "Camera PHOTO triggered";
+}
+
+void MainWindow::onCameraRecClicked() {
+  qDebug() << "Camera REC triggered";
+}
+
+void MainWindow::onExposureModeChanged(int index) {
+  qDebug() << "Exposure mode changed to" << index;
+}
+
+void MainWindow::onShutterSliderChanged(int value) {
+  qDebug() << "Shutter slider changed to" << value;
+}
+
+void MainWindow::onGainSliderChanged(int value) {
+  qDebug() << "Gain slider changed to" << value;
+}
+
+void MainWindow::onIrCutToggled(bool checked) {
+  qDebug() << "IR-Cut toggled" << checked;
+}
+
+void MainWindow::onBinningChanged(int index) {
+  qDebug() << "Binning changed to" << index;
+}
+
+void MainWindow::onContrastSliderChanged(int value) {
+  qDebug() << "Contrast slider changed to" << value;
+}
+
+void MainWindow::onSaturationSliderChanged(int value) {
+  qDebug() << "Saturation slider changed to" << value;
+}
+
+void MainWindow::onSharpnessSliderChanged(int value) {
+  qDebug() << "Sharpness slider changed to" << value;
+}
+
+void MainWindow::onHueSliderChanged(int value) {
+  qDebug() << "Hue slider changed to" << value;
 }

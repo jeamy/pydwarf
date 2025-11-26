@@ -1,7 +1,9 @@
 #include "MainWindow.h"
 #include <QApplication>
+#include <QFile>
 #include <QLocale>
 #include <QLoggingCategory>
+#include <QTextStream>
 #include <QTranslator>
 #include <iostream>
 
@@ -23,6 +25,13 @@ int main(int argc, char *argv[]) {
     if (translator.load(baseName, i18nDir)) {
       app.installTranslator(&translator);
     }
+  }
+
+  // Load global application style sheet
+  QFile styleFile(QCoreApplication::applicationDirPath() + "/styles/app.qss");
+  if (styleFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    QTextStream in(&styleFile);
+    app.setStyleSheet(in.readAll());
   }
 
   // Apply Dark Theme
