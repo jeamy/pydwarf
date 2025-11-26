@@ -39,6 +39,8 @@ set(SOURCES
     src/net/DwarfHttpClient.h
     src/net/DwarfMessageDispatcher.cpp
     src/net/DwarfMessageDispatcher.h
+    src/net/DwarfCameraController.cpp
+    src/net/DwarfCameraController.h
     ${PROTO_SRCS}
     ${PROTO_HDRS}
 )

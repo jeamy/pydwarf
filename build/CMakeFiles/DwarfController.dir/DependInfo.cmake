@@ -18,6 +18,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/lux/programming/pydwarf/build/panorama.pb.cc" "CMakeFiles/DwarfController.dir/panorama.pb.cc.o" "gcc" "CMakeFiles/DwarfController.dir/panorama.pb.cc.o.d"
   "/home/lux/programming/pydwarf/src/MainWindow.cpp" "CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o.d"
   "/home/lux/programming/pydwarf/src/main.cpp" "CMakeFiles/DwarfController.dir/src/main.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/main.cpp.o.d"
+  "/home/lux/programming/pydwarf/src/net/DwarfCameraController.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfCameraController.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfCameraController.cpp.o.d"
   "/home/lux/programming/pydwarf/src/net/DwarfFinder.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfFinder.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfFinder.cpp.o.d"
   "/home/lux/programming/pydwarf/src/net/DwarfHttpClient.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o.d"
   "/home/lux/programming/pydwarf/src/net/DwarfMessageDispatcher.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfMessageDispatcher.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfMessageDispatcher.cpp.o.d"

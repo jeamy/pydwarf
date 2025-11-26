@@ -16,6 +16,8 @@
 #include <QTabWidget>
 #include <QWidget>
 
+class DwarfCameraController;
+
 class ClickableLabel : public QLabel {
   Q_OBJECT
 
@@ -87,6 +89,7 @@ private:
   DwarfFinder *m_finder;
   bool m_scanCancelled;
   void updateStatusStyle(const char *statusKey);
+  DwarfCameraController *m_cameraController;
 
   enum class CameraStream { Tele, Wide };
 
@@ -109,4 +112,5 @@ private:
   QSlider *m_saturationSlider;
   QSlider *m_sharpnessSlider;
   QSlider *m_hueSlider;
+  bool m_isRecording;
 };

@@ -1,4 +1,6 @@
 #include "MainWindow.h"
+#include "net/DwarfCameraController.h"
+#include "qnamespace.h"
 #include <QDebug>
 #include <QDockWidget>
 #include <QHBoxLayout>
@@ -10,13 +12,15 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), m_wsClient(nullptr), m_dispatcher(nullptr),
-      m_scanCancelled(false) {
+      m_scanCancelled(false), m_cameraController(nullptr),
+      m_isRecording(false) {
   m_mainStreamView = nullptr;
   m_pipStreamView = nullptr;
   m_teleButton = nullptr;
   m_wideButton = nullptr;
   m_mainStream = CameraStream::Tele;
   m_pipStream = CameraStream::Wide;
+  m_cameraController = new DwarfCameraController(this);
   m_finder = new DwarfFinder(this);
   connect(m_finder, &DwarfFinder::deviceFound, this,
           &MainWindow::onDeviceFound);
@@ -91,7 +95,7 @@ void MainWindow::setupUi() {
 
   viewportLayout->addWidget(m_mainStreamView, 0, 0);
   viewportLayout->addWidget(m_pipStreamView, 0, 0,
-                            Qt::AlignTop | Qt::AlignRight);
+                            Qt::AlignTop | Qt::AlignLeft);
   viewportWidget->setLayout(viewportLayout);
   mainLayout->addWidget(viewportWidget);
 
@@ -222,7 +226,7 @@ void MainWindow::setupUi() {
 
   QLabel *gainLabel = new QLabel(tr("Gain"), exposureGroup);
   m_gainSlider = new QSlider(Qt::Horizontal, exposureGroup);
-  m_gainSlider->setRange(0, 100);
+  m_gainSlider->setRange(0, 300);
   connect(m_gainSlider, &QSlider::valueChanged, this,
           &MainWindow::onGainSliderChanged);
 
@@ -409,6 +413,9 @@ void MainWindow::onConnectClicked() {
     m_statusLabel->setText(tr("Disconnected"));
     updateStatusStyle("disconnected");
     statusBar()->showMessage(tr("Disconnected"));
+    if (m_cameraController) {
+      m_cameraController->setClient(nullptr);
+    }
   } else {
     m_wsClient = new DwarfWebSocketClient(ip, this);
 
@@ -425,6 +432,10 @@ void MainWindow::onConnectClicked() {
 
     connect(m_wsClient, &DwarfWebSocketClient::messageReceived, m_dispatcher,
             &DwarfMessageDispatcher::dispatch);
+
+    if (m_cameraController) {
+      m_cameraController->setClient(m_wsClient);
+    }
 
     m_wsClient->connectToDevice();
     m_connectButton->setEnabled(false); // Disable connect while connecting
@@ -505,47 +516,115 @@ void MainWindow::onCameraSourceWide() {
 }
 
 void MainWindow::onCameraPhotoClicked() {
-  qDebug() << "Camera PHOTO triggered";
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->takePhoto(kind);
 }
 
 void MainWindow::onCameraRecClicked() {
-  qDebug() << "Camera REC triggered";
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+
+  if (!m_isRecording) {
+    m_cameraController->startRecord(kind);
+    m_isRecording = true;
+  } else {
+    m_cameraController->stopRecord(kind);
+    m_isRecording = false;
+  }
 }
 
 void MainWindow::onExposureModeChanged(int index) {
-  qDebug() << "Exposure mode changed to" << index;
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->setExposureMode(kind, index);
 }
 
 void MainWindow::onShutterSliderChanged(int value) {
-  qDebug() << "Shutter slider changed to" << value;
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->setExposureIndex(kind, value);
 }
 
 void MainWindow::onGainSliderChanged(int value) {
-  qDebug() << "Gain slider changed to" << value;
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->setGainIndex(kind, value);
 }
 
 void MainWindow::onIrCutToggled(bool checked) {
-  qDebug() << "IR-Cut toggled" << checked;
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->setIrCut(kind, checked ? 1 : 0);
 }
 
 void MainWindow::onBinningChanged(int index) {
-  qDebug() << "Binning changed to" << index;
+  Q_UNUSED(index);
+  // TODO: Map binning to camera parameters when API details are clarified
 }
 
 void MainWindow::onContrastSliderChanged(int value) {
-  qDebug() << "Contrast slider changed to" << value;
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->setContrast(kind, value);
 }
 
 void MainWindow::onSaturationSliderChanged(int value) {
-  qDebug() << "Saturation slider changed to" << value;
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->setSaturation(kind, value);
 }
 
 void MainWindow::onSharpnessSliderChanged(int value) {
-  qDebug() << "Sharpness slider changed to" << value;
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->setSharpness(kind, value);
 }
 
 void MainWindow::onHueSliderChanged(int value) {
-  qDebug() << "Hue slider changed to" << value;
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->setHue(kind, value);
 }
 
 void MainWindow::onPipStreamClicked() {

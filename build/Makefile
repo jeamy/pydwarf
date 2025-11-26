@@ -371,6 +371,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/net/DwarfCameraController.o: src/net/DwarfCameraController.cpp.o
+.PHONY : src/net/DwarfCameraController.o
+
+# target to build an object file
+src/net/DwarfCameraController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfCameraController.cpp.o
+.PHONY : src/net/DwarfCameraController.cpp.o
+
+src/net/DwarfCameraController.i: src/net/DwarfCameraController.cpp.i
+.PHONY : src/net/DwarfCameraController.i
+
+# target to preprocess a source file
+src/net/DwarfCameraController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfCameraController.cpp.i
+.PHONY : src/net/DwarfCameraController.cpp.i
+
+src/net/DwarfCameraController.s: src/net/DwarfCameraController.cpp.s
+.PHONY : src/net/DwarfCameraController.s
+
+# target to generate assembly for a file
+src/net/DwarfCameraController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfCameraController.cpp.s
+.PHONY : src/net/DwarfCameraController.cpp.s
+
 src/net/DwarfFinder.o: src/net/DwarfFinder.cpp.o
 .PHONY : src/net/DwarfFinder.o
 
@@ -577,6 +601,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/net/DwarfCameraController.o"
+	@echo "... src/net/DwarfCameraController.i"
+	@echo "... src/net/DwarfCameraController.s"
 	@echo "... src/net/DwarfFinder.o"
 	@echo "... src/net/DwarfFinder.i"
 	@echo "... src/net/DwarfFinder.s"

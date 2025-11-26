@@ -39,3 +39,20 @@ QLabel#statusLabel[status="ok"] {
 QLabel#statusLabel[status="error"] {
     color: #FF0000;
 }
+
+/* Stream views */
+QLabel#mainStreamView {
+    background-color: #202020;
+    border: 1px solid #444444;
+    color: #CCCCCC;
+}
+
+QLabel#pipStreamView {
+    background-color: #202020;
+    border: 1px solid #666666;
+    color: #CCCCCC;
+}
+
+QLabel#pipStreamView:hover {
+    border-color: #AAAAAA;
+}

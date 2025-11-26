@@ -21,6 +21,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o.d"
   "CMakeFiles/DwarfController.dir/src/main.cpp.o"
   "CMakeFiles/DwarfController.dir/src/main.cpp.o.d"
+  "CMakeFiles/DwarfController.dir/src/net/DwarfCameraController.cpp.o"
+  "CMakeFiles/DwarfController.dir/src/net/DwarfCameraController.cpp.o.d"
   "CMakeFiles/DwarfController.dir/src/net/DwarfFinder.cpp.o"
   "CMakeFiles/DwarfController.dir/src/net/DwarfFinder.cpp.o.d"
   "CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o"
