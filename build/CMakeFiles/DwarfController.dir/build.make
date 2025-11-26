@@ -423,10 +423,11 @@ DwarfController: CMakeFiles/DwarfController.dir/system.pb.cc.o
 DwarfController: CMakeFiles/DwarfController.dir/tracking.pb.cc.o
 DwarfController: CMakeFiles/DwarfController.dir/build.make
 DwarfController: CMakeFiles/DwarfController.dir/compiler_depend.ts
-DwarfController: /usr/lib64/libQt6Widgets.so.6.10.1
-DwarfController: /usr/lib64/libQt6Multimedia.so.6.10.1
+DwarfController: /usr/lib64/libQt6MultimediaWidgets.so.6.10.1
 DwarfController: /usr/lib64/libQt6WebSockets.so.6.10.1
 DwarfController: /usr/lib64/libprotobuf.so
+DwarfController: /usr/lib64/libQt6Widgets.so.6.10.1
+DwarfController: /usr/lib64/libQt6Multimedia.so.6.10.1
 DwarfController: /usr/lib64/libQt6Gui.so.6.10.1
 DwarfController: /usr/lib64/libGLX.so
 DwarfController: /usr/lib64/libOpenGL.so

@@ -11,7 +11,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 # Find Qt6
-find_package(Qt6 REQUIRED COMPONENTS Widgets Network Multimedia WebSockets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Network Multimedia MultimediaWidgets WebSockets)
 
 # Find Protobuf
 find_package(Protobuf REQUIRED)
@@ -53,6 +53,7 @@ target_link_libraries(DwarfController PRIVATE
     Qt6::Widgets
     Qt6::Network
     Qt6::Multimedia
+    Qt6::MultimediaWidgets
     Qt6::WebSockets
     ${Protobuf_LIBRARIES}
 )

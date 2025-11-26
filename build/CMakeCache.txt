@@ -355,6 +355,9 @@ Qt6GuiTools_DIR:PATH=/usr/lib64/cmake/Qt6GuiTools
 //The directory containing a CMake configuration file for Qt6Gui.
 Qt6Gui_DIR:PATH=/usr/lib64/cmake/Qt6Gui
 
+//The directory containing a CMake configuration file for Qt6MultimediaWidgets.
+Qt6MultimediaWidgets_DIR:PATH=/usr/lib64/cmake/Qt6MultimediaWidgets
+
 //The directory containing a CMake configuration file for Qt6Multimedia.
 Qt6Multimedia_DIR:PATH=/usr/lib64/cmake/Qt6Multimedia
 

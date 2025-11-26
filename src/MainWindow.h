@@ -10,10 +10,12 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QMainWindow>
+#include <QMediaPlayer>
 #include <QMouseEvent>
 #include <QPushButton>
 #include <QSlider>
 #include <QTabWidget>
+#include <QVideoWidget>
 #include <QWidget>
 
 class DwarfCameraController;
@@ -71,6 +73,9 @@ private slots:
   void onSaturationSliderChanged(int value);
   void onSharpnessSliderChanged(int value);
   void onHueSliderChanged(int value);
+  void onBrightnessSliderChanged(int value);
+  void onWbModeChanged(int index);
+  void onWbTemperatureChanged(int value);
 
 private:
   void setupUi();
@@ -95,9 +100,14 @@ private:
 
   QLabel *m_mainStreamView;
   ClickableLabel *m_pipStreamView;
+  QVideoWidget *m_mainVideoWidget;
+  QVideoWidget *m_pipVideoWidget;
   CameraStream m_mainStream;
   CameraStream m_pipStream;
   void updateCameraStreamViews();
+  void updateStreamRouting();
+  void startStreaming(const QString &ip);
+  void stopStreaming();
 
   QPushButton *m_teleButton;
   QPushButton *m_wideButton;
@@ -112,5 +122,11 @@ private:
   QSlider *m_saturationSlider;
   QSlider *m_sharpnessSlider;
   QSlider *m_hueSlider;
+  QSlider *m_brightnessSlider;
+  QComboBox *m_wbModeCombo;
+  QSlider *m_wbTemperatureSlider;
   bool m_isRecording;
+
+  QMediaPlayer *m_telePlayer;
+  QMediaPlayer *m_widePlayer;
 };

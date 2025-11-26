@@ -545,6 +545,17 @@
   /usr/include/qt6/QtGui/qvector2d.h \
   /usr/include/qt6/QtGui/qvectornd.h \
   /usr/include/qt6/QtGui/qwindowdefs.h \
+  /usr/include/qt6/QtMultimedia/QMediaPlayer \
+  /usr/include/qt6/QtMultimedia/qaudio.h \
+  /usr/include/qt6/QtMultimedia/qmediaplayer.h \
+  /usr/include/qt6/QtMultimedia/qtaudio.h \
+  /usr/include/qt6/QtMultimedia/qtmultimedia-config.h \
+  /usr/include/qt6/QtMultimedia/qtmultimediaexports.h \
+  /usr/include/qt6/QtMultimedia/qtmultimediaglobal.h \
+  /usr/include/qt6/QtMultimediaWidgets/QVideoWidget \
+  /usr/include/qt6/QtMultimediaWidgets/qtmultimediawidgetsexports.h \
+  /usr/include/qt6/QtMultimediaWidgets/qtmultimediawidgetsglobal.h \
+  /usr/include/qt6/QtMultimediaWidgets/qvideowidget.h \
   /usr/include/qt6/QtNetwork/QAbstractSocket \
   /usr/include/qt6/QtNetwork/QHostAddress \
   /usr/include/qt6/QtNetwork/QNetworkAccessManager \

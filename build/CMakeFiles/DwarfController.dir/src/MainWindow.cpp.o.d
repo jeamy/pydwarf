@@ -481,6 +481,13 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: \
  /usr/include/qt6/QtCore/qitemselectionmodel.h \
  /usr/include/qt6/QtWidgets/QMainWindow \
  /usr/include/qt6/QtWidgets/qmainwindow.h \
+ /usr/include/qt6/QtMultimedia/QMediaPlayer \
+ /usr/include/qt6/QtMultimedia/qmediaplayer.h \
+ /usr/include/qt6/QtMultimedia/qtmultimediaglobal.h \
+ /usr/include/qt6/QtMultimedia/qtmultimedia-config.h \
+ /usr/include/qt6/QtMultimedia/qtmultimediaexports.h \
+ /usr/include/qt6/QtMultimedia/qtaudio.h \
+ /usr/include/qt6/QtMultimedia/qaudio.h \
  /usr/include/qt6/QtGui/QMouseEvent /usr/include/qt6/QtGui/qevent.h \
  /usr/include/qt6/QtCore/qcoreevent.h \
  /usr/include/qt6/QtGui/qeventpoint.h /usr/include/qt6/QtGui/qvector2d.h \
@@ -503,6 +510,10 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: \
  /usr/include/qt6/QtWidgets/QSlider /usr/include/qt6/QtWidgets/qslider.h \
  /usr/include/qt6/QtWidgets/QTabWidget \
  /usr/include/qt6/QtWidgets/qtabwidget.h \
+ /usr/include/qt6/QtMultimediaWidgets/QVideoWidget \
+ /usr/include/qt6/QtMultimediaWidgets/qvideowidget.h \
+ /usr/include/qt6/QtMultimediaWidgets/qtmultimediawidgetsglobal.h \
+ /usr/include/qt6/QtMultimediaWidgets/qtmultimediawidgetsexports.h \
  /usr/include/qt6/QtWidgets/QWidget /usr/include/qt6/QtWidgets/qwidget.h \
  /home/lux/programming/pydwarf/src/net/DwarfCameraController.h \
  /home/lux/programming/pydwarf/build/camera.pb.h \

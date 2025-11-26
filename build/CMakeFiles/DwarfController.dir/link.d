@@ -19,10 +19,11 @@ DwarfController: \
   CMakeFiles/DwarfController.dir/panorama.pb.cc.o \
   CMakeFiles/DwarfController.dir/system.pb.cc.o \
   CMakeFiles/DwarfController.dir/tracking.pb.cc.o \
-  /usr/lib64/libQt6Widgets.so.6.10.1 \
-  /usr/lib64/libQt6Multimedia.so.6.10.1 \
+  /usr/lib64/libQt6MultimediaWidgets.so.6.10.1 \
   /usr/lib64/libQt6WebSockets.so.6.10.1 \
   /usr/lib64/libprotobuf.so \
+  /usr/lib64/libQt6Widgets.so.6.10.1 \
+  /usr/lib64/libQt6Multimedia.so.6.10.1 \
   /usr/lib64/libQt6Gui.so.6.10.1 \
   /usr/lib64/libGLX.so \
   /usr/lib64/libOpenGL.so \
@@ -54,9 +55,9 @@ DwarfController: \
   /usr/lib/gcc/x86_64-redhat-linux/15/libgcc.a \
   /usr/lib/gcc/x86_64-redhat-linux/15/crtend.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/crtn.o \
+  /usr/lib64/libz.so.1 \
   /usr/lib64/libQt6DBus.so.6 \
   /usr/lib64/libpulse.so.0 \
-  /usr/lib64/libz.so.1 \
   /usr/lib64/libEGL.so.1 \
   /usr/lib64/libfontconfig.so.1 \
   /usr/lib64/libX11.so.6 \
@@ -174,13 +175,15 @@ CMakeFiles/DwarfController.dir/system.pb.cc.o:
 
 CMakeFiles/DwarfController.dir/tracking.pb.cc.o:
 
-/usr/lib64/libQt6Widgets.so.6.10.1:
-
-/usr/lib64/libQt6Multimedia.so.6.10.1:
+/usr/lib64/libQt6MultimediaWidgets.so.6.10.1:
 
 /usr/lib64/libQt6WebSockets.so.6.10.1:
 
 /usr/lib64/libprotobuf.so:
+
+/usr/lib64/libQt6Widgets.so.6.10.1:
+
+/usr/lib64/libQt6Multimedia.so.6.10.1:
 
 /usr/lib64/libQt6Gui.so.6.10.1:
 
@@ -244,11 +247,11 @@ CMakeFiles/DwarfController.dir/tracking.pb.cc.o:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/crtn.o:
 
+/usr/lib64/libz.so.1:
+
 /usr/lib64/libQt6DBus.so.6:
 
 /usr/lib64/libpulse.so.0:
-
-/usr/lib64/libz.so.1:
 
 /usr/lib64/libEGL.so.1:
 

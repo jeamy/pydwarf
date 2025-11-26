@@ -13,7 +13,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), m_wsClient(nullptr), m_dispatcher(nullptr),
       m_scanCancelled(false), m_cameraController(nullptr),
-      m_isRecording(false) {
+      m_isRecording(false), m_mainVideoWidget(nullptr),
+      m_pipVideoWidget(nullptr), m_telePlayer(nullptr), m_widePlayer(nullptr) {
   m_mainStreamView = nullptr;
   m_pipStreamView = nullptr;
   m_teleButton = nullptr;
@@ -21,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent)
   m_mainStream = CameraStream::Tele;
   m_pipStream = CameraStream::Wide;
   m_cameraController = new DwarfCameraController(this);
+  m_telePlayer = new QMediaPlayer(this);
+  m_widePlayer = new QMediaPlayer(this);
   m_finder = new DwarfFinder(this);
   connect(m_finder, &DwarfFinder::deviceFound, this,
           &MainWindow::onDeviceFound);
@@ -39,6 +42,8 @@ MainWindow::~MainWindow() {
     m_wsClient->disconnect();
     delete m_wsClient;
   }
+
+  stopStreaming();
 }
 
 void MainWindow::updateStatusStyle(const char *statusKey) {
@@ -68,6 +73,54 @@ void MainWindow::updateCameraStreamViews() {
     m_teleButton->setChecked(mainIsTele);
     m_wideButton->setChecked(!mainIsTele);
   }
+
+  updateStreamRouting();
+}
+
+void MainWindow::updateStreamRouting() {
+  if (!m_telePlayer || !m_widePlayer || !m_mainVideoWidget ||
+      !m_pipVideoWidget)
+    return;
+
+  const bool mainIsTele = (m_mainStream == CameraStream::Tele);
+  if (mainIsTele) {
+    m_telePlayer->setVideoOutput(m_mainVideoWidget);
+    m_widePlayer->setVideoOutput(m_pipVideoWidget);
+  } else {
+    m_telePlayer->setVideoOutput(m_pipVideoWidget);
+    m_widePlayer->setVideoOutput(m_mainVideoWidget);
+  }
+}
+
+void MainWindow::startStreaming(const QString &ip) {
+  if (!m_telePlayer || !m_widePlayer)
+    return;
+
+  // Ensure camera is opened on both Tele and Wide before requesting RTSP
+  if (m_cameraController) {
+    m_cameraController->openCamera(DwarfCameraController::CameraKind::Tele,
+                                   false, 0);
+    m_cameraController->openCamera(DwarfCameraController::CameraKind::Wide,
+                                   true, 0);
+  }
+
+  const QUrl teleUrl(QStringLiteral("rtsp://%1/ch0/stream0").arg(ip));
+  const QUrl wideUrl(QStringLiteral("rtsp://%1/ch1/stream0").arg(ip));
+
+  m_telePlayer->setSource(teleUrl);
+  m_widePlayer->setSource(wideUrl);
+
+  updateStreamRouting();
+
+  m_telePlayer->play();
+  m_widePlayer->play();
+}
+
+void MainWindow::stopStreaming() {
+  if (m_telePlayer)
+    m_telePlayer->stop();
+  if (m_widePlayer)
+    m_widePlayer->stop();
 }
 
 void MainWindow::setupUi() {
@@ -92,6 +145,17 @@ void MainWindow::setupUi() {
   m_pipStreamView = new ClickableLabel(centralWidget);
   m_pipStreamView->setObjectName("pipStreamView");
   m_pipStreamView->setFixedSize(220, 124);
+
+  m_mainVideoWidget = new QVideoWidget(m_mainStreamView);
+  QVBoxLayout *mainVideoLayout = new QVBoxLayout(m_mainStreamView);
+  mainVideoLayout->setContentsMargins(0, 0, 0, 0);
+  mainVideoLayout->addWidget(m_mainVideoWidget);
+
+  m_pipVideoWidget = new QVideoWidget(m_pipStreamView);
+  m_pipVideoWidget->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+  QVBoxLayout *pipVideoLayout = new QVBoxLayout(m_pipStreamView);
+  pipVideoLayout->setContentsMargins(0, 0, 0, 0);
+  pipVideoLayout->addWidget(m_pipVideoWidget);
 
   viewportLayout->addWidget(m_mainStreamView, 0, 0);
   viewportLayout->addWidget(m_pipStreamView, 0, 0,
@@ -252,6 +316,12 @@ void MainWindow::setupUi() {
   connect(m_binningCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
           this, &MainWindow::onBinningChanged);
 
+  QLabel *brightnessLabel = new QLabel(tr("Brightness"), imageGroup);
+  m_brightnessSlider = new QSlider(Qt::Horizontal, imageGroup);
+  m_brightnessSlider->setRange(0, 100);
+  connect(m_brightnessSlider, &QSlider::valueChanged, this,
+          &MainWindow::onBrightnessSliderChanged);
+
   QLabel *contrastLabel = new QLabel(tr("Contrast"), imageGroup);
   m_contrastSlider = new QSlider(Qt::Horizontal, imageGroup);
   m_contrastSlider->setRange(0, 100);
@@ -279,20 +349,45 @@ void MainWindow::setupUi() {
   imageLayout->addWidget(m_irCutCheckBox, 0, 0, 1, 2);
   imageLayout->addWidget(binningLabel, 1, 0);
   imageLayout->addWidget(m_binningCombo, 1, 1);
-  imageLayout->addWidget(contrastLabel, 2, 0);
-  imageLayout->addWidget(m_contrastSlider, 2, 1);
-  imageLayout->addWidget(saturationLabel, 3, 0);
-  imageLayout->addWidget(m_saturationSlider, 3, 1);
-  imageLayout->addWidget(sharpnessLabel, 4, 0);
-  imageLayout->addWidget(m_sharpnessSlider, 4, 1);
-  imageLayout->addWidget(hueLabel, 5, 0);
-  imageLayout->addWidget(m_hueSlider, 5, 1);
+  imageLayout->addWidget(brightnessLabel, 2, 0);
+  imageLayout->addWidget(m_brightnessSlider, 2, 1);
+  imageLayout->addWidget(contrastLabel, 3, 0);
+  imageLayout->addWidget(m_contrastSlider, 3, 1);
+  imageLayout->addWidget(saturationLabel, 4, 0);
+  imageLayout->addWidget(m_saturationSlider, 4, 1);
+  imageLayout->addWidget(sharpnessLabel, 5, 0);
+  imageLayout->addWidget(m_sharpnessSlider, 5, 1);
+  imageLayout->addWidget(hueLabel, 6, 0);
+  imageLayout->addWidget(m_hueSlider, 6, 1);
   imageGroup->setLayout(imageLayout);
+
+  QGroupBox *wbGroup = new QGroupBox(tr("White balance"), cameraTab);
+  QGridLayout *wbLayout = new QGridLayout(wbGroup);
+
+  QLabel *wbModeLabel = new QLabel(tr("Mode:"), wbGroup);
+  m_wbModeCombo = new QComboBox(wbGroup);
+  m_wbModeCombo->addItem(tr("Auto"));
+  m_wbModeCombo->addItem(tr("Manual"));
+  connect(m_wbModeCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
+          this, &MainWindow::onWbModeChanged);
+
+  QLabel *wbTempLabel = new QLabel(tr("Color temperature"), wbGroup);
+  m_wbTemperatureSlider = new QSlider(Qt::Horizontal, wbGroup);
+  m_wbTemperatureSlider->setRange(0, 100);
+  connect(m_wbTemperatureSlider, &QSlider::valueChanged, this,
+          &MainWindow::onWbTemperatureChanged);
+
+  wbLayout->addWidget(wbModeLabel, 0, 0);
+  wbLayout->addWidget(m_wbModeCombo, 0, 1);
+  wbLayout->addWidget(wbTempLabel, 1, 0);
+  wbLayout->addWidget(m_wbTemperatureSlider, 1, 1);
+  wbGroup->setLayout(wbLayout);
 
   cameraLayout->addLayout(sourceLayout);
   cameraLayout->addLayout(captureLayout);
   cameraLayout->addWidget(exposureGroup);
   cameraLayout->addWidget(imageGroup);
+  cameraLayout->addWidget(wbGroup);
   cameraLayout->addStretch();
   cameraTab->setLayout(cameraLayout);
 
@@ -416,6 +511,7 @@ void MainWindow::onConnectClicked() {
     if (m_cameraController) {
       m_cameraController->setClient(nullptr);
     }
+    stopStreaming();
   } else {
     m_wsClient = new DwarfWebSocketClient(ip, this);
 
@@ -436,6 +532,9 @@ void MainWindow::onConnectClicked() {
     if (m_cameraController) {
       m_cameraController->setClient(m_wsClient);
     }
+
+    // Start streaming after WebSocket connection is initiated
+    startStreaming(ip);
 
     m_wsClient->connectToDevice();
     m_connectButton->setEnabled(false); // Disable connect while connecting
@@ -625,6 +724,36 @@ void MainWindow::onHueSliderChanged(int value) {
           ? DwarfCameraController::CameraKind::Tele
           : DwarfCameraController::CameraKind::Wide;
   m_cameraController->setHue(kind, value);
+}
+
+void MainWindow::onBrightnessSliderChanged(int value) {
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->setBrightness(kind, value);
+}
+
+void MainWindow::onWbModeChanged(int index) {
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->setWhiteBalanceMode(kind, index);
+}
+
+void MainWindow::onWbTemperatureChanged(int value) {
+  if (!m_cameraController)
+    return;
+  DwarfCameraController::CameraKind kind =
+      (m_mainStream == CameraStream::Tele)
+          ? DwarfCameraController::CameraKind::Tele
+          : DwarfCameraController::CameraKind::Wide;
+  m_cameraController->setWhiteBalanceByTemperature(kind, value);
 }
 
 void MainWindow::onPipStreamClicked() {
