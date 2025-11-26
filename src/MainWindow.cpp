@@ -11,6 +11,12 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), m_wsClient(nullptr), m_dispatcher(nullptr),
       m_scanCancelled(false) {
+  m_mainStreamView = nullptr;
+  m_pipStreamView = nullptr;
+  m_teleButton = nullptr;
+  m_wideButton = nullptr;
+  m_mainStream = CameraStream::Tele;
+  m_pipStream = CameraStream::Wide;
   m_finder = new DwarfFinder(this);
   connect(m_finder, &DwarfFinder::deviceFound, this,
           &MainWindow::onDeviceFound);
@@ -40,6 +46,26 @@ void MainWindow::updateStatusStyle(const char *statusKey) {
   m_statusLabel->update();
 }
 
+void MainWindow::updateCameraStreamViews() {
+  if (!m_mainStreamView || !m_pipStreamView)
+    return;
+
+  const bool mainIsTele = (m_mainStream == CameraStream::Tele);
+
+  if (mainIsTele) {
+    m_mainStreamView->setText(tr("Live Stream (TELE)"));
+    m_pipStreamView->setText(tr("WIDE"));
+  } else {
+    m_mainStreamView->setText(tr("Live Stream (WIDE)"));
+    m_pipStreamView->setText(tr("TELE"));
+  }
+
+  if (m_teleButton && m_wideButton) {
+    m_teleButton->setChecked(mainIsTele);
+    m_wideButton->setChecked(!mainIsTele);
+  }
+}
+
 void MainWindow::setupUi() {
   setWindowTitle(tr("DWARF II Controller"));
   resize(1280, 720);
@@ -50,13 +76,27 @@ void MainWindow::setupUi() {
 
   QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
 
-  QLabel *viewportLabel = new QLabel(tr("Live Stream Area"), centralWidget);
-  viewportLabel->setAlignment(Qt::AlignCenter);
-  QFont viewportFont = viewportLabel->font();
-  viewportFont.setPointSize(24);
-  viewportLabel->setFont(viewportFont);
-  viewportLabel->setMinimumHeight(400);
-  mainLayout->addWidget(viewportLabel);
+  QWidget *viewportWidget = new QWidget(centralWidget);
+  QGridLayout *viewportLayout = new QGridLayout(viewportWidget);
+  viewportLayout->setContentsMargins(0, 0, 0, 0);
+
+  m_mainStreamView = new QLabel(centralWidget);
+  m_mainStreamView->setObjectName("mainStreamView");
+  m_mainStreamView->setAlignment(Qt::AlignCenter);
+  m_mainStreamView->setMinimumHeight(400);
+
+  m_pipStreamView = new ClickableLabel(centralWidget);
+  m_pipStreamView->setObjectName("pipStreamView");
+  m_pipStreamView->setFixedSize(220, 124);
+
+  viewportLayout->addWidget(m_mainStreamView, 0, 0);
+  viewportLayout->addWidget(m_pipStreamView, 0, 0,
+                            Qt::AlignTop | Qt::AlignRight);
+  viewportWidget->setLayout(viewportLayout);
+  mainLayout->addWidget(viewportWidget);
+
+  connect(m_pipStreamView, &ClickableLabel::clicked, this,
+          &MainWindow::onPipStreamClicked);
 
   // Device List (Hidden by default or shown?)
   // Let's show it always for now, or maybe collapsible.
@@ -251,6 +291,8 @@ void MainWindow::setupUi() {
   cameraLayout->addWidget(imageGroup);
   cameraLayout->addStretch();
   cameraTab->setLayout(cameraLayout);
+
+  updateCameraStreamViews();
 
   QWidget *astroTab = new QWidget(this);
   QVBoxLayout *astroLayout = new QVBoxLayout(astroTab);
@@ -451,11 +493,15 @@ void MainWindow::onWebSocketError(const QString &error) {
 }
 
 void MainWindow::onCameraSourceTele() {
-  qDebug() << "Camera source set to TELE";
+  m_mainStream = CameraStream::Tele;
+  m_pipStream = CameraStream::Wide;
+  updateCameraStreamViews();
 }
 
 void MainWindow::onCameraSourceWide() {
-  qDebug() << "Camera source set to WIDE";
+  m_mainStream = CameraStream::Wide;
+  m_pipStream = CameraStream::Tele;
+  updateCameraStreamViews();
 }
 
 void MainWindow::onCameraPhotoClicked() {
@@ -500,4 +546,9 @@ void MainWindow::onSharpnessSliderChanged(int value) {
 
 void MainWindow::onHueSliderChanged(int value) {
   qDebug() << "Hue slider changed to" << value;
+}
+
+void MainWindow::onPipStreamClicked() {
+  std::swap(m_mainStream, m_pipStream);
+  updateCameraStreamViews();
 }

@@ -423,14 +423,15 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: \
  /usr/include/qt6/QtWebSockets/qwebsocketprotocol.h \
  /home/lux/programming/pydwarf/src/net/DwarfMessageDispatcher.h \
  /usr/include/qt6/QtCore/QByteArray /usr/include/qt6/QtCore/qbytearray.h \
- /usr/include/qt6/QtWidgets/QLabel /usr/include/qt6/QtWidgets/qlabel.h \
+ /usr/include/qt6/QtWidgets/QComboBox \
+ /usr/include/qt6/QtWidgets/qcombobox.h \
  /usr/include/qt6/QtWidgets/qtwidgetsglobal.h \
  /usr/include/qt6/QtGui/qtguiglobal.h \
  /usr/include/qt6/QtGui/qtgui-config.h \
  /usr/include/qt6/QtGui/qtguiexports.h \
  /usr/include/qt6/QtWidgets/qtwidgets-config.h \
  /usr/include/qt6/QtWidgets/qtwidgetsexports.h \
- /usr/include/qt6/QtWidgets/qframe.h /usr/include/qt6/QtWidgets/qwidget.h \
+ /usr/include/qt6/QtWidgets/qwidget.h \
  /usr/include/qt6/QtGui/qwindowdefs.h /usr/include/qt6/QtCore/qmargins.h \
  /usr/include/qt6/QtCore/qcheckedint_impl.h \
  /usr/include/qt6/QtGui/qaction.h /usr/include/qt6/QtGui/qkeysequence.h \
@@ -448,19 +449,6 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: \
  /usr/include/qt6/QtGui/qfontvariableaxis.h \
  /usr/include/qt6/QtWidgets/qsizepolicy.h \
  /usr/include/qt6/QtGui/qcursor.h /usr/include/qt6/QtGui/qbitmap.h \
- /usr/include/qt6/QtGui/qpicture.h /usr/include/qt6/QtGui/qtextdocument.h \
- /usr/include/qt6/QtCore/qurl.h /usr/include/qt6/QtWidgets/QLineEdit \
- /usr/include/qt6/QtWidgets/qlineedit.h \
- /usr/include/qt6/QtGui/qtextcursor.h \
- /usr/include/qt6/QtGui/qtextformat.h /usr/include/qt6/QtGui/qpen.h \
- /usr/include/qt6/QtGui/qtextoption.h \
- /usr/include/qt6/QtWidgets/QListWidget \
- /usr/include/qt6/QtWidgets/qlistwidget.h \
- /usr/include/qt6/QtWidgets/qlistview.h \
- /usr/include/qt6/QtWidgets/qabstractitemview.h \
- /usr/include/qt6/QtWidgets/qabstractscrollarea.h \
- /usr/include/qt6/QtCore/qabstractitemmodel.h \
- /usr/include/qt6/QtCore/qitemselectionmodel.h \
  /usr/include/qt6/QtWidgets/qabstractitemdelegate.h \
  /usr/include/qt6/QtWidgets/qstyleoption.h \
  /usr/include/qt6/QtWidgets/qabstractspinbox.h \
@@ -471,11 +459,31 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: \
  /usr/include/qt6/QtWidgets/qstyle.h /usr/include/qt6/QtWidgets/qtabbar.h \
  /usr/include/qt6/QtWidgets/qtabwidget.h \
  /usr/include/qt6/QtWidgets/qrubberband.h \
+ /usr/include/qt6/QtWidgets/qframe.h \
+ /usr/include/qt6/QtCore/qabstractitemmodel.h \
+ /usr/include/qt6/QtWidgets/QCheckBox \
+ /usr/include/qt6/QtWidgets/qcheckbox.h \
+ /usr/include/qt6/QtWidgets/qabstractbutton.h \
+ /usr/include/qt6/QtWidgets/QGroupBox \
+ /usr/include/qt6/QtWidgets/qgroupbox.h /usr/include/qt6/QtWidgets/QLabel \
+ /usr/include/qt6/QtWidgets/qlabel.h /usr/include/qt6/QtGui/qpicture.h \
+ /usr/include/qt6/QtGui/qtextdocument.h /usr/include/qt6/QtCore/qurl.h \
+ /usr/include/qt6/QtWidgets/QLineEdit \
+ /usr/include/qt6/QtWidgets/qlineedit.h \
+ /usr/include/qt6/QtGui/qtextcursor.h \
+ /usr/include/qt6/QtGui/qtextformat.h /usr/include/qt6/QtGui/qpen.h \
+ /usr/include/qt6/QtGui/qtextoption.h \
+ /usr/include/qt6/QtWidgets/QListWidget \
+ /usr/include/qt6/QtWidgets/qlistwidget.h \
+ /usr/include/qt6/QtWidgets/qlistview.h \
+ /usr/include/qt6/QtWidgets/qabstractitemview.h \
+ /usr/include/qt6/QtWidgets/qabstractscrollarea.h \
+ /usr/include/qt6/QtCore/qitemselectionmodel.h \
  /usr/include/qt6/QtWidgets/QMainWindow \
  /usr/include/qt6/QtWidgets/qmainwindow.h \
  /usr/include/qt6/QtWidgets/QPushButton \
  /usr/include/qt6/QtWidgets/qpushbutton.h \
- /usr/include/qt6/QtWidgets/qabstractbutton.h \
+ /usr/include/qt6/QtWidgets/QSlider /usr/include/qt6/QtWidgets/qslider.h \
  /usr/include/qt6/QtWidgets/QTabWidget \
  /usr/include/qt6/QtWidgets/qtabwidget.h /usr/include/qt6/QtCore/QDebug \
  /usr/include/qt6/QtCore/qdebug.h /usr/include/qt6/QtWidgets/QDockWidget \

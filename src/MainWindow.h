@@ -10,9 +10,30 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QMainWindow>
+#include <QMouseEvent>
 #include <QPushButton>
 #include <QSlider>
 #include <QTabWidget>
+#include <QWidget>
+
+class ClickableLabel : public QLabel {
+  Q_OBJECT
+
+public:
+  explicit ClickableLabel(QWidget *parent = nullptr)
+      : QLabel(parent) {}
+  explicit ClickableLabel(const QString &text, QWidget *parent = nullptr)
+      : QLabel(text, parent) {}
+
+signals:
+  void clicked();
+
+protected:
+  void mousePressEvent(QMouseEvent *event) override {
+    QLabel::mousePressEvent(event);
+    emit clicked();
+  }
+};
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -34,6 +55,7 @@ private slots:
   void onScanFinished();
   void onScanProgress(int percent);
   void onDeviceSelected(QListWidgetItem *item);
+  void onPipStreamClicked();
   void onCameraSourceTele();
   void onCameraSourceWide();
   void onCameraPhotoClicked();
@@ -65,6 +87,14 @@ private:
   DwarfFinder *m_finder;
   bool m_scanCancelled;
   void updateStatusStyle(const char *statusKey);
+
+  enum class CameraStream { Tele, Wide };
+
+  QLabel *m_mainStreamView;
+  ClickableLabel *m_pipStreamView;
+  CameraStream m_mainStream;
+  CameraStream m_pipStream;
+  void updateCameraStreamViews();
 
   QPushButton *m_teleButton;
   QPushButton *m_wideButton;

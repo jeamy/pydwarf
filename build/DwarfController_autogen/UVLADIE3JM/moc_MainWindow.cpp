@@ -60,7 +60,23 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "percent",
         "onDeviceSelected",
         "QListWidgetItem*",
-        "item"
+        "item",
+        "onCameraSourceTele",
+        "onCameraSourceWide",
+        "onCameraPhotoClicked",
+        "onCameraRecClicked",
+        "onExposureModeChanged",
+        "index",
+        "onShutterSliderChanged",
+        "value",
+        "onGainSliderChanged",
+        "onIrCutToggled",
+        "checked",
+        "onBinningChanged",
+        "onContrastSliderChanged",
+        "onSaturationSliderChanged",
+        "onSharpnessSliderChanged",
+        "onHueSliderChanged"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -98,6 +114,50 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         QtMocHelpers::SlotData<void(QListWidgetItem *)>(18, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { 0x80000000 | 19, 20 },
         }}),
+        // Slot 'onCameraSourceTele'
+        QtMocHelpers::SlotData<void()>(21, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onCameraSourceWide'
+        QtMocHelpers::SlotData<void()>(22, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onCameraPhotoClicked'
+        QtMocHelpers::SlotData<void()>(23, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onCameraRecClicked'
+        QtMocHelpers::SlotData<void()>(24, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onExposureModeChanged'
+        QtMocHelpers::SlotData<void(int)>(25, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 26 },
+        }}),
+        // Slot 'onShutterSliderChanged'
+        QtMocHelpers::SlotData<void(int)>(27, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 28 },
+        }}),
+        // Slot 'onGainSliderChanged'
+        QtMocHelpers::SlotData<void(int)>(29, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 28 },
+        }}),
+        // Slot 'onIrCutToggled'
+        QtMocHelpers::SlotData<void(bool)>(30, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Bool, 31 },
+        }}),
+        // Slot 'onBinningChanged'
+        QtMocHelpers::SlotData<void(int)>(32, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 26 },
+        }}),
+        // Slot 'onContrastSliderChanged'
+        QtMocHelpers::SlotData<void(int)>(33, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 28 },
+        }}),
+        // Slot 'onSaturationSliderChanged'
+        QtMocHelpers::SlotData<void(int)>(34, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 28 },
+        }}),
+        // Slot 'onSharpnessSliderChanged'
+        QtMocHelpers::SlotData<void(int)>(35, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 28 },
+        }}),
+        // Slot 'onHueSliderChanged'
+        QtMocHelpers::SlotData<void(int)>(36, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 28 },
+        }}),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -133,6 +193,19 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 9: _t->onScanFinished(); break;
         case 10: _t->onScanProgress((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
         case 11: _t->onDeviceSelected((*reinterpret_cast<std::add_pointer_t<QListWidgetItem*>>(_a[1]))); break;
+        case 12: _t->onCameraSourceTele(); break;
+        case 13: _t->onCameraSourceWide(); break;
+        case 14: _t->onCameraPhotoClicked(); break;
+        case 15: _t->onCameraRecClicked(); break;
+        case 16: _t->onExposureModeChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 17: _t->onShutterSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 18: _t->onGainSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 19: _t->onIrCutToggled((*reinterpret_cast<std::add_pointer_t<bool>>(_a[1]))); break;
+        case 20: _t->onBinningChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 21: _t->onContrastSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 22: _t->onSaturationSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 23: _t->onSharpnessSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 24: _t->onHueSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
         default: ;
         }
     }
@@ -157,14 +230,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 25)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 25;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 25)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 12;
+        _id -= 25;
     }
     return _id;
 }
