@@ -39,6 +39,9 @@ Die Architektur wird analog zur wxWidgets-Studie aufgebaut, jedoch mit Qt-native
     *   Erstellung einer Helper-Klasse `ProtobufHelper` zur Serialisierung/Deserialisierung (Qt `QByteArray` <-> `std::string`).
 3.  **Basis-GUI**:
     *   Erstellung des `MainWindow` mit Platzhaltern für die verschiedenen Module (Tabs).
+4.  **Internationalisierung (i18n)**:
+    *   Alle UI-Texte mit `tr()` markieren.
+    *   Einrichtung von Qt Linguist (`.ts`/`.qm` Dateien) für **Englisch** und **Deutsch**.
 
 ### Phase 2: Netzwerk-Layer (Core) (1-2 Wochen)
 *Ziel: Kommunikation mit dem Teleskop (Senden/Empfangen).*

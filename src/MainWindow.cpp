@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include <QDebug>
+#include <QDockWidget>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMessageBox>
@@ -7,7 +8,8 @@
 #include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), m_wsClient(nullptr), m_dispatcher(nullptr) {
+    : QMainWindow(parent), m_wsClient(nullptr), m_dispatcher(nullptr),
+      m_scanCancelled(false) {
   m_finder = new DwarfFinder(this);
   connect(m_finder, &DwarfFinder::deviceFound, this,
           &MainWindow::onDeviceFound);
@@ -29,7 +31,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::setupUi() {
-  setWindowTitle("DWARF II Controller");
+  setWindowTitle(tr("DWARF II Controller"));
   resize(1280, 720);
 
   // Central Widget
@@ -38,12 +40,28 @@ void MainWindow::setupUi() {
 
   QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
 
+  QLabel *viewportLabel = new QLabel(tr("Live Stream Area"), centralWidget);
+  viewportLabel->setAlignment(Qt::AlignCenter);
+  QFont viewportFont = viewportLabel->font();
+  viewportFont.setPointSize(24);
+  viewportLabel->setFont(viewportFont);
+  viewportLabel->setMinimumHeight(400);
+  mainLayout->addWidget(viewportLabel);
+
+  // Device List (Hidden by default or shown?)
+  // Let's show it always for now, or maybe collapsible.
+  // User wants to see found dwarfs.
+  m_deviceList = new QListWidget(this);
+  m_deviceList->setMaximumHeight(100);
+  connect(m_deviceList, &QListWidget::itemClicked, this,
+          &MainWindow::onDeviceSelected);
+
   // Grid Layout for Controls
   QGridLayout *gridLayout = new QGridLayout();
   gridLayout->setColumnStretch(1, 1); // Make input column stretch
 
   // Row 0: Scan
-  QLabel *subnetLabel = new QLabel("Scan Subnet:", this);
+  QLabel *subnetLabel = new QLabel(tr("Scan Subnet:"), this);
   m_subnetInput = new QLineEdit(this);
   // Pre-fill with detected subnet
   QStringList subnets = m_finder->getLocalSubnets();
@@ -52,15 +70,15 @@ void MainWindow::setupUi() {
   } else {
     m_subnetInput->setText("192.168.88");
   }
-  m_subnetInput->setPlaceholderText("e.g. 192.168.1");
+  m_subnetInput->setPlaceholderText(tr("e.g. 192.168.1"));
   connect(m_subnetInput, &QLineEdit::textChanged, this,
           &MainWindow::onSubnetTextChanged);
 
-  m_scanButton = new QPushButton("Scan", this);
+  m_scanButton = new QPushButton(tr("Scan"), this);
   connect(m_scanButton, &QPushButton::clicked, this,
           &MainWindow::onScanClicked);
 
-  m_cancelScanButton = new QPushButton("Cancel", this);
+  m_cancelScanButton = new QPushButton(tr("Cancel"), this);
   m_cancelScanButton->setEnabled(false);
   connect(m_cancelScanButton, &QPushButton::clicked, this,
           &MainWindow::onCancelScanClicked);
@@ -71,16 +89,16 @@ void MainWindow::setupUi() {
   gridLayout->addWidget(m_cancelScanButton, 0, 3);
 
   // Row 1: Connect
-  QLabel *ipLabel = new QLabel("DWARF II IP:", this);
+  QLabel *ipLabel = new QLabel(tr("DWARF II IP:"), this);
   m_ipInput = new QLineEdit(this);
   m_ipInput->setText("192.168.88.1");
-  m_ipInput->setPlaceholderText("Enter IP address");
+  m_ipInput->setPlaceholderText(tr("Enter IP address"));
 
-  m_connectButton = new QPushButton("Connect", this);
+  m_connectButton = new QPushButton(tr("Connect"), this);
   connect(m_connectButton, &QPushButton::clicked, this,
           &MainWindow::onConnectClicked);
 
-  m_cancelConnectButton = new QPushButton("Cancel", this);
+  m_cancelConnectButton = new QPushButton(tr("Cancel"), this);
   m_cancelConnectButton->setEnabled(false);
   connect(m_cancelConnectButton, &QPushButton::clicked, this,
           &MainWindow::onCancelConnectClicked);
@@ -91,80 +109,90 @@ void MainWindow::setupUi() {
   gridLayout->addWidget(m_cancelConnectButton, 1, 3);
 
   // Status Label
-  m_statusLabel = new QLabel("Disconnected", this);
+  m_statusLabel = new QLabel(tr("Disconnected"), this);
   m_statusLabel->setStyleSheet("QLabel { color: #FF5555; font-weight: bold; }");
   m_statusLabel->setAlignment(Qt::AlignCenter);
 
-  mainLayout->addLayout(gridLayout);
-  mainLayout->addWidget(m_statusLabel);
-
-  // Device List (Hidden by default or shown?)
-  // Let's show it always for now, or maybe collapsible.
-  // User wants to see found dwarfs.
-  m_deviceList = new QListWidget(this);
-  m_deviceList->setMaximumHeight(100);
-  connect(m_deviceList, &QListWidget::itemClicked, this,
-          &MainWindow::onDeviceSelected);
-  mainLayout->addWidget(m_deviceList);
+  QWidget *systemMediaTab = new QWidget(this);
+  QVBoxLayout *systemMediaLayout = new QVBoxLayout(systemMediaTab);
+  systemMediaLayout->addLayout(gridLayout);
+  systemMediaLayout->addWidget(m_statusLabel);
+  systemMediaLayout->addWidget(m_deviceList);
+  systemMediaTab->setLayout(systemMediaLayout);
 
   // Tab widget for modules
   m_tabWidget = new QTabWidget(this);
 
   QWidget *cameraTab = new QWidget(this);
   QVBoxLayout *cameraLayout = new QVBoxLayout(cameraTab);
-  QLabel *placeholderLabel = new QLabel("Live Stream Area", cameraTab);
-  placeholderLabel->setAlignment(Qt::AlignCenter);
-  QFont font = placeholderLabel->font();
-  font.setPointSize(24);
-  placeholderLabel->setFont(font);
-  placeholderLabel->setMinimumHeight(400);
-  cameraLayout->addWidget(placeholderLabel);
+  QLabel *cameraControlsLabel =
+      new QLabel(tr("Camera controls (TODO)"), cameraTab);
+  cameraControlsLabel->setAlignment(Qt::AlignCenter);
+  cameraLayout->addWidget(cameraControlsLabel);
   cameraTab->setLayout(cameraLayout);
 
-  QWidget *motorAstroTab = new QWidget(this);
-  QVBoxLayout *motorAstroLayout = new QVBoxLayout(motorAstroTab);
-  QLabel *motorAstroLabel = new QLabel("Motor & Astro Controls (TODO)", motorAstroTab);
-  motorAstroLabel->setAlignment(Qt::AlignCenter);
-  motorAstroLayout->addWidget(motorAstroLabel);
-  motorAstroTab->setLayout(motorAstroLayout);
+  QWidget *astroTab = new QWidget(this);
+  QVBoxLayout *astroLayout = new QVBoxLayout(astroTab);
+  QLabel *astroLabel =
+      new QLabel(tr("Astro & Navigation (TODO)"), astroTab);
+  astroLabel->setAlignment(Qt::AlignCenter);
+  astroLayout->addWidget(astroLabel);
+  astroTab->setLayout(astroLayout);
 
-  QWidget *mediaTab = new QWidget(this);
-  QVBoxLayout *mediaLayout = new QVBoxLayout(mediaTab);
-  QLabel *mediaLabel = new QLabel("Media Panel (TODO)", mediaTab);
-  mediaLabel->setAlignment(Qt::AlignCenter);
-  mediaLayout->addWidget(mediaLabel);
-  mediaTab->setLayout(mediaLayout);
+  QWidget *motorFocusTab = new QWidget(this);
+  QVBoxLayout *motorFocusLayout = new QVBoxLayout(motorFocusTab);
+  QLabel *motorFocusLabel =
+      new QLabel(tr("Motor & Focus controls (TODO)"), motorFocusTab);
+  motorFocusLabel->setAlignment(Qt::AlignCenter);
+  motorFocusLayout->addWidget(motorFocusLabel);
+  motorFocusTab->setLayout(motorFocusLayout);
 
-  m_tabWidget->addTab(cameraTab, "Camera");
-  m_tabWidget->addTab(motorAstroTab, "Motor & Astro");
-  m_tabWidget->addTab(mediaTab, "Media");
+  m_tabWidget->addTab(systemMediaTab, tr("System & Media"));
+  m_tabWidget->addTab(motorFocusTab, tr("Motor & Focus"));
+m_tabWidget->addTab(cameraTab, tr("Camera & Capture"));
+  m_tabWidget->addTab(astroTab, tr("Astro & Navigation"));
+  
+  m_tabWidget->setTabPosition(QTabWidget::East);
 
-  mainLayout->addWidget(m_tabWidget);
+  QDockWidget *controlDock = new QDockWidget(tr("Control Deck"), this);
+  controlDock->setAllowedAreas(Qt::RightDockWidgetArea);
+  controlDock->setFeatures(static_cast<QDockWidget::DockWidgetFeatures>(
+      QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetMovable |
+      QDockWidget::DockWidgetFloatable));
 
-  statusBar()->showMessage("Ready");
+  QWidget *dockContents = new QWidget(controlDock);
+  QVBoxLayout *dockLayout = new QVBoxLayout(dockContents);
+  dockLayout->addWidget(m_tabWidget);
+  dockContents->setLayout(dockLayout);
+  controlDock->setWidget(dockContents);
+  addDockWidget(Qt::RightDockWidgetArea, controlDock);
+
+  statusBar()->showMessage(tr("Ready"));
 }
 
 void MainWindow::onScanClicked() {
   QString subnet = m_subnetInput->text().trimmed();
   qDebug() << "Scan button clicked, subnet:" << subnet;
+  m_scanCancelled = false;
   m_deviceList->clear();
   m_scanButton->setEnabled(false);
   m_cancelScanButton->setEnabled(true);
-  m_statusLabel->setText(QString("Scanning %1.0/24...").arg(subnet));
+  m_statusLabel->setText(tr("Scanning %1.0/24...").arg(subnet));
   m_statusLabel->setStyleSheet("QLabel { color: #FFA500; font-weight: bold; }");
   m_finder->startScan(subnet);
 }
 
 void MainWindow::onCancelScanClicked() {
   m_finder->stopScan();
-  m_statusLabel->setText("Scan Cancelled");
+  m_scanCancelled = true;
+  m_statusLabel->setText(tr("Scan Cancelled"));
   m_statusLabel->setStyleSheet("QLabel { color: #FF5555; font-weight: bold; }");
 }
 
 void MainWindow::onScanProgress(int percent) {
   QString subnet = m_subnetInput->text().trimmed();
   m_statusLabel->setText(
-      QString("Scanning %1.0/24... %2%").arg(subnet).arg(percent));
+      tr("Scanning %1.0/24... %2%").arg(subnet).arg(percent));
 }
 
 void MainWindow::onDeviceFound(const DwarfDeviceInfo &info) {
@@ -179,17 +207,17 @@ void MainWindow::onScanFinished() {
   m_scanButton->setEnabled(true);
   m_cancelScanButton->setEnabled(false);
 
-  if (m_statusLabel->text() == "Scan Cancelled") {
+  if (m_scanCancelled) {
     // Keep cancelled status
     qDebug() << "Scan was cancelled";
   } else if (m_deviceList->count() == 0) {
-    m_statusLabel->setText("No devices found");
+    m_statusLabel->setText(tr("No devices found"));
     m_statusLabel->setStyleSheet(
         "QLabel { color: #FF5555; font-weight: bold; }");
     qDebug() << "No devices found";
   } else {
     m_statusLabel->setText(
-        QString("Found %1 devices").arg(m_deviceList->count()));
+        tr("Found %1 devices").arg(m_deviceList->count()));
     m_statusLabel->setStyleSheet(
         "QLabel { color: #55FF55; font-weight: bold; }");
     qDebug() << "Found" << m_deviceList->count() << "devices";
@@ -206,7 +234,8 @@ void MainWindow::onConnectClicked() {
   QString ip = m_ipInput->text().trimmed();
 
   if (ip.isEmpty()) {
-    QMessageBox::warning(this, "Error", "Please enter an IP address");
+    QMessageBox::warning(this, tr("Error"),
+                         tr("Please enter an IP address"));
     return;
   }
 
@@ -214,12 +243,12 @@ void MainWindow::onConnectClicked() {
     m_wsClient->disconnect();
     delete m_wsClient;
     m_wsClient = nullptr;
-    m_connectButton->setText("Connect");
+    m_connectButton->setText(tr("Connect"));
     m_cancelConnectButton->setEnabled(false);
-    m_statusLabel->setText("Disconnected");
+    m_statusLabel->setText(tr("Disconnected"));
     m_statusLabel->setStyleSheet(
         "QLabel { color: #FF5555; font-weight: bold; }");
-    statusBar()->showMessage("Disconnected");
+    statusBar()->showMessage(tr("Disconnected"));
   } else {
     m_wsClient = new DwarfWebSocketClient(ip, this);
 
@@ -240,10 +269,10 @@ void MainWindow::onConnectClicked() {
     m_wsClient->connectToDevice();
     m_connectButton->setEnabled(false); // Disable connect while connecting
     m_cancelConnectButton->setEnabled(true);
-    m_statusLabel->setText("Connecting...");
+    m_statusLabel->setText(tr("Connecting..."));
     m_statusLabel->setStyleSheet(
         "QLabel { color: #FFA500; font-weight: bold; }");
-    statusBar()->showMessage("Connecting to " + ip);
+    statusBar()->showMessage(tr("Connecting to %1").arg(ip));
   }
 }
 
@@ -258,11 +287,11 @@ void MainWindow::onCancelConnectClicked() {
   }
 
   m_connectButton->setEnabled(true);
-  m_connectButton->setText("Connect");
+  m_connectButton->setText(tr("Connect"));
   m_cancelConnectButton->setEnabled(false);
-  m_statusLabel->setText("Cancelled");
+  m_statusLabel->setText(tr("Cancelled"));
   m_statusLabel->setStyleSheet("QLabel { color: #FF5555; font-weight: bold; }");
-  statusBar()->showMessage("Connection cancelled");
+  statusBar()->showMessage(tr("Connection cancelled"));
 }
 
 void MainWindow::onSubnetTextChanged(const QString &text) {
@@ -277,29 +306,29 @@ void MainWindow::onSubnetTextChanged(const QString &text) {
 
 void MainWindow::onWebSocketConnected() {
   m_connectButton->setEnabled(true);
-  m_connectButton->setText("Disconnect");
+  m_connectButton->setText(tr("Disconnect"));
   m_cancelConnectButton->setEnabled(
       false); // Can't cancel if already connected, use Disconnect
-  m_statusLabel->setText("Connected");
+  m_statusLabel->setText(tr("Connected"));
   m_statusLabel->setStyleSheet("QLabel { color: #55FF55; font-weight: bold; }");
-  statusBar()->showMessage("Connected to DWARF II");
+  statusBar()->showMessage(tr("Connected to DWARF II"));
 }
 
 void MainWindow::onWebSocketDisconnected() {
   m_connectButton->setEnabled(true);
-  m_connectButton->setText("Connect");
+  m_connectButton->setText(tr("Connect"));
   m_cancelConnectButton->setEnabled(false);
-  m_statusLabel->setText("Disconnected");
+  m_statusLabel->setText(tr("Disconnected"));
   m_statusLabel->setStyleSheet("QLabel { color: #FF5555; font-weight: bold; }");
-  statusBar()->showMessage("Disconnected from DWARF II");
+  statusBar()->showMessage(tr("Disconnected from DWARF II"));
 }
 
 void MainWindow::onWebSocketError(const QString &error) {
-  QMessageBox::critical(this, "Connection Error", error);
+  QMessageBox::critical(this, tr("Connection Error"), error);
   m_connectButton->setEnabled(true);
-  m_connectButton->setText("Connect");
+  m_connectButton->setText(tr("Connect"));
   m_cancelConnectButton->setEnabled(false);
-  m_statusLabel->setText("Error");
+  m_statusLabel->setText(tr("Error"));
   m_statusLabel->setStyleSheet("QLabel { color: #FF0000; font-weight: bold; }");
-  statusBar()->showMessage("Error: " + error);
+  statusBar()->showMessage(tr("Error: %1").arg(error));
 }

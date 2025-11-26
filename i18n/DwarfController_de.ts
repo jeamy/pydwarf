@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="de_DE" sourcelanguage="en_US">
+  <context>
+    <name>MainWindow</name>
+    <message>
+      <source>DWARF II Controller</source>
+      <translation>DWARF II Steuerung</translation>
+    </message>
+    <message>
+      <source>Scan Subnet:</source>
+      <translation>Subnetz scannen:</translation>
+    </message>
+    <message>
+      <source>e.g. 192.168.1</source>
+      <translation>z. B. 192.168.1</translation>
+    </message>
+    <message>
+      <source>Scan</source>
+      <translation>Scannen</translation>
+    </message>
+    <message>
+      <source>Cancel</source>
+      <translation>Abbrechen</translation>
+    </message>
+    <message>
+      <source>DWARF II IP:</source>
+      <translation>DWARF II IP-Adresse:</translation>
+    </message>
+    <message>
+      <source>Enter IP address</source>
+      <translation>IP-Adresse eingeben</translation>
+    </message>
+    <message>
+      <source>Connect</source>
+      <translation>Verbinden</translation>
+    </message>
+    <message>
+      <source>Disconnect</source>
+      <translation>Trennen</translation>
+    </message>
+    <message>
+      <source>Disconnected</source>
+      <translation>Getrennt</translation>
+    </message>
+    <message>
+      <source>Connected</source>
+      <translation>Verbunden</translation>
+    </message>
+    <message>
+      <source>Live Stream Area</source>
+      <translation>Live-Stream-Bereich</translation>
+    </message>
+    <message>
+      <source>Scanning %1.0/24...</source>
+      <translation>Scanne %1.0/24…</translation>
+    </message>
+    <message>
+      <source>Scan Cancelled</source>
+      <translation>Scan abgebrochen</translation>
+    </message>
+    <message>
+      <source>Scanning %1.0/24... %2%</source>
+      <translation>Scanne %1.0/24… %2 %</translation>
+    </message>
+    <message>
+      <source>No devices found</source>
+      <translation>Keine Geräte gefunden</translation>
+    </message>
+    <message>
+      <source>Found %1 devices</source>
+      <translation>%1 Geräte gefunden</translation>
+    </message>
+    <message>
+      <source>Error</source>
+      <translation>Fehler</translation>
+    </message>
+    <message>
+      <source>Connection Error</source>
+      <translation>Verbindungsfehler</translation>
+    </message>
+    <message>
+      <source>Please enter an IP address</source>
+      <translation>Bitte eine IP-Adresse eingeben</translation>
+    </message>
+    <message>
+      <source>Connecting...</source>
+      <translation>Verbindung wird aufgebaut…</translation>
+    </message>
+    <message>
+      <source>Connecting to %1</source>
+      <translation>Verbinde mit %1</translation>
+    </message>
+    <message>
+      <source>Connected to DWARF II</source>
+      <translation>Mit DWARF II verbunden</translation>
+    </message>
+    <message>
+      <source>Disconnected from DWARF II</source>
+      <translation>Verbindung zu DWARF II getrennt</translation>
+    </message>
+    <message>
+      <source>Cancelled</source>
+      <translation>Abgebrochen</translation>
+    </message>
+    <message>
+      <source>Connection cancelled</source>
+      <translation>Verbindung abgebrochen</translation>
+    </message>
+    <message>
+      <source>Error: %1</source>
+      <translation>Fehler: %1</translation>
+    </message>
+    <message>
+      <source>Camera controls (TODO)</source>
+      <translation>Kamerasteuerung (TODO)</translation>
+    </message>
+    <message>
+      <source>Astro &amp; Navigation (TODO)</source>
+      <translation>Astro &amp; Navigation (TODO)</translation>
+    </message>
+    <message>
+      <source>Motor &amp; Focus controls (TODO)</source>
+      <translation>Motor- &amp; Fokus-Steuerung (TODO)</translation>
+    </message>
+    <message>
+      <source>Camera &amp; Capture</source>
+      <translation>Kamera &amp; Aufnahme</translation>
+    </message>
+    <message>
+      <source>Astro &amp; Navigation</source>
+      <translation>Astro &amp; Navigation</translation>
+    </message>
+    <message>
+      <source>Motor &amp; Focus</source>
+      <translation>Motor &amp; Fokus</translation>
+    </message>
+    <message>
+      <source>System &amp; Media</source>
+      <translation>System &amp; Medien</translation>
+    </message>
+    <message>
+      <source>Control Deck</source>
+      <translation>Control Deck</translation>
+    </message>
+    <message>
+      <source>Ready</source>
+      <translation>Bereit</translation>
+    </message>
+  </context>
+</TS>

@@ -55,6 +55,17 @@ target_link_libraries(DwarfController PRIVATE
     ${Protobuf_LIBRARIES}
 )
 
+set(I18N_SOURCE_DIR ${CMAKE_SOURCE_DIR}/i18n)
+set(I18N_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/i18n)
+
+add_custom_command(TARGET DwarfController POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${I18N_BINARY_DIR}
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different
+          ${I18N_SOURCE_DIR}/DwarfController_de.qm
+          ${I18N_SOURCE_DIR}/DwarfController_en.qm
+          ${I18N_BINARY_DIR}
+)
+
 # Qt specific settings
 set_target_properties(DwarfController PROPERTIES
     WIN32_EXECUTABLE ON

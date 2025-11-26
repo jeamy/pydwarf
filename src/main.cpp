@@ -1,6 +1,8 @@
 #include "MainWindow.h"
 #include <QApplication>
+#include <QLocale>
 #include <QLoggingCategory>
+#include <QTranslator>
 #include <iostream>
 
 int main(int argc, char *argv[]) {
@@ -12,6 +14,16 @@ int main(int argc, char *argv[]) {
   fflush(stderr);
 
   QApplication app(argc, argv);
+
+  QTranslator translator;
+  const QString languageCode = QLocale::system().name().left(2);
+  if (languageCode == "de") {
+    const QString baseName = QStringLiteral("DwarfController_de");
+    const QString i18nDir = QCoreApplication::applicationDirPath() + "/i18n";
+    if (translator.load(baseName, i18nDir)) {
+      app.installTranslator(&translator);
+    }
+  }
 
   // Apply Dark Theme
   QPalette darkPalette;

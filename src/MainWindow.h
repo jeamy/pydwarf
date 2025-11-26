@@ -46,4 +46,5 @@ private:
   DwarfWebSocketClient *m_wsClient;
   DwarfMessageDispatcher *m_dispatcher;
   DwarfFinder *m_finder;
+  bool m_scanCancelled;
 };
