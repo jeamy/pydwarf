@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /media/data/programming/pydwarf
+CMAKE_SOURCE_DIR = /home/lux/programming/pydwarf
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /media/data/programming/pydwarf/build
+CMAKE_BINARY_DIR = /home/lux/programming/pydwarf/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /media/data/programming/pydwarf/build/CMakeFiles /media/data/programming/pydwarf/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lux/programming/pydwarf/build/CMakeFiles /home/lux/programming/pydwarf/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /media/data/programming/pydwarf/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lux/programming/pydwarf/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -371,6 +371,78 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/net/DwarfFinder.o: src/net/DwarfFinder.cpp.o
+.PHONY : src/net/DwarfFinder.o
+
+# target to build an object file
+src/net/DwarfFinder.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfFinder.cpp.o
+.PHONY : src/net/DwarfFinder.cpp.o
+
+src/net/DwarfFinder.i: src/net/DwarfFinder.cpp.i
+.PHONY : src/net/DwarfFinder.i
+
+# target to preprocess a source file
+src/net/DwarfFinder.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfFinder.cpp.i
+.PHONY : src/net/DwarfFinder.cpp.i
+
+src/net/DwarfFinder.s: src/net/DwarfFinder.cpp.s
+.PHONY : src/net/DwarfFinder.s
+
+# target to generate assembly for a file
+src/net/DwarfFinder.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfFinder.cpp.s
+.PHONY : src/net/DwarfFinder.cpp.s
+
+src/net/DwarfHttpClient.o: src/net/DwarfHttpClient.cpp.o
+.PHONY : src/net/DwarfHttpClient.o
+
+# target to build an object file
+src/net/DwarfHttpClient.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o
+.PHONY : src/net/DwarfHttpClient.cpp.o
+
+src/net/DwarfHttpClient.i: src/net/DwarfHttpClient.cpp.i
+.PHONY : src/net/DwarfHttpClient.i
+
+# target to preprocess a source file
+src/net/DwarfHttpClient.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.i
+.PHONY : src/net/DwarfHttpClient.cpp.i
+
+src/net/DwarfHttpClient.s: src/net/DwarfHttpClient.cpp.s
+.PHONY : src/net/DwarfHttpClient.s
+
+# target to generate assembly for a file
+src/net/DwarfHttpClient.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.s
+.PHONY : src/net/DwarfHttpClient.cpp.s
+
+src/net/DwarfMessageDispatcher.o: src/net/DwarfMessageDispatcher.cpp.o
+.PHONY : src/net/DwarfMessageDispatcher.o
+
+# target to build an object file
+src/net/DwarfMessageDispatcher.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMessageDispatcher.cpp.o
+.PHONY : src/net/DwarfMessageDispatcher.cpp.o
+
+src/net/DwarfMessageDispatcher.i: src/net/DwarfMessageDispatcher.cpp.i
+.PHONY : src/net/DwarfMessageDispatcher.i
+
+# target to preprocess a source file
+src/net/DwarfMessageDispatcher.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMessageDispatcher.cpp.i
+.PHONY : src/net/DwarfMessageDispatcher.cpp.i
+
+src/net/DwarfMessageDispatcher.s: src/net/DwarfMessageDispatcher.cpp.s
+.PHONY : src/net/DwarfMessageDispatcher.s
+
+# target to generate assembly for a file
+src/net/DwarfMessageDispatcher.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMessageDispatcher.cpp.s
+.PHONY : src/net/DwarfMessageDispatcher.cpp.s
+
 src/net/DwarfWebSocketClient.o: src/net/DwarfWebSocketClient.cpp.o
 .PHONY : src/net/DwarfWebSocketClient.o
 
@@ -394,6 +466,30 @@ src/net/DwarfWebSocketClient.s: src/net/DwarfWebSocketClient.cpp.s
 src/net/DwarfWebSocketClient.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfWebSocketClient.cpp.s
 .PHONY : src/net/DwarfWebSocketClient.cpp.s
+
+src/net/ProtobufHelper.o: src/net/ProtobufHelper.cpp.o
+.PHONY : src/net/ProtobufHelper.o
+
+# target to build an object file
+src/net/ProtobufHelper.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/ProtobufHelper.cpp.o
+.PHONY : src/net/ProtobufHelper.cpp.o
+
+src/net/ProtobufHelper.i: src/net/ProtobufHelper.cpp.i
+.PHONY : src/net/ProtobufHelper.i
+
+# target to preprocess a source file
+src/net/ProtobufHelper.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/ProtobufHelper.cpp.i
+.PHONY : src/net/ProtobufHelper.cpp.i
+
+src/net/ProtobufHelper.s: src/net/ProtobufHelper.cpp.s
+.PHONY : src/net/ProtobufHelper.s
+
+# target to generate assembly for a file
+src/net/ProtobufHelper.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/ProtobufHelper.cpp.s
+.PHONY : src/net/ProtobufHelper.cpp.s
 
 system.pb.o: system.pb.cc.o
 .PHONY : system.pb.o
@@ -481,9 +577,21 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/net/DwarfFinder.o"
+	@echo "... src/net/DwarfFinder.i"
+	@echo "... src/net/DwarfFinder.s"
+	@echo "... src/net/DwarfHttpClient.o"
+	@echo "... src/net/DwarfHttpClient.i"
+	@echo "... src/net/DwarfHttpClient.s"
+	@echo "... src/net/DwarfMessageDispatcher.o"
+	@echo "... src/net/DwarfMessageDispatcher.i"
+	@echo "... src/net/DwarfMessageDispatcher.s"
 	@echo "... src/net/DwarfWebSocketClient.o"
 	@echo "... src/net/DwarfWebSocketClient.i"
 	@echo "... src/net/DwarfWebSocketClient.s"
+	@echo "... src/net/ProtobufHelper.o"
+	@echo "... src/net/ProtobufHelper.i"
+	@echo "... src/net/ProtobufHelper.s"
 	@echo "... system.pb.o"
 	@echo "... system.pb.i"
 	@echo "... system.pb.s"

@@ -1,6 +1,8 @@
-/media/data/programming/pydwarf/build/DwarfController_autogen/UVLADIE3JM/moc_MainWindow.cpp: /media/data/programming/pydwarf/src/MainWindow.h \
-  /media/data/programming/pydwarf/build/DwarfController_autogen/moc_predefs.h \
+/home/lux/programming/pydwarf/build/DwarfController_autogen/UVLADIE3JM/moc_MainWindow.cpp: /home/lux/programming/pydwarf/src/MainWindow.h \
+  /home/lux/programming/pydwarf/build/DwarfController_autogen/moc_predefs.h \
   /media/data/programming/pydwarf/build/base.pb.h \
+  /media/data/programming/pydwarf/src/net/DwarfFinder.h \
+  /media/data/programming/pydwarf/src/net/DwarfMessageDispatcher.h \
   /media/data/programming/pydwarf/src/net/DwarfWebSocketClient.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -127,6 +129,7 @@
   /usr/include/c++/15/bits/localefwd.h \
   /usr/include/c++/15/bits/memory_resource.h \
   /usr/include/c++/15/bits/memoryfwd.h \
+  /usr/include/c++/15/bits/monostate.h \
   /usr/include/c++/15/bits/move.h \
   /usr/include/c++/15/bits/nested_exception.h \
   /usr/include/c++/15/bits/new_allocator.h \
@@ -229,6 +232,8 @@
   /usr/include/c++/15/optional \
   /usr/include/c++/15/ostream \
   /usr/include/c++/15/pstl/execution_defs.h \
+  /usr/include/c++/15/pstl/glue_algorithm_defs.h \
+  /usr/include/c++/15/pstl/glue_memory_defs.h \
   /usr/include/c++/15/pstl/glue_numeric_defs.h \
   /usr/include/c++/15/pstl/pstl_config.h \
   /usr/include/c++/15/ratio \
@@ -333,7 +338,11 @@
   /usr/include/linux/types.h \
   /usr/include/locale.h \
   /usr/include/pthread.h \
+  /usr/include/qt6/QtCore/QByteArray \
   /usr/include/qt6/QtCore/QFlags \
+  /usr/include/qt6/QtCore/QIODevice \
+  /usr/include/qt6/QtCore/QList \
+  /usr/include/qt6/QtCore/QMetaType \
   /usr/include/qt6/QtCore/QObject \
   /usr/include/qt6/QtCore/QSharedDataPointer \
   /usr/include/qt6/QtCore/QString \
@@ -350,6 +359,7 @@
   /usr/include/qt6/QtCore/q23utility.h \
   /usr/include/qt6/QtCore/q26numeric.h \
   /usr/include/qt6/QtCore/qabstracteventdispatcher.h \
+  /usr/include/qt6/QtCore/qabstractitemmodel.h \
   /usr/include/qt6/QtCore/qalgorithms.h \
   /usr/include/qt6/QtCore/qalloc.h \
   /usr/include/qt6/QtCore/qanystringview.h \
@@ -401,6 +411,7 @@
   /usr/include/qt6/QtCore/qhashfunctions.h \
   /usr/include/qt6/QtCore/qiodevice.h \
   /usr/include/qt6/QtCore/qiodevicebase.h \
+  /usr/include/qt6/QtCore/qitemselectionmodel.h \
   /usr/include/qt6/QtCore/qiterable.h \
   /usr/include/qt6/QtCore/qiterator.h \
   /usr/include/qt6/QtCore/qlatin1stringview.h \
@@ -428,6 +439,7 @@
   /usr/include/qt6/QtCore/qprocessordetection.h \
   /usr/include/qt6/QtCore/qrect.h \
   /usr/include/qt6/QtCore/qrefcount.h \
+  /usr/include/qt6/QtCore/qregularexpression.h \
   /usr/include/qt6/QtCore/qscopedpointer.h \
   /usr/include/qt6/QtCore/qscopeguard.h \
   /usr/include/qt6/QtCore/qset.h \
@@ -511,21 +523,30 @@
   /usr/include/qt6/QtGui/qtguiexports.h \
   /usr/include/qt6/QtGui/qtguiglobal.h \
   /usr/include/qt6/QtGui/qtransform.h \
+  /usr/include/qt6/QtGui/qvalidator.h \
   /usr/include/qt6/QtGui/qwindowdefs.h \
   /usr/include/qt6/QtNetwork/QAbstractSocket \
+  /usr/include/qt6/QtNetwork/QHostAddress \
+  /usr/include/qt6/QtNetwork/QNetworkAccessManager \
   /usr/include/qt6/QtNetwork/QNetworkProxy \
+  /usr/include/qt6/QtNetwork/QNetworkReply \
   /usr/include/qt6/QtNetwork/QNetworkRequest \
   /usr/include/qt6/QtNetwork/QSslConfiguration \
   /usr/include/qt6/QtNetwork/QSslError \
+  /usr/include/qt6/QtNetwork/QSslPreSharedKeyAuthenticator \
+  /usr/include/qt6/QtNetwork/QTcpSocket \
   /usr/include/qt6/QtNetwork/qabstractsocket.h \
   /usr/include/qt6/QtNetwork/qhostaddress.h \
   /usr/include/qt6/QtNetwork/qhttpheaders.h \
+  /usr/include/qt6/QtNetwork/qnetworkaccessmanager.h \
   /usr/include/qt6/QtNetwork/qnetworkproxy.h \
+  /usr/include/qt6/QtNetwork/qnetworkreply.h \
   /usr/include/qt6/QtNetwork/qnetworkrequest.h \
   /usr/include/qt6/QtNetwork/qssl.h \
   /usr/include/qt6/QtNetwork/qsslcertificate.h \
   /usr/include/qt6/QtNetwork/qsslconfiguration.h \
   /usr/include/qt6/QtNetwork/qsslerror.h \
+  /usr/include/qt6/QtNetwork/qsslpresharedkeyauthenticator.h \
   /usr/include/qt6/QtNetwork/qsslsocket.h \
   /usr/include/qt6/QtNetwork/qtcpsocket.h \
   /usr/include/qt6/QtNetwork/qtnetwork-config.h \
@@ -538,15 +559,29 @@
   /usr/include/qt6/QtWebSockets/qwebsockets_global.h \
   /usr/include/qt6/QtWidgets/QLabel \
   /usr/include/qt6/QtWidgets/QLineEdit \
+  /usr/include/qt6/QtWidgets/QListWidget \
   /usr/include/qt6/QtWidgets/QMainWindow \
   /usr/include/qt6/QtWidgets/QPushButton \
+  /usr/include/qt6/QtWidgets/QTabWidget \
   /usr/include/qt6/QtWidgets/qabstractbutton.h \
+  /usr/include/qt6/QtWidgets/qabstractitemdelegate.h \
+  /usr/include/qt6/QtWidgets/qabstractitemview.h \
+  /usr/include/qt6/QtWidgets/qabstractscrollarea.h \
+  /usr/include/qt6/QtWidgets/qabstractslider.h \
+  /usr/include/qt6/QtWidgets/qabstractspinbox.h \
   /usr/include/qt6/QtWidgets/qframe.h \
   /usr/include/qt6/QtWidgets/qlabel.h \
   /usr/include/qt6/QtWidgets/qlineedit.h \
+  /usr/include/qt6/QtWidgets/qlistview.h \
+  /usr/include/qt6/QtWidgets/qlistwidget.h \
   /usr/include/qt6/QtWidgets/qmainwindow.h \
   /usr/include/qt6/QtWidgets/qpushbutton.h \
+  /usr/include/qt6/QtWidgets/qrubberband.h \
   /usr/include/qt6/QtWidgets/qsizepolicy.h \
+  /usr/include/qt6/QtWidgets/qslider.h \
+  /usr/include/qt6/QtWidgets/qstyle.h \
+  /usr/include/qt6/QtWidgets/qstyleoption.h \
+  /usr/include/qt6/QtWidgets/qtabbar.h \
   /usr/include/qt6/QtWidgets/qtabwidget.h \
   /usr/include/qt6/QtWidgets/qtwidgets-config.h \
   /usr/include/qt6/QtWidgets/qtwidgetsexports.h \

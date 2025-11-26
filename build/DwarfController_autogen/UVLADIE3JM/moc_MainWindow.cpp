@@ -7,6 +7,7 @@
 *****************************************************************************/
 
 #include "../../../src/MainWindow.h"
+#include <QtNetwork/QSslError>
 #include <QtGui/qtextcursor.h>
 #include <QtCore/qmetatype.h>
 
@@ -42,22 +43,60 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "MainWindow",
         "onConnectClicked",
         "",
+        "onCancelConnectClicked",
+        "onScanClicked",
+        "onCancelScanClicked",
+        "onSubnetTextChanged",
+        "text",
         "onWebSocketConnected",
         "onWebSocketDisconnected",
         "onWebSocketError",
-        "error"
+        "error",
+        "onDeviceFound",
+        "DwarfDeviceInfo",
+        "info",
+        "onScanFinished",
+        "onScanProgress",
+        "percent",
+        "onDeviceSelected",
+        "QListWidgetItem*",
+        "item"
     };
 
     QtMocHelpers::UintData qt_methods {
         // Slot 'onConnectClicked'
         QtMocHelpers::SlotData<void()>(1, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onWebSocketConnected'
+        // Slot 'onCancelConnectClicked'
         QtMocHelpers::SlotData<void()>(3, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onWebSocketDisconnected'
+        // Slot 'onScanClicked'
         QtMocHelpers::SlotData<void()>(4, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onCancelScanClicked'
+        QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onSubnetTextChanged'
+        QtMocHelpers::SlotData<void(const QString &)>(6, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::QString, 7 },
+        }}),
+        // Slot 'onWebSocketConnected'
+        QtMocHelpers::SlotData<void()>(8, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onWebSocketDisconnected'
+        QtMocHelpers::SlotData<void()>(9, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onWebSocketError'
-        QtMocHelpers::SlotData<void(const QString &)>(5, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::QString, 6 },
+        QtMocHelpers::SlotData<void(const QString &)>(10, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::QString, 11 },
+        }}),
+        // Slot 'onDeviceFound'
+        QtMocHelpers::SlotData<void(const DwarfDeviceInfo &)>(12, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 13, 14 },
+        }}),
+        // Slot 'onScanFinished'
+        QtMocHelpers::SlotData<void()>(15, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onScanProgress'
+        QtMocHelpers::SlotData<void(int)>(16, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 17 },
+        }}),
+        // Slot 'onDeviceSelected'
+        QtMocHelpers::SlotData<void(QListWidgetItem *)>(18, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 19, 20 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
@@ -83,9 +122,17 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: _t->onConnectClicked(); break;
-        case 1: _t->onWebSocketConnected(); break;
-        case 2: _t->onWebSocketDisconnected(); break;
-        case 3: _t->onWebSocketError((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 1: _t->onCancelConnectClicked(); break;
+        case 2: _t->onScanClicked(); break;
+        case 3: _t->onCancelScanClicked(); break;
+        case 4: _t->onSubnetTextChanged((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 5: _t->onWebSocketConnected(); break;
+        case 6: _t->onWebSocketDisconnected(); break;
+        case 7: _t->onWebSocketError((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 8: _t->onDeviceFound((*reinterpret_cast<std::add_pointer_t<DwarfDeviceInfo>>(_a[1]))); break;
+        case 9: _t->onScanFinished(); break;
+        case 10: _t->onScanProgress((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 11: _t->onDeviceSelected((*reinterpret_cast<std::add_pointer_t<QListWidgetItem*>>(_a[1]))); break;
         default: ;
         }
     }
@@ -110,14 +157,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 12;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 12)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 4;
+        _id -= 12;
     }
     return _id;
 }

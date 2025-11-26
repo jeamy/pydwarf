@@ -1,4 +1,5 @@
 #include "DwarfWebSocketClient.h"
+#include "ProtobufHelper.h"
 #include <QDebug>
 #include <QUuid>
 
@@ -105,6 +106,5 @@ QByteArray DwarfWebSocketClient::createPacket(uint32_t moduleId, uint32_t cmd,
   packet.set_data(data.data(), data.size());
   packet.set_client_id(m_clientId.toStdString());
 
-  std::string serialized = packet.SerializeAsString();
-  return QByteArray(serialized.data(), serialized.size());
+  return ProtobufHelper::serialize(packet);
 }

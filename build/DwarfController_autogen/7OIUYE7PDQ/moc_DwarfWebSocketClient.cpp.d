@@ -1,5 +1,5 @@
-/media/data/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfWebSocketClient.cpp: /media/data/programming/pydwarf/src/net/DwarfWebSocketClient.h \
-  /media/data/programming/pydwarf/build/DwarfController_autogen/moc_predefs.h \
+/home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfWebSocketClient.cpp: /home/lux/programming/pydwarf/src/net/DwarfWebSocketClient.h \
+  /home/lux/programming/pydwarf/build/DwarfController_autogen/moc_predefs.h \
   /media/data/programming/pydwarf/build/base.pb.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \

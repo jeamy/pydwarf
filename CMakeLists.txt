@@ -31,6 +31,14 @@ set(SOURCES
     src/MainWindow.h
     src/net/DwarfWebSocketClient.cpp
     src/net/DwarfWebSocketClient.h
+    src/net/DwarfFinder.cpp
+    src/net/DwarfFinder.h
+    src/net/ProtobufHelper.cpp
+    src/net/ProtobufHelper.h
+    src/net/DwarfHttpClient.cpp
+    src/net/DwarfHttpClient.h
+    src/net/DwarfMessageDispatcher.cpp
+    src/net/DwarfMessageDispatcher.h
     ${PROTO_SRCS}
     ${PROTO_HDRS}
 )
