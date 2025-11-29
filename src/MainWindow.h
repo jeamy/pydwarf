@@ -19,6 +19,8 @@
 #include <QWidget>
 
 class DwarfCameraController;
+class DwarfMotorController;
+class DwarfFocusController;
 
 class ClickableLabel : public QWidget {
   Q_OBJECT
@@ -63,6 +65,17 @@ private slots:
   void onCameraSourceWide();
   void onCameraPhotoClicked();
   void onCameraRecClicked();
+  void onMotorLeftPressed();
+  void onMotorLeftReleased();
+  void onMotorRightPressed();
+  void onMotorRightReleased();
+  void onMotorUpPressed();
+  void onMotorUpReleased();
+  void onMotorDownPressed();
+  void onMotorDownReleased();
+  void onFocusMinusClicked();
+  void onFocusPlusClicked();
+  void onFocusAutoClicked();
   void onExposureModeChanged(int index);
   void onShutterSliderChanged(int value);
   void onGainSliderChanged(int value);
@@ -94,6 +107,8 @@ private:
   bool m_scanCancelled;
   void updateStatusStyle(const char *statusKey);
   DwarfCameraController *m_cameraController;
+  DwarfMotorController *m_motorController;
+  DwarfFocusController *m_focusController;
 
   enum class CameraStream { Tele, Wide };
 
@@ -123,6 +138,7 @@ private:
   QSlider *m_sharpnessSlider;
   QSlider *m_hueSlider;
   QSlider *m_brightnessSlider;
+  QSlider *m_motorSpeedSlider;
   QComboBox *m_wbModeCombo;
   QSlider *m_wbTemperatureSlider;
   bool m_isRecording;

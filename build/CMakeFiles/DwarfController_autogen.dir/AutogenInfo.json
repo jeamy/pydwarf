@@ -564,6 +564,12 @@
 			null
 		],
 		[
+			"/home/lux/programming/pydwarf/src/net/DwarfFocusController.h",
+			"MU",
+			"7OIUYE7PDQ/moc_DwarfFocusController.cpp",
+			null
+		],
+		[
 			"/home/lux/programming/pydwarf/src/net/DwarfHttpClient.h",
 			"MU",
 			"7OIUYE7PDQ/moc_DwarfHttpClient.cpp",
@@ -573,6 +579,12 @@
 			"/home/lux/programming/pydwarf/src/net/DwarfMessageDispatcher.h",
 			"MU",
 			"7OIUYE7PDQ/moc_DwarfMessageDispatcher.cpp",
+			null
+		],
+		[
+			"/home/lux/programming/pydwarf/src/net/DwarfMotorController.h",
+			"MU",
+			"7OIUYE7PDQ/moc_DwarfMotorController.cpp",
 			null
 		],
 		[
@@ -678,12 +690,22 @@
 		],
 		[ "/home/lux/programming/pydwarf/src/net/DwarfFinder.cpp", "MU", null ],
 		[
+			"/home/lux/programming/pydwarf/src/net/DwarfFocusController.cpp",
+			"MU",
+			null
+		],
+		[
 			"/home/lux/programming/pydwarf/src/net/DwarfHttpClient.cpp",
 			"MU",
 			null
 		],
 		[
 			"/home/lux/programming/pydwarf/src/net/DwarfMessageDispatcher.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/lux/programming/pydwarf/src/net/DwarfMotorController.cpp",
 			"MU",
 			null
 		],

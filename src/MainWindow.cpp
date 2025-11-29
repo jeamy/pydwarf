@@ -1,5 +1,7 @@
 #include "MainWindow.h"
 #include "net/DwarfCameraController.h"
+#include "net/DwarfMotorController.h"
+#include "net/DwarfFocusController.h"
 #include "qnamespace.h"
 #include <QDebug>
 #include <QDockWidget>
@@ -13,7 +15,9 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), m_wsClient(nullptr), m_dispatcher(nullptr),
-      m_scanCancelled(false), m_cameraController(nullptr), m_isRecording(false),
+      m_scanCancelled(false), m_cameraController(nullptr),
+      m_motorController(nullptr), m_focusController(nullptr),
+      m_isRecording(false),
       m_mainVideoWidget(nullptr), m_pipVideoWidget(nullptr),
       m_telePlayer(nullptr), m_widePlayer(nullptr) {
   m_mainStreamView = nullptr;
@@ -23,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
   m_mainStream = CameraStream::Tele;
   m_pipStream = CameraStream::Wide;
   m_cameraController = new DwarfCameraController(this);
+  m_motorController = new DwarfMotorController(this);
+  m_focusController = new DwarfFocusController(this);
   m_telePlayer = new QMediaPlayer(this);
   m_widePlayer = new QMediaPlayer(this);
   m_finder = new DwarfFinder(this);
@@ -446,9 +452,72 @@ void MainWindow::setupUi() {
   QWidget *motorFocusTab = new QWidget(this);
   QVBoxLayout *motorFocusLayout = new QVBoxLayout(motorFocusTab);
   QLabel *motorFocusLabel =
-      new QLabel(tr("Motor & Focus controls (TODO)"), motorFocusTab);
+      new QLabel(tr("Motor & Focus controls"), motorFocusTab);
   motorFocusLabel->setAlignment(Qt::AlignCenter);
   motorFocusLayout->addWidget(motorFocusLabel);
+
+  // Simple D-pad style motor controls
+  QGroupBox *motorGroup = new QGroupBox(tr("Motor"), motorFocusTab);
+  QGridLayout *motorGrid = new QGridLayout(motorGroup);
+
+  QPushButton *btnUp = new QPushButton(tr("\u2191"), motorGroup);
+  QPushButton *btnDown = new QPushButton(tr("\u2193"), motorGroup);
+  QPushButton *btnLeft = new QPushButton(tr("\u2190"), motorGroup);
+  QPushButton *btnRight = new QPushButton(tr("\u2192"), motorGroup);
+
+  motorGrid->addWidget(btnUp, 0, 1);
+  motorGrid->addWidget(btnLeft, 1, 0);
+  motorGrid->addWidget(btnRight, 1, 2);
+  motorGrid->addWidget(btnDown, 2, 1);
+
+  connect(btnLeft, &QPushButton::pressed, this,
+          &MainWindow::onMotorLeftPressed);
+  connect(btnLeft, &QPushButton::released, this,
+          &MainWindow::onMotorLeftReleased);
+  connect(btnRight, &QPushButton::pressed, this,
+          &MainWindow::onMotorRightPressed);
+  connect(btnRight, &QPushButton::released, this,
+          &MainWindow::onMotorRightReleased);
+  connect(btnUp, &QPushButton::pressed, this, &MainWindow::onMotorUpPressed);
+  connect(btnUp, &QPushButton::released, this,
+          &MainWindow::onMotorUpReleased);
+  connect(btnDown, &QPushButton::pressed, this,
+          &MainWindow::onMotorDownPressed);
+  connect(btnDown, &QPushButton::released, this,
+          &MainWindow::onMotorDownReleased);
+
+  motorFocusLayout->addWidget(motorGroup);
+
+  QGroupBox *motorSpeedGroup = new QGroupBox(tr("Motor speed"), motorFocusTab);
+  QHBoxLayout *speedLayout = new QHBoxLayout(motorSpeedGroup);
+  QLabel *speedLabel = new QLabel(tr("Speed"), motorSpeedGroup);
+  m_motorSpeedSlider = new QSlider(Qt::Horizontal, motorSpeedGroup);
+  m_motorSpeedSlider->setRange(1, 30);
+  m_motorSpeedSlider->setValue(5);
+  speedLayout->addWidget(speedLabel);
+  speedLayout->addWidget(m_motorSpeedSlider);
+  motorSpeedGroup->setLayout(speedLayout);
+  motorFocusLayout->addWidget(motorSpeedGroup);
+
+  QGroupBox *focusGroup = new QGroupBox(tr("Focus"), motorFocusTab);
+  QHBoxLayout *focusLayout = new QHBoxLayout(focusGroup);
+  QPushButton *focusMinus = new QPushButton(tr("FOCUS -"), focusGroup);
+  QPushButton *focusPlus = new QPushButton(tr("FOCUS +"), focusGroup);
+  QPushButton *focusAuto = new QPushButton(tr("AUTO"), focusGroup);
+  focusLayout->addWidget(focusMinus);
+  focusLayout->addWidget(focusPlus);
+  focusLayout->addWidget(focusAuto);
+  focusGroup->setLayout(focusLayout);
+  motorFocusLayout->addWidget(focusGroup);
+
+  connect(focusMinus, &QPushButton::clicked, this,
+          &MainWindow::onFocusMinusClicked);
+  connect(focusPlus, &QPushButton::clicked, this,
+          &MainWindow::onFocusPlusClicked);
+  connect(focusAuto, &QPushButton::clicked, this,
+          &MainWindow::onFocusAutoClicked);
+
+  motorFocusLayout->addStretch();
   motorFocusTab->setLayout(motorFocusLayout);
 
   m_tabWidget->addTab(systemMediaTab, tr("System & Media"));
@@ -551,6 +620,12 @@ void MainWindow::onConnectClicked() {
     if (m_cameraController) {
       m_cameraController->setClient(nullptr);
     }
+    if (m_motorController) {
+      m_motorController->setClient(nullptr);
+    }
+    if (m_focusController) {
+      m_focusController->setClient(nullptr);
+    }
     stopStreaming();
   } else {
     m_wsClient = new DwarfWebSocketClient(ip, this);
@@ -571,6 +646,12 @@ void MainWindow::onConnectClicked() {
 
     if (m_cameraController) {
       m_cameraController->setClient(m_wsClient);
+    }
+    if (m_motorController) {
+      m_motorController->setClient(m_wsClient);
+    }
+    if (m_focusController) {
+      m_focusController->setClient(m_wsClient);
     }
 
     m_wsClient->connectToDevice();
@@ -681,6 +762,92 @@ void MainWindow::onCameraRecClicked() {
     m_cameraController->stopRecord(kind);
     m_isRecording = false;
   }
+}
+
+void MainWindow::onMotorLeftPressed() {
+  if (!m_motorController)
+    return;
+  double speed = 5.0;
+  if (m_motorSpeedSlider)
+    speed = m_motorSpeedSlider->value();
+  m_motorController->runMotor(DwarfMotorController::Axis::Altitude, false,
+                              speed);
+}
+
+void MainWindow::onMotorLeftReleased() {
+  if (!m_motorController)
+    return;
+  // Stop horizontal axis (Altitude)
+  m_motorController->stopMotor(DwarfMotorController::Axis::Altitude);
+}
+
+void MainWindow::onMotorRightPressed() {
+  if (!m_motorController)
+    return;
+  double speed = 5.0;
+  if (m_motorSpeedSlider)
+    speed = m_motorSpeedSlider->value();
+  m_motorController->runMotor(DwarfMotorController::Axis::Altitude, true,
+                              speed);
+}
+
+void MainWindow::onMotorRightReleased() {
+  if (!m_motorController)
+    return;
+  // Stop horizontal axis (Altitude)
+  m_motorController->stopMotor(DwarfMotorController::Axis::Altitude);
+}
+
+void MainWindow::onMotorUpPressed() {
+  if (!m_motorController)
+    return;
+  double speed = 5.0;
+  if (m_motorSpeedSlider)
+    speed = m_motorSpeedSlider->value();
+  m_motorController->runMotor(DwarfMotorController::Axis::Azimuth, true,
+                              speed);
+}
+
+void MainWindow::onMotorUpReleased() {
+  if (!m_motorController)
+    return;
+  // Stop Azimuth axis
+  m_motorController->stopMotor(DwarfMotorController::Axis::Azimuth);
+}
+
+void MainWindow::onMotorDownPressed() {
+  if (!m_motorController)
+    return;
+  double speed = 5.0;
+  if (m_motorSpeedSlider)
+    speed = m_motorSpeedSlider->value();
+  m_motorController->runMotor(DwarfMotorController::Axis::Azimuth, false,
+                              speed);
+}
+
+void MainWindow::onFocusMinusClicked() {
+  if (!m_focusController)
+    return;
+  m_focusController->manualStepFar();
+}
+
+void MainWindow::onFocusPlusClicked() {
+  if (!m_focusController)
+    return;
+  m_focusController->manualStepNear();
+}
+
+void MainWindow::onFocusAutoClicked() {
+  if (!m_focusController)
+    return;
+  m_focusController->autoFocusNormal();
+}
+
+void MainWindow::onMotorDownReleased() {
+  if (!m_motorController)
+    return;
+  // Stop Azimuth axis
+  m_motorController->stopMotor(DwarfMotorController::Axis::Azimuth);
 }
 
 void MainWindow::onExposureModeChanged(int index) {

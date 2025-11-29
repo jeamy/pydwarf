@@ -519,6 +519,10 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: \
  /home/lux/programming/pydwarf/build/camera.pb.h \
  /usr/include/google/protobuf/generated_message_bases.h \
  /usr/include/google/protobuf/io/zero_copy_stream_impl.h \
+ /home/lux/programming/pydwarf/src/net/DwarfMotorController.h \
+ /home/lux/programming/pydwarf/build/motor.pb.h \
+ /home/lux/programming/pydwarf/src/net/DwarfFocusController.h \
+ /home/lux/programming/pydwarf/build/focus.pb.h \
  /usr/include/qt6/QtCore/qnamespace.h /usr/include/qt6/QtCore/QDebug \
  /usr/include/qt6/QtCore/qdebug.h /usr/include/qt6/QtWidgets/QDockWidget \
  /usr/include/qt6/QtWidgets/qdockwidget.h \

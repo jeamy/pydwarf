@@ -419,6 +419,30 @@ src/net/DwarfFinder.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfFinder.cpp.s
 .PHONY : src/net/DwarfFinder.cpp.s
 
+src/net/DwarfFocusController.o: src/net/DwarfFocusController.cpp.o
+.PHONY : src/net/DwarfFocusController.o
+
+# target to build an object file
+src/net/DwarfFocusController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfFocusController.cpp.o
+.PHONY : src/net/DwarfFocusController.cpp.o
+
+src/net/DwarfFocusController.i: src/net/DwarfFocusController.cpp.i
+.PHONY : src/net/DwarfFocusController.i
+
+# target to preprocess a source file
+src/net/DwarfFocusController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfFocusController.cpp.i
+.PHONY : src/net/DwarfFocusController.cpp.i
+
+src/net/DwarfFocusController.s: src/net/DwarfFocusController.cpp.s
+.PHONY : src/net/DwarfFocusController.s
+
+# target to generate assembly for a file
+src/net/DwarfFocusController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfFocusController.cpp.s
+.PHONY : src/net/DwarfFocusController.cpp.s
+
 src/net/DwarfHttpClient.o: src/net/DwarfHttpClient.cpp.o
 .PHONY : src/net/DwarfHttpClient.o
 
@@ -466,6 +490,30 @@ src/net/DwarfMessageDispatcher.s: src/net/DwarfMessageDispatcher.cpp.s
 src/net/DwarfMessageDispatcher.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMessageDispatcher.cpp.s
 .PHONY : src/net/DwarfMessageDispatcher.cpp.s
+
+src/net/DwarfMotorController.o: src/net/DwarfMotorController.cpp.o
+.PHONY : src/net/DwarfMotorController.o
+
+# target to build an object file
+src/net/DwarfMotorController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMotorController.cpp.o
+.PHONY : src/net/DwarfMotorController.cpp.o
+
+src/net/DwarfMotorController.i: src/net/DwarfMotorController.cpp.i
+.PHONY : src/net/DwarfMotorController.i
+
+# target to preprocess a source file
+src/net/DwarfMotorController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMotorController.cpp.i
+.PHONY : src/net/DwarfMotorController.cpp.i
+
+src/net/DwarfMotorController.s: src/net/DwarfMotorController.cpp.s
+.PHONY : src/net/DwarfMotorController.s
+
+# target to generate assembly for a file
+src/net/DwarfMotorController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMotorController.cpp.s
+.PHONY : src/net/DwarfMotorController.cpp.s
 
 src/net/DwarfWebSocketClient.o: src/net/DwarfWebSocketClient.cpp.o
 .PHONY : src/net/DwarfWebSocketClient.o
@@ -607,12 +655,18 @@ help:
 	@echo "... src/net/DwarfFinder.o"
 	@echo "... src/net/DwarfFinder.i"
 	@echo "... src/net/DwarfFinder.s"
+	@echo "... src/net/DwarfFocusController.o"
+	@echo "... src/net/DwarfFocusController.i"
+	@echo "... src/net/DwarfFocusController.s"
 	@echo "... src/net/DwarfHttpClient.o"
 	@echo "... src/net/DwarfHttpClient.i"
 	@echo "... src/net/DwarfHttpClient.s"
 	@echo "... src/net/DwarfMessageDispatcher.o"
 	@echo "... src/net/DwarfMessageDispatcher.i"
 	@echo "... src/net/DwarfMessageDispatcher.s"
+	@echo "... src/net/DwarfMotorController.o"
+	@echo "... src/net/DwarfMotorController.i"
+	@echo "... src/net/DwarfMotorController.s"
 	@echo "... src/net/DwarfWebSocketClient.o"
 	@echo "... src/net/DwarfWebSocketClient.i"
 	@echo "... src/net/DwarfWebSocketClient.s"

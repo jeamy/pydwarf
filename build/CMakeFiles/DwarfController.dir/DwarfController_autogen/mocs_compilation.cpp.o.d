@@ -525,10 +525,16 @@ CMakeFiles/DwarfController.dir/DwarfController_autogen/mocs_compilation.cpp.o: \
  /usr/include/google/protobuf/generated_message_bases.h \
  /usr/include/google/protobuf/io/zero_copy_stream_impl.h \
  /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfFinder.cpp \
+ /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfFocusController.cpp \
+ /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/../../../src/net/DwarfFocusController.h \
+ /home/lux/programming/pydwarf/build/focus.pb.h \
  /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfHttpClient.cpp \
  /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/../../../src/net/DwarfHttpClient.h \
  /usr/include/qt6/QtCore/QJsonDocument \
  /usr/include/qt6/QtCore/qjsondocument.h \
  /usr/include/qt6/QtCore/qjsonparseerror.h \
  /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMessageDispatcher.cpp \
+ /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMotorController.cpp \
+ /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/../../../src/net/DwarfMotorController.h \
+ /home/lux/programming/pydwarf/build/motor.pb.h \
  /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfWebSocketClient.cpp
