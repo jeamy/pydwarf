@@ -3766,6 +3766,7 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /home/lux/programming/pydwarf/src/net/DwarfCameraController.h \
   /home/lux/programming/pydwarf/src/net/DwarfFinder.h \
   /home/lux/programming/pydwarf/src/net/DwarfFocusController.h \
+  /home/lux/programming/pydwarf/src/net/DwarfHttpClient.h \
   /home/lux/programming/pydwarf/src/net/DwarfMessageDispatcher.h \
   /home/lux/programming/pydwarf/src/net/DwarfMjpegStream.h \
   /home/lux/programming/pydwarf/src/net/DwarfMjpegView.h \
@@ -3881,6 +3882,7 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/c++/15/bits/char_traits.h \
   /usr/include/c++/15/bits/charconv.h \
   /usr/include/c++/15/bits/chrono.h \
+  /usr/include/c++/15/bits/codecvt.h \
   /usr/include/c++/15/bits/concept_check.h \
   /usr/include/c++/15/bits/cpp_type_traits.h \
   /usr/include/c++/15/bits/cxxabi_forced.h \
@@ -3890,6 +3892,10 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/c++/15/bits/exception.h \
   /usr/include/c++/15/bits/exception_defines.h \
   /usr/include/c++/15/bits/exception_ptr.h \
+  /usr/include/c++/15/bits/fs_dir.h \
+  /usr/include/c++/15/bits/fs_fwd.h \
+  /usr/include/c++/15/bits/fs_ops.h \
+  /usr/include/c++/15/bits/fs_path.h \
   /usr/include/c++/15/bits/functexcept.h \
   /usr/include/c++/15/bits/functional_hash.h \
   /usr/include/c++/15/bits/hash_bytes.h \
@@ -3901,8 +3907,11 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/c++/15/bits/list.tcc \
   /usr/include/c++/15/bits/locale_classes.h \
   /usr/include/c++/15/bits/locale_classes.tcc \
+  /usr/include/c++/15/bits/locale_conv.h \
   /usr/include/c++/15/bits/locale_facets.h \
   /usr/include/c++/15/bits/locale_facets.tcc \
+  /usr/include/c++/15/bits/locale_facets_nonio.h \
+  /usr/include/c++/15/bits/locale_facets_nonio.tcc \
   /usr/include/c++/15/bits/localefwd.h \
   /usr/include/c++/15/bits/memory_resource.h \
   /usr/include/c++/15/bits/memoryfwd.h \
@@ -3918,6 +3927,7 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/c++/15/bits/postypes.h \
   /usr/include/c++/15/bits/predefined_ops.h \
   /usr/include/c++/15/bits/ptr_traits.h \
+  /usr/include/c++/15/bits/quoted_string.h \
   /usr/include/c++/15/bits/range_access.h \
   /usr/include/c++/15/bits/refwrap.h \
   /usr/include/c++/15/bits/requires_hosted.h \
@@ -3925,6 +3935,7 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/c++/15/bits/shared_ptr_atomic.h \
   /usr/include/c++/15/bits/shared_ptr_base.h \
   /usr/include/c++/15/bits/specfun.h \
+  /usr/include/c++/15/bits/sstream.tcc \
   /usr/include/c++/15/bits/std_abs.h \
   /usr/include/c++/15/bits/std_function.h \
   /usr/include/c++/15/bits/std_mutex.h \
@@ -3972,6 +3983,7 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/c++/15/climits \
   /usr/include/c++/15/clocale \
   /usr/include/c++/15/cmath \
+  /usr/include/c++/15/codecvt \
   /usr/include/c++/15/compare \
   /usr/include/c++/15/concepts \
   /usr/include/c++/15/cstddef \
@@ -3992,8 +4004,10 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/c++/15/ext/numeric_traits.h \
   /usr/include/c++/15/ext/string_conversions.h \
   /usr/include/c++/15/ext/type_traits.h \
+  /usr/include/c++/15/filesystem \
   /usr/include/c++/15/functional \
   /usr/include/c++/15/initializer_list \
+  /usr/include/c++/15/iomanip \
   /usr/include/c++/15/ios \
   /usr/include/c++/15/iosfwd \
   /usr/include/c++/15/iostream \
@@ -4001,6 +4015,7 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/c++/15/iterator \
   /usr/include/c++/15/limits \
   /usr/include/c++/15/list \
+  /usr/include/c++/15/locale \
   /usr/include/c++/15/map \
   /usr/include/c++/15/memory \
   /usr/include/c++/15/mutex \
@@ -4015,6 +4030,7 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/c++/15/pstl/pstl_config.h \
   /usr/include/c++/15/ratio \
   /usr/include/c++/15/set \
+  /usr/include/c++/15/sstream \
   /usr/include/c++/15/stdexcept \
   /usr/include/c++/15/stdlib.h \
   /usr/include/c++/15/streambuf \
@@ -4052,7 +4068,9 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/c++/15/x86_64-redhat-linux/bits/error_constants.h \
   /usr/include/c++/15/x86_64-redhat-linux/bits/gthr-default.h \
   /usr/include/c++/15/x86_64-redhat-linux/bits/gthr.h \
+  /usr/include/c++/15/x86_64-redhat-linux/bits/messages_members.h \
   /usr/include/c++/15/x86_64-redhat-linux/bits/os_defines.h \
+  /usr/include/c++/15/x86_64-redhat-linux/bits/time_members.h \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -4109,6 +4127,7 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/google/protobuf/stubs/strutil.h \
   /usr/include/google/protobuf/unknown_field_set.h \
   /usr/include/google/protobuf/wire_format_lite.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
@@ -4121,8 +4140,12 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/pthread.h \
   /usr/include/qt6/QtCore/QByteArray \
   /usr/include/qt6/QtCore/QDebug \
+  /usr/include/qt6/QtCore/QFileInfo \
   /usr/include/qt6/QtCore/QFlags \
   /usr/include/qt6/QtCore/QIODevice \
+  /usr/include/qt6/QtCore/QJsonArray \
+  /usr/include/qt6/QtCore/QJsonDocument \
+  /usr/include/qt6/QtCore/QJsonObject \
   /usr/include/qt6/QtCore/QList \
   /usr/include/qt6/QtCore/QMetaType \
   /usr/include/qt6/QtCore/QObject \
@@ -4162,6 +4185,8 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/qt6/QtCore/qbytearraylist.h \
   /usr/include/qt6/QtCore/qbytearrayview.h \
   /usr/include/qt6/QtCore/qcalendar.h \
+  /usr/include/qt6/QtCore/qcborcommon.h \
+  /usr/include/qt6/QtCore/qcborvalue.h \
   /usr/include/qt6/QtCore/qchar.h \
   /usr/include/qt6/QtCore/qcheckedint_impl.h \
   /usr/include/qt6/QtCore/qcompare.h \
@@ -4187,6 +4212,9 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/qt6/QtCore/qendian.h \
   /usr/include/qt6/QtCore/qeventloop.h \
   /usr/include/qt6/QtCore/qexceptionhandling.h \
+  /usr/include/qt6/QtCore/qfile.h \
+  /usr/include/qt6/QtCore/qfiledevice.h \
+  /usr/include/qt6/QtCore/qfileinfo.h \
   /usr/include/qt6/QtCore/qflags.h \
   /usr/include/qt6/QtCore/qfloat16.h \
   /usr/include/qt6/QtCore/qforeach.h \
@@ -4202,6 +4230,11 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/qt6/QtCore/qitemselectionmodel.h \
   /usr/include/qt6/QtCore/qiterable.h \
   /usr/include/qt6/QtCore/qiterator.h \
+  /usr/include/qt6/QtCore/qjsonarray.h \
+  /usr/include/qt6/QtCore/qjsondocument.h \
+  /usr/include/qt6/QtCore/qjsonobject.h \
+  /usr/include/qt6/QtCore/qjsonparseerror.h \
+  /usr/include/qt6/QtCore/qjsonvalue.h \
   /usr/include/qt6/QtCore/qlatin1stringview.h \
   /usr/include/qt6/QtCore/qline.h \
   /usr/include/qt6/QtCore/qlist.h \
@@ -4265,6 +4298,7 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/qt6/QtCore/qtextstream.h \
   /usr/include/qt6/QtCore/qtformat_impl.h \
   /usr/include/qt6/QtCore/qtimer.h \
+  /usr/include/qt6/QtCore/qtimezone.h \
   /usr/include/qt6/QtCore/qtmetamacros.h \
   /usr/include/qt6/QtCore/qtnoop.h \
   /usr/include/qt6/QtCore/qtpreprocessorsupport.h \
@@ -4277,6 +4311,7 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: /home/lux/programming/pydwa
   /usr/include/qt6/QtCore/qtypes.h \
   /usr/include/qt6/QtCore/qurl.h \
   /usr/include/qt6/QtCore/qutf8stringview.h \
+  /usr/include/qt6/QtCore/quuid.h \
   /usr/include/qt6/QtCore/qvariant.h \
   /usr/include/qt6/QtCore/qvarlengtharray.h \
   /usr/include/qt6/QtCore/qversiontagging.h \
@@ -6987,6 +7022,7 @@ CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o: /home/lux/programm
   /usr/include/qt6/QtCore/QFlags \
   /usr/include/qt6/QtCore/QIODevice \
   /usr/include/qt6/QtCore/QJsonDocument \
+  /usr/include/qt6/QtCore/QJsonObject \
   /usr/include/qt6/QtCore/QList \
   /usr/include/qt6/QtCore/QMetaType \
   /usr/include/qt6/QtCore/QObject \
@@ -7019,6 +7055,8 @@ CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o: /home/lux/programm
   /usr/include/qt6/QtCore/qbytearraylist.h \
   /usr/include/qt6/QtCore/qbytearrayview.h \
   /usr/include/qt6/QtCore/qcalendar.h \
+  /usr/include/qt6/QtCore/qcborcommon.h \
+  /usr/include/qt6/QtCore/qcborvalue.h \
   /usr/include/qt6/QtCore/qchar.h \
   /usr/include/qt6/QtCore/qcompare.h \
   /usr/include/qt6/QtCore/qcompare_impl.h \
@@ -7036,6 +7074,7 @@ CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o: /home/lux/programm
   /usr/include/qt6/QtCore/qdatastream.h \
   /usr/include/qt6/QtCore/qdatetime.h \
   /usr/include/qt6/QtCore/qdebug.h \
+  /usr/include/qt6/QtCore/qendian.h \
   /usr/include/qt6/QtCore/qexceptionhandling.h \
   /usr/include/qt6/QtCore/qflags.h \
   /usr/include/qt6/QtCore/qfloat16.h \
@@ -7052,7 +7091,9 @@ CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o: /home/lux/programm
   /usr/include/qt6/QtCore/qiterable.h \
   /usr/include/qt6/QtCore/qiterator.h \
   /usr/include/qt6/QtCore/qjsondocument.h \
+  /usr/include/qt6/QtCore/qjsonobject.h \
   /usr/include/qt6/QtCore/qjsonparseerror.h \
+  /usr/include/qt6/QtCore/qjsonvalue.h \
   /usr/include/qt6/QtCore/qlatin1stringview.h \
   /usr/include/qt6/QtCore/qlist.h \
   /usr/include/qt6/QtCore/qlocale.h \
@@ -7074,6 +7115,7 @@ CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o: /home/lux/programm
   /usr/include/qt6/QtCore/qpair.h \
   /usr/include/qt6/QtCore/qprocessordetection.h \
   /usr/include/qt6/QtCore/qrefcount.h \
+  /usr/include/qt6/QtCore/qregularexpression.h \
   /usr/include/qt6/QtCore/qscopedpointer.h \
   /usr/include/qt6/QtCore/qscopeguard.h \
   /usr/include/qt6/QtCore/qset.h \
@@ -7120,6 +7162,7 @@ CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o: /home/lux/programm
   /usr/include/qt6/QtCore/qtypes.h \
   /usr/include/qt6/QtCore/qurl.h \
   /usr/include/qt6/QtCore/qutf8stringview.h \
+  /usr/include/qt6/QtCore/quuid.h \
   /usr/include/qt6/QtCore/qvariant.h \
   /usr/include/qt6/QtCore/qvarlengtharray.h \
   /usr/include/qt6/QtCore/qversiontagging.h \
@@ -8350,6 +8393,12 @@ CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o: /home/lux/programmi
   /usr/include/locale.h \
   /usr/include/math.h \
   /usr/include/pthread.h \
+  /usr/include/qt6/QtCore/QList \
+  /usr/include/qt6/QtCore/QObject \
+  /usr/include/qt6/QtCore/QPointF \
+  /usr/include/qt6/QtCore/QRect \
+  /usr/include/qt6/QtCore/QSize \
+  /usr/include/qt6/QtCore/QSizeF \
   /usr/include/qt6/QtCore/q17memory.h \
   /usr/include/qt6/QtCore/q20functional.h \
   /usr/include/qt6/QtCore/q20iterator.h \
@@ -8358,6 +8407,7 @@ CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o: /home/lux/programmi
   /usr/include/qt6/QtCore/q20utility.h \
   /usr/include/qt6/QtCore/q23type_traits.h \
   /usr/include/qt6/QtCore/q23utility.h \
+  /usr/include/qt6/QtCore/qabstracteventdispatcher.h \
   /usr/include/qt6/QtCore/qalgorithms.h \
   /usr/include/qt6/QtCore/qalloc.h \
   /usr/include/qt6/QtCore/qanystringview.h \
@@ -8368,6 +8418,7 @@ CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o: /home/lux/programmi
   /usr/include/qt6/QtCore/qatomic.h \
   /usr/include/qt6/QtCore/qatomic_cxx11.h \
   /usr/include/qt6/QtCore/qbasicatomic.h \
+  /usr/include/qt6/QtCore/qbasictimer.h \
   /usr/include/qt6/QtCore/qbindingstorage.h \
   /usr/include/qt6/QtCore/qbytearray.h \
   /usr/include/qt6/QtCore/qbytearrayalgorithms.h \
@@ -8386,10 +8437,15 @@ CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o: /home/lux/programmi
   /usr/include/qt6/QtCore/qcontainerinfo.h \
   /usr/include/qt6/QtCore/qcontainertools_impl.h \
   /usr/include/qt6/QtCore/qcontiguouscache.h \
+  /usr/include/qt6/QtCore/qcoreapplication.h \
+  /usr/include/qt6/QtCore/qcoreapplication_platform.h \
+  /usr/include/qt6/QtCore/qcoreevent.h \
   /usr/include/qt6/QtCore/qdarwinhelpers.h \
   /usr/include/qt6/QtCore/qdatastream.h \
+  /usr/include/qt6/QtCore/qdeadlinetimer.h \
   /usr/include/qt6/QtCore/qdebug.h \
   /usr/include/qt6/QtCore/qendian.h \
+  /usr/include/qt6/QtCore/qeventloop.h \
   /usr/include/qt6/QtCore/qexceptionhandling.h \
   /usr/include/qt6/QtCore/qflags.h \
   /usr/include/qt6/QtCore/qfloat16.h \
@@ -8401,12 +8457,14 @@ CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o: /home/lux/programmi
   /usr/include/qt6/QtCore/qglobalstatic.h \
   /usr/include/qt6/QtCore/qhash.h \
   /usr/include/qt6/QtCore/qhashfunctions.h \
+  /usr/include/qt6/QtCore/qiodevice.h \
   /usr/include/qt6/QtCore/qiodevicebase.h \
   /usr/include/qt6/QtCore/qiterable.h \
   /usr/include/qt6/QtCore/qiterator.h \
   /usr/include/qt6/QtCore/qlatin1stringview.h \
   /usr/include/qt6/QtCore/qline.h \
   /usr/include/qt6/QtCore/qlist.h \
+  /usr/include/qt6/QtCore/qlocale.h \
   /usr/include/qt6/QtCore/qlogging.h \
   /usr/include/qt6/QtCore/qmalloc.h \
   /usr/include/qt6/QtCore/qmap.h \
@@ -8416,6 +8474,7 @@ CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o: /home/lux/programmi
   /usr/include/qt6/QtCore/qmetatype.h \
   /usr/include/qt6/QtCore/qminmax.h \
   /usr/include/qt6/QtCore/qnamespace.h \
+  /usr/include/qt6/QtCore/qnativeinterface.h \
   /usr/include/qt6/QtCore/qnumeric.h \
   /usr/include/qt6/QtCore/qobject.h \
   /usr/include/qt6/QtCore/qobject_impl.h \
@@ -8472,6 +8531,7 @@ CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o: /home/lux/programmi
   /usr/include/qt6/QtCore/qtversionchecks.h \
   /usr/include/qt6/QtCore/qtypeinfo.h \
   /usr/include/qt6/QtCore/qtypes.h \
+  /usr/include/qt6/QtCore/qurl.h \
   /usr/include/qt6/QtCore/qutf8stringview.h \
   /usr/include/qt6/QtCore/qvariant.h \
   /usr/include/qt6/QtCore/qvarlengtharray.h \
@@ -8479,18 +8539,27 @@ CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o: /home/lux/programmi
   /usr/include/qt6/QtCore/qxptype_traits.h \
   /usr/include/qt6/QtCore/qyieldcpu.h \
   /usr/include/qt6/QtGui/QImage \
+  /usr/include/qt6/QtGui/QMouseEvent \
+  /usr/include/qt6/QtGui/QPaintEvent \
   /usr/include/qt6/QtGui/QPainter \
+  /usr/include/qt6/QtGui/QTransform \
   /usr/include/qt6/QtGui/qaction.h \
   /usr/include/qt6/QtGui/qbitmap.h \
   /usr/include/qt6/QtGui/qbrush.h \
   /usr/include/qt6/QtGui/qcolor.h \
   /usr/include/qt6/QtGui/qcursor.h \
+  /usr/include/qt6/QtGui/qevent.h \
+  /usr/include/qt6/QtGui/qeventpoint.h \
   /usr/include/qt6/QtGui/qfont.h \
   /usr/include/qt6/QtGui/qfontinfo.h \
   /usr/include/qt6/QtGui/qfontmetrics.h \
   /usr/include/qt6/QtGui/qfontvariableaxis.h \
+  /usr/include/qt6/QtGui/qguiapplication.h \
+  /usr/include/qt6/QtGui/qguiapplication_platform.h \
   /usr/include/qt6/QtGui/qicon.h \
   /usr/include/qt6/QtGui/qimage.h \
+  /usr/include/qt6/QtGui/qinputdevice.h \
+  /usr/include/qt6/QtGui/qinputmethod.h \
   /usr/include/qt6/QtGui/qkeysequence.h \
   /usr/include/qt6/QtGui/qpaintdevice.h \
   /usr/include/qt6/QtGui/qpainter.h \
@@ -8498,15 +8567,20 @@ CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o: /home/lux/programmi
   /usr/include/qt6/QtGui/qpen.h \
   /usr/include/qt6/QtGui/qpixelformat.h \
   /usr/include/qt6/QtGui/qpixmap.h \
+  /usr/include/qt6/QtGui/qpointingdevice.h \
   /usr/include/qt6/QtGui/qpolygon.h \
   /usr/include/qt6/QtGui/qregion.h \
   /usr/include/qt6/QtGui/qrgb.h \
   /usr/include/qt6/QtGui/qrgba64.h \
+  /usr/include/qt6/QtGui/qscreen.h \
+  /usr/include/qt6/QtGui/qscreen_platform.h \
   /usr/include/qt6/QtGui/qtextoption.h \
   /usr/include/qt6/QtGui/qtgui-config.h \
   /usr/include/qt6/QtGui/qtguiexports.h \
   /usr/include/qt6/QtGui/qtguiglobal.h \
   /usr/include/qt6/QtGui/qtransform.h \
+  /usr/include/qt6/QtGui/qvector2d.h \
+  /usr/include/qt6/QtGui/qvectornd.h \
   /usr/include/qt6/QtGui/qwindowdefs.h \
   /usr/include/qt6/QtWidgets/QWidget \
   /usr/include/qt6/QtWidgets/qsizepolicy.h \
@@ -10982,17 +11056,11 @@ CMakeFiles/DwarfController.dir/tracking.pb.cc.o:
 
 /usr/include/qt6/QtGui/QPainter:
 
+/usr/include/qt6/QtGui/QPaintEvent:
+
 /usr/include/qt6/QtNetwork/QNetworkInterface:
 
-/usr/include/qt6/QtCore/quuid.h:
-
-/usr/include/qt6/QtCore/QJsonObject:
-
 /usr/include/qt6/QtCore/qtranslator.h:
-
-/usr/include/qt6/QtCore/qfiledevice.h:
-
-/usr/include/qt6/QtCore/qfile.h:
 
 /usr/include/qt6/QtCore/QLoggingCategory:
 
@@ -11000,19 +11068,29 @@ CMakeFiles/DwarfController.dir/tracking.pb.cc.o:
 
 /usr/include/qt6/QtCore/QFile:
 
-/usr/include/libintl.h:
+/usr/include/qt6/QtWidgets/qlayoutitem.h:
 
-/usr/include/c++/15/locale:
+/usr/include/qt6/QtWidgets/qlayout.h:
 
-/usr/include/c++/15/filesystem:
+/usr/include/qt6/QtWidgets/qdialogbuttonbox.h:
+
+/usr/include/qt6/QtWidgets/qdialog.h:
+
+/usr/include/qt6/QtWidgets/qboxlayout.h:
+
+/usr/include/qt6/QtWidgets/QStyle:
+
+/usr/include/qt6/QtWidgets/QMessageBox:
+
+/usr/include/qt6/QtWidgets/QHBoxLayout:
+
+/usr/include/qt6/QtCore/quuid.h:
+
+/usr/include/qt6/QtCore/qfileinfo.h:
 
 /usr/include/qt6/QtCore/qurl.h:
 
 /usr/include/qt6/QtCore/qtypes.h:
-
-/usr/include/qt6/QtCore/qcborvalue.h:
-
-/usr/include/qt6/QtCore/qtconfiginclude.h:
 
 /usr/include/c++/15/bits/locale_classes.h:
 
@@ -11049,6 +11127,10 @@ CMakeFiles/DwarfController.dir/tracking.pb.cc.o:
 /usr/include/c++/15/bits/nested_exception.h:
 
 /usr/include/qt6/QtCore/qstringmatcher.h:
+
+/usr/include/qt6/QtWidgets/QDockWidget:
+
+/usr/include/assert.h:
 
 /usr/include/qt6/QtCore/qstringlist.h:
 
@@ -11198,10 +11280,6 @@ CMakeFiles/DwarfController.dir/tracking.pb.cc.o:
 
 /usr/lib64/cmake/Qt6WidgetsTools/Qt6WidgetsToolsTargets.cmake:
 
-/usr/include/c++/15/x86_64-redhat-linux/bits/time_members.h:
-
-/usr/include/qt6/QtWidgets/qframe.h:
-
 /usr/include/qt6/QtCore/qatomic_cxx11.h:
 
 /usr/include/qt6/QtCore/qarraydatapointer.h:
@@ -11224,8 +11302,6 @@ CMakeFiles/DwarfController.dir/tracking.pb.cc.o:
 
 /usr/lib64/cmake/Qt6DBus/Qt6DBusMacros.cmake:
 
-/usr/include/qt6/QtWidgets/QHBoxLayout:
-
 /usr/include/qt6/QtCore/q23type_traits.h:
 
 /usr/include/google/protobuf/io/coded_stream.h:
@@ -11245,6 +11321,8 @@ CMakeFiles/DwarfController.dir/tracking.pb.cc.o:
 /usr/lib64/libproxy.so.1:
 
 /usr/include/qt6/QtCore/QByteArray:
+
+/usr/include/qt6/QtCore/QPointF:
 
 /usr/include/pthread.h:
 
@@ -11353,6 +11431,10 @@ CMakeFiles/DwarfController.dir/src/main.cpp.o:
 /usr/include/qt6/QtCore/qjsonobject.h:
 
 /usr/include/c++/15/x86_64-redhat-linux/bits/error_constants.h:
+
+/usr/include/qt6/QtCore/qtconfiginclude.h:
+
+/usr/include/qt6/QtCore/qcborvalue.h:
 
 /usr/include/c++/15/x86_64-redhat-linux/bits/c++config.h:
 
@@ -11674,6 +11756,8 @@ base.pb.h:
 
 /usr/include/qt6/QtCore/qshareddata_impl.h:
 
+/usr/include/c++/15/filesystem:
+
 /usr/include/bits/pthreadtypes.h:
 
 /usr/lib64/cmake/Qt6Gui/Qt6QJp2PluginConfig.cmake:
@@ -11747,6 +11831,10 @@ tracking.pb.cc:
 /usr/include/qt6/QtCore/qutf8stringview.h:
 
 /usr/include/c++/15/system_error:
+
+/usr/include/qt6/QtWidgets/QStatusBar:
+
+/usr/include/c++/15/codecvt:
 
 /usr/lib64/libgsm.so.1:
 
@@ -11870,11 +11958,11 @@ CMakeFiles/DwarfController.dir/DwarfController_autogen/mocs_compilation.cpp.o:
 
 /usr/include/asm-generic/errno-base.h:
 
-/usr/include/c++/15/iomanip:
+/usr/lib64/cmake/Qt6Gui/Qt6QTuioTouchPluginTargets-relwithdebinfo.cmake:
 
 /usr/include/qt6/QtCore/qobjectdefs_impl.h:
 
-/usr/lib64/cmake/Qt6Gui/Qt6QTuioTouchPluginTargets-relwithdebinfo.cmake:
+/usr/include/c++/15/iomanip:
 
 /usr/lib64/libprotobuf.so:
 
@@ -11947,8 +12035,6 @@ tracking.pb.h:
 /usr/lib64/cmake/Qt6Gui/Qt6QVkKhrDisplayIntegrationPluginTargets.cmake:
 
 /home/lux/programming/pydwarf/src/net/DwarfWebSocketClient.h:
-
-/usr/include/qt6/QtWidgets/qdialog.h:
 
 /usr/include/bits/types/__sigset_t.h:
 
@@ -12178,6 +12264,12 @@ DwarfController_autogen/7OIUYE7PDQ/moc_DwarfCameraController.cpp:
 
 /usr/include/c++/15/bits/chrono.h:
 
+/usr/include/qt6/QtWidgets/qgridlayout.h:
+
+/usr/include/c++/15/bits/requires_hosted.h:
+
+/home/lux/programming/pydwarf/src/net/DwarfMotorController.cpp:
+
 /usr/lib64/libproxy/libpxbackend-1.0.so:
 
 /usr/include/c++/15/bits/uses_allocator_args.h:
@@ -12354,13 +12446,7 @@ CMakeFiles/DwarfController.dir/src/net/DwarfWebSocketClient.cpp.o:
 
 /usr/share/cmake/Modules/CheckCXXCompilerFlag.cmake:
 
-/usr/include/assert.h:
-
-/usr/include/qt6/QtWidgets/QDockWidget:
-
 /usr/share/cmake/Modules/Compiler/GNU.cmake:
-
-/usr/include/qt6/QtWidgets/QMessageBox:
 
 /usr/share/cmake/Modules/Platform/UnixPaths.cmake:
 
@@ -12422,9 +12508,9 @@ CMakeFiles/3.31.6/CMakeSystem.cmake:
 
 /usr/lib64/cmake/Qt6Gui/Qt6QJpegPluginConfig.cmake:
 
-/usr/include/c++/15/x86_64-redhat-linux/bits/messages_members.h:
-
 /usr/include/qt6/QtCore/qcontainertools_impl.h:
+
+/usr/include/c++/15/x86_64-redhat-linux/bits/messages_members.h:
 
 /usr/include/c++/15/ext/string_conversions.h:
 
@@ -12471,12 +12557,6 @@ CMakeFiles/DwarfController.dir/src/net/DwarfFinder.cpp.o:
 /usr/lib64/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginAdditionalTargetInfo.cmake:
 
 /usr/include/qt6/QtGui/qfont.h:
-
-/usr/include/c++/15/sstream:
-
-/usr/include/c++/15/tr1/gamma.tcc:
-
-/usr/include/qt6/QtGui/qtguiglobal.h:
 
 /usr/include/c++/15/bits/exception_ptr.h:
 
@@ -12714,6 +12794,8 @@ base.pb.cc:
 
 /usr/include/qt6/QtWidgets/qtabbar.h:
 
+/usr/include/libintl.h:
+
 /usr/include/qt6/QtWidgets/qtwidgets-config.h:
 
 /usr/include/bits/types/__locale_t.h:
@@ -12801,6 +12883,8 @@ base.pb.cc:
 /usr/include/google/protobuf/stubs/hash.h:
 
 /usr/lib64/cmake/Qt6/QtPublicFindPackageHelpers.cmake:
+
+/usr/include/c++/15/locale:
 
 /usr/lib64/cmake/Qt6/QtPublicPluginHelpers.cmake:
 
@@ -12932,9 +13016,9 @@ base.pb.cc:
 
 /usr/lib64/cmake/Qt6Multimedia/Qt6QFFmpegMediaPluginTargets.cmake:
 
-/usr/include/qt6/QtCore/qcborcommon.h:
-
 /usr/include/qt6/QtCore/QJsonDocument:
+
+/usr/include/qt6/QtCore/qcborcommon.h:
 
 /usr/include/qt6/QtWidgets/QTabWidget:
 
@@ -13068,6 +13152,8 @@ motor.pb.cc:
 
 /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake:
 
+/usr/include/qt6/QtCore/qtimezone.h:
+
 /usr/lib64/cmake/Qt6Gui/Qt6QVkKhrDisplayIntegrationPluginAdditionalTargetInfo.cmake:
 
 /usr/lib64/cmake/Qt6Gui/Qt6QVkKhrDisplayIntegrationPluginConfig.cmake:
@@ -13117,8 +13203,6 @@ motor.pb.cc:
 /home/lux/programming/pydwarf/src/net/DwarfFinder.h:
 
 /usr/lib64/cmake/Qt6Gui/Qt6QXcbGlxIntegrationPluginConfig.cmake:
-
-/usr/include/qt6/QtWidgets/qdialogbuttonbox.h:
 
 /usr/include/qt6/QtCore/QMetaType:
 
@@ -13175,6 +13259,8 @@ camera.pb.cc:
 /usr/lib64/cmake/Qt6Multimedia/Qt6QGstreamerMediaPluginAdditionalTargetInfo.cmake:
 
 /usr/lib64/cmake/Qt6Multimedia/Qt6QGstreamerMediaPluginConfig.cmake:
+
+/usr/include/qt6/QtCore/QFileInfo:
 
 /usr/include/c++/15/bits/quoted_string.h:
 
@@ -13294,6 +13380,10 @@ DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMjpegStream.cpp:
 
 DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMjpegView.cpp:
 
+/usr/include/qt6/QtWidgets/qdockwidget.h:
+
+DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMotorController.cpp:
+
 /usr/include/bits/flt-eval-method.h:
 
 /usr/lib64/libGLX.so:
@@ -13303,6 +13393,8 @@ DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMjpegView.cpp:
 /usr/include/qt6/QtNetwork/qsslsocket.h:
 
 /usr/include/bits/iscanonical.h:
+
+/usr/include/qt6/QtCore/qjsonarray.h:
 
 /usr/include/bits/math-vector.h:
 
@@ -13332,28 +13424,6 @@ DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMjpegView.cpp:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/include/stdint.h:
 
-/usr/include/c++/15/codecvt:
-
-/usr/include/qt6/QtWidgets/QStatusBar:
-
-/usr/include/qt6/QtWidgets/QStyle:
-
-/usr/include/qt6/QtWidgets/qboxlayout.h:
-
-DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMotorController.cpp:
-
-/usr/include/qt6/QtWidgets/qdockwidget.h:
-
-/usr/include/c++/15/bits/requires_hosted.h:
-
-/home/lux/programming/pydwarf/src/net/DwarfMotorController.cpp:
-
-/usr/include/qt6/QtWidgets/qgridlayout.h:
-
-/usr/include/qt6/QtWidgets/qlayout.h:
-
-/usr/include/qt6/QtWidgets/qlayoutitem.h:
-
 /usr/include/c++/15/bits/codecvt.h:
 
 /usr/include/c++/15/bits/fs_fwd.h:
@@ -13363,3 +13433,21 @@ DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMotorController.cpp:
 /usr/include/c++/15/bits/locale_facets_nonio.h:
 
 /usr/include/c++/15/bits/locale_facets_nonio.tcc:
+
+/usr/include/c++/15/tr1/gamma.tcc:
+
+/usr/include/qt6/QtGui/qtguiglobal.h:
+
+/usr/include/c++/15/sstream:
+
+/usr/include/qt6/QtWidgets/qframe.h:
+
+/usr/include/c++/15/x86_64-redhat-linux/bits/time_members.h:
+
+/usr/include/qt6/QtCore/QJsonArray:
+
+/usr/include/qt6/QtCore/QJsonObject:
+
+/usr/include/qt6/QtCore/qfile.h:
+
+/usr/include/qt6/QtCore/qfiledevice.h:

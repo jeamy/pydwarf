@@ -4,6 +4,7 @@
 #include "net/DwarfFocusController.h"
 #include "net/DwarfMjpegStream.h"
 #include "net/DwarfMjpegView.h"
+#include "net/DwarfHttpClient.h"
 #include "qnamespace.h"
 #include <QDebug>
 #include <QDockWidget>
@@ -14,6 +15,10 @@
 #include <QStyle>
 #include <QTimer>
 #include <QVBoxLayout>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QFileInfo>
 #include <cmath>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -22,7 +27,11 @@ MainWindow::MainWindow(QWidget *parent)
       m_motorController(nullptr), m_focusController(nullptr),
       m_isRecording(false),
       m_mainVideoWidget(nullptr), m_pipVideoWidget(nullptr),
-      m_teleStream(nullptr), m_wideStream(nullptr) {
+      m_teleStream(nullptr), m_wideStream(nullptr),
+      m_httpClient(nullptr), m_openGalleryButton(nullptr),
+      m_mediaTabs(nullptr), m_mediaPhotoList(nullptr),
+      m_mediaVideoList(nullptr), m_mediaBurstList(nullptr),
+      m_mediaAstroList(nullptr), m_mediaPanoList(nullptr) {
   m_mainStreamView = nullptr;
   m_pipStreamView = nullptr;
   m_teleButton = nullptr;
@@ -300,6 +309,30 @@ void MainWindow::setupUi() {
   systemMediaLayout->addLayout(gridLayout);
   systemMediaLayout->addWidget(m_statusLabel);
   systemMediaLayout->addWidget(m_deviceList);
+
+  QGroupBox *mediaGroup = new QGroupBox(tr("Media gallery"), systemMediaTab);
+  QVBoxLayout *mediaLayout = new QVBoxLayout(mediaGroup);
+  m_openGalleryButton = new QPushButton(tr("Open gallery"), mediaGroup);
+  m_mediaTabs = new QTabWidget(mediaGroup);
+  m_mediaPhotoList = new QListWidget(m_mediaTabs);
+  m_mediaVideoList = new QListWidget(m_mediaTabs);
+  m_mediaBurstList = new QListWidget(m_mediaTabs);
+  m_mediaAstroList = new QListWidget(m_mediaTabs);
+  m_mediaPanoList = new QListWidget(m_mediaTabs);
+  m_mediaTabs->addTab(m_mediaPhotoList, tr("Photo"));
+  m_mediaTabs->addTab(m_mediaVideoList, tr("Video"));
+  m_mediaTabs->addTab(m_mediaBurstList, tr("Burst"));
+  m_mediaTabs->addTab(m_mediaAstroList, tr("Astro"));
+  m_mediaTabs->addTab(m_mediaPanoList, tr("Panorama"));
+  mediaLayout->addWidget(m_openGalleryButton);
+  mediaLayout->addWidget(m_mediaTabs);
+  mediaGroup->setLayout(mediaLayout);
+  systemMediaLayout->addWidget(mediaGroup);
+
+  if (m_openGalleryButton)
+    connect(m_openGalleryButton, &QPushButton::clicked, this,
+            &MainWindow::onOpenGalleryClicked);
+
   systemMediaTab->setLayout(systemMediaLayout);
 
   // Tab widget for modules
@@ -1083,6 +1116,173 @@ void MainWindow::onMainViewPointClicked(const QPointF &normalizedPos) {
         m_motorController->stopMotor(DwarfMotorController::Axis::Altitude);
     });
   }
+}
+
+void MainWindow::onOpenGalleryClicked() {
+  QString ip = m_ipInput ? m_ipInput->text().trimmed() : QString();
+  if (ip.isEmpty())
+    return;
+
+  if (m_httpClient) {
+    m_httpClient->deleteLater();
+    m_httpClient = nullptr;
+  }
+
+  m_httpClient = new DwarfHttpClient(ip, this);
+  connect(m_httpClient, &DwarfHttpClient::mediaListReceived, this,
+          &MainWindow::onMediaListReceived);
+  connect(m_httpClient, &DwarfHttpClient::errorOccurred, this,
+          &MainWindow::onMediaListError);
+
+  if (m_openGalleryButton)
+    m_openGalleryButton->setEnabled(false);
+  if (m_mediaPhotoList)
+    m_mediaPhotoList->clear();
+  if (m_mediaVideoList)
+    m_mediaVideoList->clear();
+  if (m_mediaBurstList)
+    m_mediaBurstList->clear();
+  if (m_mediaAstroList)
+    m_mediaAstroList->clear();
+  if (m_mediaPanoList)
+    m_mediaPanoList->clear();
+
+  m_httpClient->fetchMediaList();
+}
+
+void MainWindow::onMediaListReceived(const QJsonDocument &document) {
+  if (m_openGalleryButton)
+    m_openGalleryButton->setEnabled(true);
+  if (!m_mediaTabs)
+    return;
+
+  if (m_mediaPhotoList)
+    m_mediaPhotoList->clear();
+  if (m_mediaVideoList)
+    m_mediaVideoList->clear();
+  if (m_mediaBurstList)
+    m_mediaBurstList->clear();
+  if (m_mediaAstroList)
+    m_mediaAstroList->clear();
+  if (m_mediaPanoList)
+    m_mediaPanoList->clear();
+
+  qWarning() << "[MainWindow] mediaInfos JSON"
+             << document.toJson(QJsonDocument::Indented);
+
+  QJsonArray files;
+  if (document.isArray())
+    files = document.array();
+  else
+    files = document.object().value(QStringLiteral("data")).toArray();
+
+  if (files.isEmpty()) {
+    if (m_mediaPhotoList)
+      m_mediaPhotoList->addItem(tr("No media found"));
+    return;
+  }
+
+  for (const QJsonValue &v : files) {
+    QJsonObject obj = v.toObject();
+    QString filePath = obj.value(QStringLiteral("filePath")).toString();
+    QString fileNameField = obj.value(QStringLiteral("fileName")).toString();
+
+    QString baseName;
+    if (!filePath.isEmpty()) {
+      QFileInfo fi(filePath);
+      baseName = fi.fileName();
+    }
+    if (baseName.isEmpty())
+      baseName = fileNameField;
+
+    if (baseName.isEmpty()) {
+      baseName = obj.value(QStringLiteral("name")).toString();
+      if (baseName.isEmpty())
+        baseName = obj.value(QStringLiteral("filename")).toString();
+      if (baseName.isEmpty())
+        baseName = obj.value(QStringLiteral("file")).toString();
+      if (baseName.isEmpty())
+        baseName = obj.value(QStringLiteral("path")).toString();
+    }
+
+    int mediaType = obj.value(QStringLiteral("mediaType")).toInt(-1);
+    int camId = obj.value(QStringLiteral("camId")).toInt(-1);
+
+    QStringList tags;
+
+    if (mediaType >= 0) {
+      QString mt;
+      switch (mediaType) {
+      case 1:
+        mt = tr("Photo");
+        break;
+      case 2:
+        mt = tr("Video");
+        break;
+      case 3:
+        mt = tr("Burst");
+        break;
+      case 4:
+        mt = tr("Astro");
+        break;
+      case 5:
+        mt = tr("Panorama");
+        break;
+      default:
+        mt = QString::number(mediaType);
+        break;
+      }
+      tags << mt;
+    }
+
+    if (camId == 0)
+      tags << tr("Tele");
+    else if (camId == 1)
+      tags << tr("Wide");
+
+    QString display = baseName;
+    if (!tags.isEmpty())
+      display += QStringLiteral(" [") + tags.join(QStringLiteral(", ")) +
+                 QStringLiteral("]");
+
+    if (display.isEmpty())
+      display = QString::fromUtf8(
+          QJsonDocument(obj).toJson(QJsonDocument::Compact));
+
+    QListWidget *target = nullptr;
+    switch (mediaType) {
+    case 1:
+      target = m_mediaPhotoList;
+      break;
+    case 2:
+      target = m_mediaVideoList;
+      break;
+    case 3:
+      target = m_mediaBurstList;
+      break;
+    case 4:
+      target = m_mediaAstroList;
+      break;
+    case 5:
+      target = m_mediaPanoList;
+      break;
+    default:
+      target = nullptr;
+      break;
+    }
+
+    if (target)
+      target->addItem(display);
+  }
+}
+
+void MainWindow::onMediaListError(const QString &error) {
+  if (m_openGalleryButton)
+    m_openGalleryButton->setEnabled(true);
+  if (!m_mediaPhotoList)
+    return;
+
+  m_mediaPhotoList->addItem(tr("Error: %1").arg(error));
 }
 
 void MainWindow::onPipStreamClicked() {

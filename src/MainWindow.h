@@ -24,6 +24,7 @@ class DwarfFocusController;
 class DwarfMjpegStream;
 class DwarfMjpegView;
 class QPointF;
+class DwarfHttpClient;
 
 class ClickableLabel : public QWidget {
   Q_OBJECT
@@ -97,6 +98,9 @@ private slots:
   void onWbModeChanged(int index);
   void onWbTemperatureChanged(int value);
   void onMainViewPointClicked(const QPointF &normalizedPos);
+  void onOpenGalleryClicked();
+  void onMediaListReceived(const QJsonDocument &document);
+  void onMediaListError(const QString &error);
 
 private:
   void setupUi();
@@ -155,4 +159,13 @@ private:
 
   DwarfMjpegStream *m_teleStream;
   DwarfMjpegStream *m_wideStream;
+
+  DwarfHttpClient *m_httpClient;
+  QPushButton *m_openGalleryButton;
+  QTabWidget *m_mediaTabs;
+  QListWidget *m_mediaPhotoList;
+  QListWidget *m_mediaVideoList;
+  QListWidget *m_mediaBurstList;
+  QListWidget *m_mediaAstroList;
+  QListWidget *m_mediaPanoList;
 };
