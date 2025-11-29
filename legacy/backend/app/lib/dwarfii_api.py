@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 # API Codes & Constants (aus api_codes.js)
 # ============================================================================
 
-DWARF_IP = "192.168.88.1"
+DWARF_IP = "192.168.8.223"
 
 def ws_url(ip: str, proxy_url: Optional[str] = None, use_https: bool = False) -> str:
     """WebSocket URL generieren"""

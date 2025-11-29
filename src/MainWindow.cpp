@@ -8,13 +8,14 @@
 #include <QMessageBox>
 #include <QStatusBar>
 #include <QStyle>
+#include <QTimer>
 #include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), m_wsClient(nullptr), m_dispatcher(nullptr),
-      m_scanCancelled(false), m_cameraController(nullptr),
-      m_isRecording(false), m_mainVideoWidget(nullptr),
-      m_pipVideoWidget(nullptr), m_telePlayer(nullptr), m_widePlayer(nullptr) {
+      m_scanCancelled(false), m_cameraController(nullptr), m_isRecording(false),
+      m_mainVideoWidget(nullptr), m_pipVideoWidget(nullptr),
+      m_telePlayer(nullptr), m_widePlayer(nullptr) {
   m_mainStreamView = nullptr;
   m_pipStreamView = nullptr;
   m_teleButton = nullptr;
@@ -33,6 +34,10 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::onScanProgress);
 
   m_dispatcher = new DwarfMessageDispatcher(this);
+  connect(m_dispatcher, &DwarfMessageDispatcher::cameraTeleMessage, this,
+          &MainWindow::onCameraTeleMessage);
+  connect(m_dispatcher, &DwarfMessageDispatcher::cameraWideMessage, this,
+          &MainWindow::onCameraWideMessage);
 
   setupUi();
 }
@@ -62,11 +67,11 @@ void MainWindow::updateCameraStreamViews() {
   const bool mainIsTele = (m_mainStream == CameraStream::Tele);
 
   if (mainIsTele) {
-    m_mainStreamView->setText(tr("Live Stream (TELE)"));
-    m_pipStreamView->setText(tr("WIDE"));
+    m_streamNameOverlay->setText(tr("Live Stream (TELE)"));
+    // m_pipStreamView->setText(tr("WIDE")); // No text on PiP, video covers it
   } else {
-    m_mainStreamView->setText(tr("Live Stream (WIDE)"));
-    m_pipStreamView->setText(tr("TELE"));
+    m_streamNameOverlay->setText(tr("Live Stream (WIDE)"));
+    // m_pipStreamView->setText(tr("TELE"));
   }
 
   if (m_teleButton && m_wideButton) {
@@ -74,13 +79,20 @@ void MainWindow::updateCameraStreamViews() {
     m_wideButton->setChecked(!mainIsTele);
   }
 
+  // Ensure overlays stay on top
+  m_streamNameOverlay->raise();
+  m_pipStreamView->raise();
+
   updateStreamRouting();
 }
 
 void MainWindow::updateStreamRouting() {
-  if (!m_telePlayer || !m_widePlayer || !m_mainVideoWidget ||
-      !m_pipVideoWidget)
+  if (!m_telePlayer || !m_widePlayer || !m_mainVideoWidget || !m_pipVideoWidget)
     return;
+
+  // Disconnect video outputs first to avoid conflicts
+  m_telePlayer->setVideoOutput(nullptr);
+  m_widePlayer->setVideoOutput(nullptr);
 
   const bool mainIsTele = (m_mainStream == CameraStream::Tele);
   if (mainIsTele) {
@@ -96,24 +108,20 @@ void MainWindow::startStreaming(const QString &ip) {
   if (!m_telePlayer || !m_widePlayer)
     return;
 
+  qWarning() << "[MainWindow] startStreaming called for IP" << ip;
+
+  qDebug() << "Sending OpenCamera commands...";
   // Ensure camera is opened on both Tele and Wide before requesting RTSP
   if (m_cameraController) {
     m_cameraController->openCamera(DwarfCameraController::CameraKind::Tele,
-                                   false, 0);
-    m_cameraController->openCamera(DwarfCameraController::CameraKind::Wide,
                                    true, 0);
+    m_cameraController->openCamera(DwarfCameraController::CameraKind::Wide,
+                                   false, 0);
+  } else {
+    qWarning()
+        << "[MainWindow] m_cameraController is null, cannot open cameras";
   }
-
-  const QUrl teleUrl(QStringLiteral("rtsp://%1/ch0/stream0").arg(ip));
-  const QUrl wideUrl(QStringLiteral("rtsp://%1/ch1/stream0").arg(ip));
-
-  m_telePlayer->setSource(teleUrl);
-  m_widePlayer->setSource(wideUrl);
-
-  updateStreamRouting();
-
-  m_telePlayer->play();
-  m_widePlayer->play();
+  // RTSP players will be started in onCameraTeleMessage / onCameraWideMessage
 }
 
 void MainWindow::stopStreaming() {
@@ -137,31 +145,65 @@ void MainWindow::setupUi() {
   QGridLayout *viewportLayout = new QGridLayout(viewportWidget);
   viewportLayout->setContentsMargins(0, 0, 0, 0);
 
-  m_mainStreamView = new QLabel(centralWidget);
+  m_mainStreamView = new QWidget(centralWidget);
   m_mainStreamView->setObjectName("mainStreamView");
-  m_mainStreamView->setAlignment(Qt::AlignCenter);
   m_mainStreamView->setMinimumHeight(400);
 
-  m_pipStreamView = new ClickableLabel(centralWidget);
-  m_pipStreamView->setObjectName("pipStreamView");
-  m_pipStreamView->setFixedSize(220, 124);
-
+  // Create Main Video Widget first
   m_mainVideoWidget = new QVideoWidget(m_mainStreamView);
+  // m_mainVideoWidget->setStyleSheet("background-color: black; border: none;");
   QVBoxLayout *mainVideoLayout = new QVBoxLayout(m_mainStreamView);
   mainVideoLayout->setContentsMargins(0, 0, 0, 0);
   mainVideoLayout->addWidget(m_mainVideoWidget);
+  m_mainVideoWidget->show();
 
+  // Overlay Label for Stream Name - Parented to Video Widget
+  m_streamNameOverlay = new QLabel(m_mainVideoWidget);
+  m_streamNameOverlay->setObjectName("streamNameOverlay");
+  // m_streamNameOverlay->setAttribute(Qt::WA_NativeWindow); // Removed
+  m_streamNameOverlay->setStyleSheet(
+      "QLabel { color: white; font-size: 16px; font-weight: bold; "
+      "background-color: rgba(0, 0, 0, 100); padding: 4px 8px; border-radius: "
+      "4px; }");
+  m_streamNameOverlay->setAlignment(Qt::AlignCenter);
+
+  // PiP View - Parented to Video Widget
+  m_pipStreamView = new ClickableLabel(m_mainVideoWidget);
+  m_pipStreamView->setObjectName("pipStreamView");
+  // m_pipStreamView->setAttribute(Qt::WA_NativeWindow); // Removed
+  m_pipStreamView->setFixedSize(220, 124);
+
+  // Layout for Overlays on top of Main Video
+  QGridLayout *overlayLayout = new QGridLayout(m_mainVideoWidget);
+  overlayLayout->setContentsMargins(10, 10, 10, 10);
+  overlayLayout->addWidget(m_streamNameOverlay, 0, 0,
+                           Qt::AlignTop | Qt::AlignHCenter);
+  overlayLayout->addWidget(m_pipStreamView, 0, 0, Qt::AlignTop | Qt::AlignLeft);
+  // Add a stretch to push everything up
+  overlayLayout->setRowStretch(1, 1);
+
+  // PiP Video Widget inside PiP View
   m_pipVideoWidget = new QVideoWidget(m_pipStreamView);
   m_pipVideoWidget->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+  // m_pipVideoWidget->setStyleSheet("background-color: black; border: none;");
   QVBoxLayout *pipVideoLayout = new QVBoxLayout(m_pipStreamView);
-  pipVideoLayout->setContentsMargins(0, 0, 0, 0);
+  pipVideoLayout->setContentsMargins(3, 3, 3, 3);
   pipVideoLayout->addWidget(m_pipVideoWidget);
+  m_pipVideoWidget->show();
 
   viewportLayout->addWidget(m_mainStreamView, 0, 0);
-  viewportLayout->addWidget(m_pipStreamView, 0, 0,
-                            Qt::AlignTop | Qt::AlignLeft);
+  // Overlays are now inside m_mainStreamView -> m_mainVideoWidget, so we don't
+  // add them to viewportLayout
+
   viewportWidget->setLayout(viewportLayout);
   mainLayout->addWidget(viewportWidget);
+
+  // Ensure overlays are on top (though parenting should handle this)
+  m_streamNameOverlay->raise();
+  m_pipStreamView->raise();
+
+  m_pipStreamView->setStyleSheet(
+      "border: 2px solid white; background-color: black;");
 
   connect(m_pipStreamView, &ClickableLabel::clicked, this,
           &MainWindow::onPipStreamClicked);
@@ -209,7 +251,7 @@ void MainWindow::setupUi() {
   // Row 1: Connect
   QLabel *ipLabel = new QLabel(tr("DWARF II IP:"), this);
   m_ipInput = new QLineEdit(this);
-  m_ipInput->setText("192.168.88.1");
+  m_ipInput->setText("192.168.8.223");
   m_ipInput->setPlaceholderText(tr("Enter IP address"));
 
   m_connectButton = new QPushButton(tr("Connect"), this);
@@ -279,8 +321,9 @@ void MainWindow::setupUi() {
   m_exposureModeCombo = new QComboBox(exposureGroup);
   m_exposureModeCombo->addItem(tr("Auto"));
   m_exposureModeCombo->addItem(tr("Manual"));
-  connect(m_exposureModeCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
-          this, &MainWindow::onExposureModeChanged);
+  connect(m_exposureModeCombo,
+          QOverload<int>::of(&QComboBox::currentIndexChanged), this,
+          &MainWindow::onExposureModeChanged);
 
   QLabel *shutterLabel = new QLabel(tr("Shutter"), exposureGroup);
   m_shutterSlider = new QSlider(Qt::Horizontal, exposureGroup);
@@ -395,8 +438,7 @@ void MainWindow::setupUi() {
 
   QWidget *astroTab = new QWidget(this);
   QVBoxLayout *astroLayout = new QVBoxLayout(astroTab);
-  QLabel *astroLabel =
-      new QLabel(tr("Astro & Navigation (TODO)"), astroTab);
+  QLabel *astroLabel = new QLabel(tr("Astro & Navigation (TODO)"), astroTab);
   astroLabel->setAlignment(Qt::AlignCenter);
   astroLayout->addWidget(astroLabel);
   astroTab->setLayout(astroLayout);
@@ -413,7 +455,7 @@ void MainWindow::setupUi() {
   m_tabWidget->addTab(motorFocusTab, tr("Motor & Focus"));
   m_tabWidget->addTab(cameraTab, tr("Camera & Capture"));
   m_tabWidget->addTab(astroTab, tr("Astro & Navigation"));
-  
+
   m_tabWidget->setTabPosition(QTabWidget::East);
 
   QDockWidget *controlDock = new QDockWidget(tr("Control Deck"), this);
@@ -477,8 +519,7 @@ void MainWindow::onScanFinished() {
     updateStatusStyle("noDevices");
     qDebug() << "No devices found";
   } else {
-    m_statusLabel->setText(
-        tr("Found %1 devices").arg(m_deviceList->count()));
+    m_statusLabel->setText(tr("Found %1 devices").arg(m_deviceList->count()));
     updateStatusStyle("ok");
     qDebug() << "Found" << m_deviceList->count() << "devices";
   }
@@ -494,8 +535,7 @@ void MainWindow::onConnectClicked() {
   QString ip = m_ipInput->text().trimmed();
 
   if (ip.isEmpty()) {
-    QMessageBox::warning(this, tr("Error"),
-                         tr("Please enter an IP address"));
+    QMessageBox::warning(this, tr("Error"), tr("Please enter an IP address"));
     return;
   }
 
@@ -532,9 +572,6 @@ void MainWindow::onConnectClicked() {
     if (m_cameraController) {
       m_cameraController->setClient(m_wsClient);
     }
-
-    // Start streaming after WebSocket connection is initiated
-    startStreaming(ip);
 
     m_wsClient->connectToDevice();
     m_connectButton->setEnabled(false); // Disable connect while connecting
@@ -574,6 +611,7 @@ void MainWindow::onSubnetTextChanged(const QString &text) {
 }
 
 void MainWindow::onWebSocketConnected() {
+  qWarning() << "[MainWindow] WebSocket connected, starting streaming";
   m_connectButton->setEnabled(true);
   m_connectButton->setText(tr("Disconnect"));
   m_cancelConnectButton->setEnabled(
@@ -581,6 +619,10 @@ void MainWindow::onWebSocketConnected() {
   m_statusLabel->setText(tr("Connected"));
   updateStatusStyle("ok");
   statusBar()->showMessage(tr("Connected to DWARF II"));
+
+  // Start streaming now that we are connected
+  QString ip = m_ipInput->text().trimmed();
+  startStreaming(ip);
 }
 
 void MainWindow::onWebSocketDisconnected() {
@@ -759,4 +801,71 @@ void MainWindow::onWbTemperatureChanged(int value) {
 void MainWindow::onPipStreamClicked() {
   std::swap(m_mainStream, m_pipStream);
   updateCameraStreamViews();
+}
+
+void MainWindow::onCameraTeleMessage(uint32_t cmd, const QByteArray &data) {
+  qWarning() << "[MainWindow] onCameraTeleMessage cmd" << cmd << "data size"
+             << data.size();
+  if (cmd == 10000) { // CMD_CAMERA_TELE_OPEN_CAMERA
+    dwarf::ComResponse res;
+    if (res.ParseFromArray(data.data(), data.size())) {
+      if (res.code() == 0 || res.code() == 374) {
+        qDebug() << "Tele camera opened (code" << res.code()
+                 << "), starting MJPEG stream...";
+        QString ip = m_ipInput->text().trimmed();
+        // Use MJPEG stream on port 8092 instead of RTSP on 554
+        // RTSP port 554 is often closed/refused, while MJPEG works in Python
+        // legacy app
+        const QUrl teleUrl(QStringLiteral("http://%1:8092/mainstream").arg(ip));
+        if (m_telePlayer) {
+          m_telePlayer->setSource(teleUrl);
+          m_telePlayer->play();
+        }
+        updateStreamRouting();
+        // Ensure overlays stay on top after video starts
+        if (m_streamNameOverlay)
+          m_streamNameOverlay->raise();
+        if (m_pipStreamView)
+          m_pipStreamView->raise();
+      } else {
+        qWarning() << "Failed to open Tele camera, code:" << res.code();
+      }
+    } else {
+      qWarning() << "[MainWindow] Failed to parse Tele ComResponse for cmd"
+                 << cmd;
+    }
+  }
+}
+
+void MainWindow::onCameraWideMessage(uint32_t cmd, const QByteArray &data) {
+  qWarning() << "[MainWindow] onCameraWideMessage cmd" << cmd << "data size"
+             << data.size();
+  if (cmd == 12000) { // CMD_CAMERA_WIDE_OPEN_CAMERA
+    dwarf::ComResponse res;
+    if (res.ParseFromArray(data.data(), data.size())) {
+      if (res.code() == 0 || res.code() == 374) {
+        qDebug() << "Wide camera opened (code" << res.code()
+                 << "), starting MJPEG stream...";
+        QString ip = m_ipInput->text().trimmed();
+        // Use MJPEG stream on port 8092 instead of RTSP on 554
+        const QUrl wideUrl(
+            QStringLiteral("http://%1:8092/secondstream").arg(ip));
+        if (m_widePlayer) {
+          m_widePlayer->setSource(wideUrl);
+          m_widePlayer->play();
+        }
+        updateStreamRouting();
+        // Ensure overlays stay on top after video starts
+        if (m_streamNameOverlay)
+          m_streamNameOverlay->raise();
+        if (m_pipStreamView)
+          m_pipStreamView->raise();
+      } else {
+        qWarning() << "Failed to open Wide camera, code:" << res.code();
+      }
+    } else {
+      qWarning() << "[MainWindow] Failed to parse Wide ComResponse for cmd"
+                 << cmd;
+    }
+  }
 }

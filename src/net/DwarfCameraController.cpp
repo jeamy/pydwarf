@@ -29,11 +29,16 @@ DwarfCameraController::DwarfCameraController(QObject *parent)
 
 void DwarfCameraController::setClient(DwarfWebSocketClient *client) {
   m_client = client;
+  qWarning() << "[DwarfCameraController] setClient called with"
+             << (client ? "valid" : "null") << "client";
 }
 
 void DwarfCameraController::openCamera(CameraKind kind, bool binning,
                                        int rtspEncodeType) {
+  qWarning() << "[DwarfCameraController] openCamera kind" << static_cast<int>(kind)
+             << "binning" << binning << "rtspEncodeType" << rtspEncodeType;
   if (!m_client || !m_client->isConnected()) {
+    qWarning() << "[DwarfCameraController] Cannot open camera, client not connected";
     emit errorOccurred("Camera client not connected");
     return;
   }
@@ -41,6 +46,8 @@ void DwarfCameraController::openCamera(CameraKind kind, bool binning,
   ReqOpenCamera req;
   req.set_binning(binning);
   req.set_rtsp_encode_type(rtspEncodeType);
+
+  qDebug() << "Sending OpenCamera for kind" << (int)kind << "binning" << binning;
 
   const QByteArray data = ProtobufHelper::serialize(req);
   m_client->sendCommand(moduleIdFor(kind), cmdOpenCameraFor(kind), data);

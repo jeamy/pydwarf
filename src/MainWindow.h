@@ -1,10 +1,10 @@
 #pragma once
 
 #include "net/DwarfFinder.h"
-#include "net/DwarfWebSocketClient.h"
 #include "net/DwarfMessageDispatcher.h"
-#include <QComboBox>
+#include "net/DwarfWebSocketClient.h"
 #include <QCheckBox>
+#include <QComboBox>
 #include <QGroupBox>
 #include <QLabel>
 #include <QLineEdit>
@@ -20,21 +20,18 @@
 
 class DwarfCameraController;
 
-class ClickableLabel : public QLabel {
+class ClickableLabel : public QWidget {
   Q_OBJECT
 
 public:
-  explicit ClickableLabel(QWidget *parent = nullptr)
-      : QLabel(parent) {}
-  explicit ClickableLabel(const QString &text, QWidget *parent = nullptr)
-      : QLabel(text, parent) {}
+  explicit ClickableLabel(QWidget *parent = nullptr) : QWidget(parent) {}
 
 signals:
   void clicked();
 
 protected:
   void mousePressEvent(QMouseEvent *event) override {
-    QLabel::mousePressEvent(event);
+    QWidget::mousePressEvent(event);
     emit clicked();
   }
 };
@@ -59,6 +56,8 @@ private slots:
   void onScanFinished();
   void onScanProgress(int percent);
   void onDeviceSelected(QListWidgetItem *item);
+  void onCameraTeleMessage(uint32_t cmd, const QByteArray &data);
+  void onCameraWideMessage(uint32_t cmd, const QByteArray &data);
   void onPipStreamClicked();
   void onCameraSourceTele();
   void onCameraSourceWide();
@@ -98,7 +97,8 @@ private:
 
   enum class CameraStream { Tele, Wide };
 
-  QLabel *m_mainStreamView;
+  QWidget *m_mainStreamView;
+  QLabel *m_streamNameOverlay;
   ClickableLabel *m_pipStreamView;
   QVideoWidget *m_mainVideoWidget;
   QVideoWidget *m_pipVideoWidget;

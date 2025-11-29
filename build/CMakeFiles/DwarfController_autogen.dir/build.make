@@ -72,7 +72,7 @@ DwarfController_autogen/timestamp: /usr/lib64/qt6/libexec/moc
 DwarfController_autogen/timestamp: /usr/lib64/qt6/libexec/uic
 DwarfController_autogen/timestamp: CMakeFiles/DwarfController_autogen.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/lux/programming/pydwarf/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target DwarfController"
-	/usr/bin/cmake -E cmake_autogen /home/lux/programming/pydwarf/build/CMakeFiles/DwarfController_autogen.dir/AutogenInfo.json ""
+	/usr/bin/cmake -E cmake_autogen /home/lux/programming/pydwarf/build/CMakeFiles/DwarfController_autogen.dir/AutogenInfo.json Debug
 	/usr/bin/cmake -E touch /home/lux/programming/pydwarf/build/DwarfController_autogen/timestamp
 
 CMakeFiles/DwarfController_autogen.dir/codegen:

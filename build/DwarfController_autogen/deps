@@ -34,6 +34,10 @@ DwarfController_autogen/timestamp: \
 	/home/lux/programming/pydwarf/src/net/DwarfWebSocketClient.h \
 	/home/lux/programming/pydwarf/src/net/ProtobufHelper.cpp \
 	/home/lux/programming/pydwarf/src/net/ProtobufHelper.h \
+	/media/data/programming/pydwarf/build/base.pb.h \
+	/media/data/programming/pydwarf/src/net/DwarfFinder.h \
+	/media/data/programming/pydwarf/src/net/DwarfMessageDispatcher.h \
+	/media/data/programming/pydwarf/src/net/DwarfWebSocketClient.h \
 	/usr/include/alloca.h \
 	/usr/include/asm-generic/bitsperlong.h \
 	/usr/include/asm-generic/errno-base.h \

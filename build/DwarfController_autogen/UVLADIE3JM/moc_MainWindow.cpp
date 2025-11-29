@@ -57,7 +57,7 @@ template <> constexpr inline auto ClickableLabel::qt_create_metaobjectdata<qt_me
             qt_methods, qt_properties, qt_enums);
 }
 Q_CONSTINIT const QMetaObject ClickableLabel::staticMetaObject = { {
-    QMetaObject::SuperData::link<QLabel::staticMetaObject>(),
+    QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
     qt_staticMetaObjectStaticContent<qt_meta_tag_ZN14ClickableLabelE_t>.stringdata,
     qt_staticMetaObjectStaticContent<qt_meta_tag_ZN14ClickableLabelE_t>.data,
     qt_static_metacall,
@@ -91,12 +91,12 @@ void *ClickableLabel::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_staticMetaObjectStaticContent<qt_meta_tag_ZN14ClickableLabelE_t>.strings))
         return static_cast<void*>(this);
-    return QLabel::qt_metacast(_clname);
+    return QWidget::qt_metacast(_clname);
 }
 
 int ClickableLabel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QLabel::qt_metacall(_c, _id, _a);
+    _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
@@ -146,6 +146,11 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "onDeviceSelected",
         "QListWidgetItem*",
         "item",
+        "onCameraTeleMessage",
+        "uint32_t",
+        "cmd",
+        "data",
+        "onCameraWideMessage",
         "onPipStreamClicked",
         "onCameraSourceTele",
         "onCameraSourceWide",
@@ -203,63 +208,71 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         QtMocHelpers::SlotData<void(QListWidgetItem *)>(18, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { 0x80000000 | 19, 20 },
         }}),
+        // Slot 'onCameraTeleMessage'
+        QtMocHelpers::SlotData<void(uint32_t, const QByteArray &)>(21, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 22, 23 }, { QMetaType::QByteArray, 24 },
+        }}),
+        // Slot 'onCameraWideMessage'
+        QtMocHelpers::SlotData<void(uint32_t, const QByteArray &)>(25, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 22, 23 }, { QMetaType::QByteArray, 24 },
+        }}),
         // Slot 'onPipStreamClicked'
-        QtMocHelpers::SlotData<void()>(21, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(26, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onCameraSourceTele'
-        QtMocHelpers::SlotData<void()>(22, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(27, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onCameraSourceWide'
-        QtMocHelpers::SlotData<void()>(23, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(28, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onCameraPhotoClicked'
-        QtMocHelpers::SlotData<void()>(24, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(29, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onCameraRecClicked'
-        QtMocHelpers::SlotData<void()>(25, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(30, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onExposureModeChanged'
-        QtMocHelpers::SlotData<void(int)>(26, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 27 },
+        QtMocHelpers::SlotData<void(int)>(31, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 32 },
         }}),
         // Slot 'onShutterSliderChanged'
-        QtMocHelpers::SlotData<void(int)>(28, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 29 },
+        QtMocHelpers::SlotData<void(int)>(33, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 34 },
         }}),
         // Slot 'onGainSliderChanged'
-        QtMocHelpers::SlotData<void(int)>(30, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 29 },
+        QtMocHelpers::SlotData<void(int)>(35, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 34 },
         }}),
         // Slot 'onIrCutToggled'
-        QtMocHelpers::SlotData<void(bool)>(31, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Bool, 32 },
+        QtMocHelpers::SlotData<void(bool)>(36, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Bool, 37 },
         }}),
         // Slot 'onBinningChanged'
-        QtMocHelpers::SlotData<void(int)>(33, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 27 },
+        QtMocHelpers::SlotData<void(int)>(38, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 32 },
         }}),
         // Slot 'onContrastSliderChanged'
-        QtMocHelpers::SlotData<void(int)>(34, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 29 },
+        QtMocHelpers::SlotData<void(int)>(39, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 34 },
         }}),
         // Slot 'onSaturationSliderChanged'
-        QtMocHelpers::SlotData<void(int)>(35, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 29 },
+        QtMocHelpers::SlotData<void(int)>(40, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 34 },
         }}),
         // Slot 'onSharpnessSliderChanged'
-        QtMocHelpers::SlotData<void(int)>(36, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 29 },
+        QtMocHelpers::SlotData<void(int)>(41, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 34 },
         }}),
         // Slot 'onHueSliderChanged'
-        QtMocHelpers::SlotData<void(int)>(37, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 29 },
+        QtMocHelpers::SlotData<void(int)>(42, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 34 },
         }}),
         // Slot 'onBrightnessSliderChanged'
-        QtMocHelpers::SlotData<void(int)>(38, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 29 },
+        QtMocHelpers::SlotData<void(int)>(43, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 34 },
         }}),
         // Slot 'onWbModeChanged'
-        QtMocHelpers::SlotData<void(int)>(39, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 27 },
+        QtMocHelpers::SlotData<void(int)>(44, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 32 },
         }}),
         // Slot 'onWbTemperatureChanged'
-        QtMocHelpers::SlotData<void(int)>(40, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 29 },
+        QtMocHelpers::SlotData<void(int)>(45, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 34 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
@@ -296,23 +309,25 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 9: _t->onScanFinished(); break;
         case 10: _t->onScanProgress((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
         case 11: _t->onDeviceSelected((*reinterpret_cast<std::add_pointer_t<QListWidgetItem*>>(_a[1]))); break;
-        case 12: _t->onPipStreamClicked(); break;
-        case 13: _t->onCameraSourceTele(); break;
-        case 14: _t->onCameraSourceWide(); break;
-        case 15: _t->onCameraPhotoClicked(); break;
-        case 16: _t->onCameraRecClicked(); break;
-        case 17: _t->onExposureModeChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 18: _t->onShutterSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 19: _t->onGainSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 20: _t->onIrCutToggled((*reinterpret_cast<std::add_pointer_t<bool>>(_a[1]))); break;
-        case 21: _t->onBinningChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 22: _t->onContrastSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 23: _t->onSaturationSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 24: _t->onSharpnessSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 25: _t->onHueSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 26: _t->onBrightnessSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 27: _t->onWbModeChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
-        case 28: _t->onWbTemperatureChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 12: _t->onCameraTeleMessage((*reinterpret_cast<std::add_pointer_t<uint32_t>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[2]))); break;
+        case 13: _t->onCameraWideMessage((*reinterpret_cast<std::add_pointer_t<uint32_t>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[2]))); break;
+        case 14: _t->onPipStreamClicked(); break;
+        case 15: _t->onCameraSourceTele(); break;
+        case 16: _t->onCameraSourceWide(); break;
+        case 17: _t->onCameraPhotoClicked(); break;
+        case 18: _t->onCameraRecClicked(); break;
+        case 19: _t->onExposureModeChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 20: _t->onShutterSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 21: _t->onGainSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 22: _t->onIrCutToggled((*reinterpret_cast<std::add_pointer_t<bool>>(_a[1]))); break;
+        case 23: _t->onBinningChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 24: _t->onContrastSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 25: _t->onSaturationSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 26: _t->onSharpnessSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 27: _t->onHueSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 28: _t->onBrightnessSliderChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 29: _t->onWbModeChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
+        case 30: _t->onWbTemperatureChanged((*reinterpret_cast<std::add_pointer_t<int>>(_a[1]))); break;
         default: ;
         }
     }
@@ -337,14 +352,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 29)
+        if (_id < 31)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 29;
+        _id -= 31;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 29)
+        if (_id < 31)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 29;
+        _id -= 31;
     }
     return _id;
 }

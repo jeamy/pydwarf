@@ -49,7 +49,8 @@ bool DwarfWebSocketClient::isConnected() const {
 void DwarfWebSocketClient::sendCommand(uint32_t moduleId, uint32_t cmd,
                                        const QByteArray &data) {
   if (!isConnected()) {
-    qWarning() << "Cannot send command: not connected";
+    qWarning() << "[DwarfWebSocketClient] Cannot send command: not connected"
+               << "module" << moduleId << "cmd" << cmd << "data size" << data.size();
     return;
   }
 

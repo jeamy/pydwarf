@@ -23,10 +23,14 @@ signals:
   void focusMessage(std::uint32_t cmd, const QByteArray &data);
   void notifyMessage(std::uint32_t cmd, const QByteArray &data);
   void panoramaMessage(std::uint32_t cmd, const QByteArray &data);
+  void cameraTeleMessage(std::uint32_t cmd, const QByteArray &data);
+  void cameraWideMessage(std::uint32_t cmd, const QByteArray &data);
   void unknownMessage(std::uint32_t moduleId, std::uint32_t cmd,
                       const QByteArray &data);
 
 private:
+  static constexpr std::uint32_t MODULE_CAMERA_TELE = 1;
+  static constexpr std::uint32_t MODULE_CAMERA_WIDE = 2;
   static constexpr std::uint32_t MODULE_ASTRO = 3;
   static constexpr std::uint32_t MODULE_SYSTEM = 4;
   static constexpr std::uint32_t MODULE_RGB_POWER = 5;

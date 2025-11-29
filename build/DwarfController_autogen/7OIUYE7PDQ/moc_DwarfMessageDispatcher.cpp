@@ -51,6 +51,8 @@ template <> constexpr inline auto DwarfMessageDispatcher::qt_create_metaobjectda
         "focusMessage",
         "notifyMessage",
         "panoramaMessage",
+        "cameraTeleMessage",
+        "cameraWideMessage",
         "unknownMessage",
         "moduleId",
         "dispatch"
@@ -89,13 +91,21 @@ template <> constexpr inline auto DwarfMessageDispatcher::qt_create_metaobjectda
         QtMocHelpers::SignalData<void(std::uint32_t, const QByteArray &)>(12, 2, QMC::AccessPublic, QMetaType::Void, {{
             { 0x80000000 | 3, 4 }, { QMetaType::QByteArray, 5 },
         }}),
+        // Signal 'cameraTeleMessage'
+        QtMocHelpers::SignalData<void(std::uint32_t, const QByteArray &)>(13, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 3, 4 }, { QMetaType::QByteArray, 5 },
+        }}),
+        // Signal 'cameraWideMessage'
+        QtMocHelpers::SignalData<void(std::uint32_t, const QByteArray &)>(14, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 3, 4 }, { QMetaType::QByteArray, 5 },
+        }}),
         // Signal 'unknownMessage'
-        QtMocHelpers::SignalData<void(std::uint32_t, std::uint32_t, const QByteArray &)>(13, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 3, 14 }, { 0x80000000 | 3, 4 }, { QMetaType::QByteArray, 5 },
+        QtMocHelpers::SignalData<void(std::uint32_t, std::uint32_t, const QByteArray &)>(15, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 3, 16 }, { 0x80000000 | 3, 4 }, { QMetaType::QByteArray, 5 },
         }}),
         // Slot 'dispatch'
-        QtMocHelpers::SlotData<void(std::uint32_t, std::uint32_t, const QByteArray &)>(15, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 3, 14 }, { 0x80000000 | 3, 4 }, { QMetaType::QByteArray, 5 },
+        QtMocHelpers::SlotData<void(std::uint32_t, std::uint32_t, const QByteArray &)>(17, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 3, 16 }, { 0x80000000 | 3, 4 }, { QMetaType::QByteArray, 5 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
@@ -128,8 +138,10 @@ void DwarfMessageDispatcher::qt_static_metacall(QObject *_o, QMetaObject::Call _
         case 5: _t->focusMessage((*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[2]))); break;
         case 6: _t->notifyMessage((*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[2]))); break;
         case 7: _t->panoramaMessage((*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[2]))); break;
-        case 8: _t->unknownMessage((*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[3]))); break;
-        case 9: _t->dispatch((*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[3]))); break;
+        case 8: _t->cameraTeleMessage((*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[2]))); break;
+        case 9: _t->cameraWideMessage((*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[2]))); break;
+        case 10: _t->unknownMessage((*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[3]))); break;
+        case 11: _t->dispatch((*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<std::uint32_t>>(_a[2])),(*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[3]))); break;
         default: ;
         }
     }
@@ -150,7 +162,11 @@ void DwarfMessageDispatcher::qt_static_metacall(QObject *_o, QMetaObject::Call _
             return;
         if (QtMocHelpers::indexOfMethod<void (DwarfMessageDispatcher::*)(std::uint32_t , const QByteArray & )>(_a, &DwarfMessageDispatcher::panoramaMessage, 7))
             return;
-        if (QtMocHelpers::indexOfMethod<void (DwarfMessageDispatcher::*)(std::uint32_t , std::uint32_t , const QByteArray & )>(_a, &DwarfMessageDispatcher::unknownMessage, 8))
+        if (QtMocHelpers::indexOfMethod<void (DwarfMessageDispatcher::*)(std::uint32_t , const QByteArray & )>(_a, &DwarfMessageDispatcher::cameraTeleMessage, 8))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (DwarfMessageDispatcher::*)(std::uint32_t , const QByteArray & )>(_a, &DwarfMessageDispatcher::cameraWideMessage, 9))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (DwarfMessageDispatcher::*)(std::uint32_t , std::uint32_t , const QByteArray & )>(_a, &DwarfMessageDispatcher::unknownMessage, 10))
             return;
     }
 }
@@ -174,14 +190,14 @@ int DwarfMessageDispatcher::qt_metacall(QMetaObject::Call _c, int _id, void **_a
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 12;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 12)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 10;
+        _id -= 12;
     }
     return _id;
 }
@@ -235,8 +251,20 @@ void DwarfMessageDispatcher::panoramaMessage(std::uint32_t _t1, const QByteArray
 }
 
 // SIGNAL 8
+void DwarfMessageDispatcher::cameraTeleMessage(std::uint32_t _t1, const QByteArray & _t2)
+{
+    QMetaObject::activate<void>(this, &staticMetaObject, 8, nullptr, _t1, _t2);
+}
+
+// SIGNAL 9
+void DwarfMessageDispatcher::cameraWideMessage(std::uint32_t _t1, const QByteArray & _t2)
+{
+    QMetaObject::activate<void>(this, &staticMetaObject, 9, nullptr, _t1, _t2);
+}
+
+// SIGNAL 10
 void DwarfMessageDispatcher::unknownMessage(std::uint32_t _t1, std::uint32_t _t2, const QByteArray & _t3)
 {
-    QMetaObject::activate<void>(this, &staticMetaObject, 8, nullptr, _t1, _t2, _t3);
+    QMetaObject::activate<void>(this, &staticMetaObject, 10, nullptr, _t1, _t2, _t3);
 }
 QT_WARNING_POP

@@ -12,6 +12,12 @@ void DwarfMessageDispatcher::dispatch(std::uint32_t moduleId,
            << "size" << data.size();
 
   switch (moduleId) {
+  case MODULE_CAMERA_TELE:
+    emit cameraTeleMessage(cmd, data);
+    break;
+  case MODULE_CAMERA_WIDE:
+    emit cameraWideMessage(cmd, data);
+    break;
   case MODULE_ASTRO:
     emit astroMessage(cmd, data);
     break;
