@@ -492,8 +492,8 @@ void MainWindow::setupUi() {
   QHBoxLayout *speedLayout = new QHBoxLayout(motorSpeedGroup);
   QLabel *speedLabel = new QLabel(tr("Speed"), motorSpeedGroup);
   m_motorSpeedSlider = new QSlider(Qt::Horizontal, motorSpeedGroup);
-  m_motorSpeedSlider->setRange(1, 30);
-  m_motorSpeedSlider->setValue(5);
+  m_motorSpeedSlider->setRange(0, 4);
+  m_motorSpeedSlider->setValue(2);
   speedLayout->addWidget(speedLabel);
   speedLayout->addWidget(m_motorSpeedSlider);
   motorSpeedGroup->setLayout(speedLayout);
@@ -767,10 +767,16 @@ void MainWindow::onCameraRecClicked() {
 void MainWindow::onMotorLeftPressed() {
   if (!m_motorController)
     return;
-  double speed = 5.0;
+  int idx = 2;
   if (m_motorSpeedSlider)
-    speed = m_motorSpeedSlider->value();
-  m_motorController->runMotor(DwarfMotorController::Axis::Altitude, false,
+    idx = m_motorSpeedSlider->value();
+  static const double speedTable[5] = {0.1, 1.0, 5.0, 10.0, 30.0};
+  if (idx < 0)
+    idx = 0;
+  else if (idx > 4)
+    idx = 4;
+  double speed = speedTable[idx];
+  m_motorController->runMotor(DwarfMotorController::Axis::Azimuth, false,
                               speed);
 }
 
@@ -778,16 +784,22 @@ void MainWindow::onMotorLeftReleased() {
   if (!m_motorController)
     return;
   // Stop horizontal axis (Altitude)
-  m_motorController->stopMotor(DwarfMotorController::Axis::Altitude);
+  m_motorController->stopMotor(DwarfMotorController::Axis::Azimuth);
 }
 
 void MainWindow::onMotorRightPressed() {
   if (!m_motorController)
     return;
-  double speed = 5.0;
+  int idx = 2;
   if (m_motorSpeedSlider)
-    speed = m_motorSpeedSlider->value();
-  m_motorController->runMotor(DwarfMotorController::Axis::Altitude, true,
+    idx = m_motorSpeedSlider->value();
+  static const double speedTable[5] = {0.1, 1.0, 5.0, 10.0, 30.0};
+  if (idx < 0)
+    idx = 0;
+  else if (idx > 4)
+    idx = 4;
+  double speed = speedTable[idx];
+  m_motorController->runMotor(DwarfMotorController::Axis::Azimuth, true,
                               speed);
 }
 
@@ -795,16 +807,22 @@ void MainWindow::onMotorRightReleased() {
   if (!m_motorController)
     return;
   // Stop horizontal axis (Altitude)
-  m_motorController->stopMotor(DwarfMotorController::Axis::Altitude);
+  m_motorController->stopMotor(DwarfMotorController::Axis::Azimuth);
 }
 
 void MainWindow::onMotorUpPressed() {
   if (!m_motorController)
     return;
-  double speed = 5.0;
+  int idx = 2;
   if (m_motorSpeedSlider)
-    speed = m_motorSpeedSlider->value();
-  m_motorController->runMotor(DwarfMotorController::Axis::Azimuth, true,
+    idx = m_motorSpeedSlider->value();
+  static const double speedTable[5] = {0.1, 1.0, 5.0, 10.0, 30.0};
+  if (idx < 0)
+    idx = 0;
+  else if (idx > 4)
+    idx = 4;
+  double speed = speedTable[idx];
+  m_motorController->runMotor(DwarfMotorController::Axis::Altitude, true,
                               speed);
 }
 
@@ -812,16 +830,22 @@ void MainWindow::onMotorUpReleased() {
   if (!m_motorController)
     return;
   // Stop Azimuth axis
-  m_motorController->stopMotor(DwarfMotorController::Axis::Azimuth);
+  m_motorController->stopMotor(DwarfMotorController::Axis::Altitude);
 }
 
 void MainWindow::onMotorDownPressed() {
   if (!m_motorController)
     return;
-  double speed = 5.0;
+  int idx = 2;
   if (m_motorSpeedSlider)
-    speed = m_motorSpeedSlider->value();
-  m_motorController->runMotor(DwarfMotorController::Axis::Azimuth, false,
+    idx = m_motorSpeedSlider->value();
+  static const double speedTable[5] = {0.1, 1.0, 5.0, 10.0, 30.0};
+  if (idx < 0)
+    idx = 0;
+  else if (idx > 4)
+    idx = 4;
+  double speed = speedTable[idx];
+  m_motorController->runMotor(DwarfMotorController::Axis::Altitude, false,
                               speed);
 }
 
@@ -847,7 +871,7 @@ void MainWindow::onMotorDownReleased() {
   if (!m_motorController)
     return;
   // Stop Azimuth axis
-  m_motorController->stopMotor(DwarfMotorController::Axis::Azimuth);
+  m_motorController->stopMotor(DwarfMotorController::Axis::Altitude);
 }
 
 void MainWindow::onExposureModeChanged(int index) {

@@ -9,7 +9,7 @@ class DwarfMotorController : public QObject {
   Q_OBJECT
 
 public:
-  enum class Axis { Azimuth = 0, Altitude = 1 };
+  enum class Axis { Azimuth = 1, Altitude = 2 };
 
   explicit DwarfMotorController(QObject *parent = nullptr);
 
