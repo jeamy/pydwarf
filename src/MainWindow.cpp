@@ -101,6 +101,7 @@ void MainWindow::updateStreamRouting() {
   m_widePlayer->setVideoOutput(nullptr);
 
   const bool mainIsTele = (m_mainStream == CameraStream::Tele);
+  qWarning() << "[MainWindow] updateStreamRouting: mainIsTele=" << mainIsTele;
   if (mainIsTele) {
     m_telePlayer->setVideoOutput(m_mainVideoWidget);
     m_widePlayer->setVideoOutput(m_pipVideoWidget);
@@ -108,6 +109,18 @@ void MainWindow::updateStreamRouting() {
     m_telePlayer->setVideoOutput(m_pipVideoWidget);
     m_widePlayer->setVideoOutput(m_mainVideoWidget);
   }
+}
+
+void MainWindow::onMotorSpeedSliderChanged(int value) {
+  int idx = value;
+  if (idx < 0)
+    idx = 0;
+  else if (idx > 4)
+    idx = 4;
+  static const double speedTable[5] = {0.1, 1.0, 5.0, 10.0, 30.0};
+  double speed = speedTable[idx];
+  if (m_motorSpeedValueLabel)
+    m_motorSpeedValueLabel->setText(tr("%1 deg/s").arg(speed));
 }
 
 void MainWindow::startStreaming(const QString &ip) {
@@ -494,8 +507,14 @@ void MainWindow::setupUi() {
   m_motorSpeedSlider = new QSlider(Qt::Horizontal, motorSpeedGroup);
   m_motorSpeedSlider->setRange(0, 4);
   m_motorSpeedSlider->setValue(2);
+  m_motorSpeedSlider->setSingleStep(1);
+  m_motorSpeedSlider->setPageStep(1);
+  m_motorSpeedSlider->setTickPosition(QSlider::TicksBelow);
+  m_motorSpeedSlider->setTickInterval(1);
+  m_motorSpeedValueLabel = new QLabel(motorSpeedGroup);
   speedLayout->addWidget(speedLabel);
   speedLayout->addWidget(m_motorSpeedSlider);
+  speedLayout->addWidget(m_motorSpeedValueLabel);
   motorSpeedGroup->setLayout(speedLayout);
   motorFocusLayout->addWidget(motorSpeedGroup);
 
@@ -516,6 +535,13 @@ void MainWindow::setupUi() {
           &MainWindow::onFocusPlusClicked);
   connect(focusAuto, &QPushButton::clicked, this,
           &MainWindow::onFocusAutoClicked);
+
+  if (m_motorSpeedSlider)
+    connect(m_motorSpeedSlider, &QSlider::valueChanged, this,
+            &MainWindow::onMotorSpeedSliderChanged);
+
+  if (m_motorSpeedSlider)
+    onMotorSpeedSliderChanged(m_motorSpeedSlider->value());
 
   motorFocusLayout->addStretch();
   motorFocusTab->setLayout(motorFocusLayout);
@@ -991,7 +1017,16 @@ void MainWindow::onWbTemperatureChanged(int value) {
 
 void MainWindow::onPipStreamClicked() {
   std::swap(m_mainStream, m_pipStream);
+  qWarning() << "[MainWindow] PiP double-click: BEFORE switch mainStream="
+             << (m_mainStream == CameraStream::Tele ? "Tele" : "Wide")
+             << "pipStream="
+             << (m_pipStream == CameraStream::Tele ? "Tele" : "Wide");
+
   updateCameraStreamViews();
+  if (m_telePlayer)
+    m_telePlayer->play();
+  if (m_widePlayer)
+    m_widePlayer->play();
 }
 
 void MainWindow::onCameraTeleMessage(uint32_t cmd, const QByteArray &data) {

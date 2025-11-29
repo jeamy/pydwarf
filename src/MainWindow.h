@@ -34,6 +34,10 @@ signals:
 protected:
   void mousePressEvent(QMouseEvent *event) override {
     QWidget::mousePressEvent(event);
+  }
+
+  void mouseDoubleClickEvent(QMouseEvent *event) override {
+    QWidget::mouseDoubleClickEvent(event);
     emit clicked();
   }
 };
@@ -76,6 +80,7 @@ private slots:
   void onFocusMinusClicked();
   void onFocusPlusClicked();
   void onFocusAutoClicked();
+  void onMotorSpeedSliderChanged(int value);
   void onExposureModeChanged(int index);
   void onShutterSliderChanged(int value);
   void onGainSliderChanged(int value);
@@ -139,6 +144,7 @@ private:
   QSlider *m_hueSlider;
   QSlider *m_brightnessSlider;
   QSlider *m_motorSpeedSlider;
+  QLabel *m_motorSpeedValueLabel;
   QComboBox *m_wbModeCombo;
   QSlider *m_wbTemperatureSlider;
   bool m_isRecording;
