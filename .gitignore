@@ -1,3 +1,6 @@
+# Build
+build/
+
 # Dokumentation (große Dateien)
 /doc/DWARF API2.0*
 /doc/dwarf_api_extracted.txt
