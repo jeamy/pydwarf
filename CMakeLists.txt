@@ -45,6 +45,10 @@ set(SOURCES
     src/net/DwarfMotorController.h
     src/net/DwarfFocusController.cpp
     src/net/DwarfFocusController.h
+    src/net/DwarfMjpegStream.cpp
+    src/net/DwarfMjpegStream.h
+    src/net/DwarfMjpegView.cpp
+    src/net/DwarfMjpegView.h
     ${PROTO_SRCS}
     ${PROTO_HDRS}
 )

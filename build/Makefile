@@ -491,6 +491,54 @@ src/net/DwarfMessageDispatcher.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMessageDispatcher.cpp.s
 .PHONY : src/net/DwarfMessageDispatcher.cpp.s
 
+src/net/DwarfMjpegStream.o: src/net/DwarfMjpegStream.cpp.o
+.PHONY : src/net/DwarfMjpegStream.o
+
+# target to build an object file
+src/net/DwarfMjpegStream.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMjpegStream.cpp.o
+.PHONY : src/net/DwarfMjpegStream.cpp.o
+
+src/net/DwarfMjpegStream.i: src/net/DwarfMjpegStream.cpp.i
+.PHONY : src/net/DwarfMjpegStream.i
+
+# target to preprocess a source file
+src/net/DwarfMjpegStream.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMjpegStream.cpp.i
+.PHONY : src/net/DwarfMjpegStream.cpp.i
+
+src/net/DwarfMjpegStream.s: src/net/DwarfMjpegStream.cpp.s
+.PHONY : src/net/DwarfMjpegStream.s
+
+# target to generate assembly for a file
+src/net/DwarfMjpegStream.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMjpegStream.cpp.s
+.PHONY : src/net/DwarfMjpegStream.cpp.s
+
+src/net/DwarfMjpegView.o: src/net/DwarfMjpegView.cpp.o
+.PHONY : src/net/DwarfMjpegView.o
+
+# target to build an object file
+src/net/DwarfMjpegView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o
+.PHONY : src/net/DwarfMjpegView.cpp.o
+
+src/net/DwarfMjpegView.i: src/net/DwarfMjpegView.cpp.i
+.PHONY : src/net/DwarfMjpegView.i
+
+# target to preprocess a source file
+src/net/DwarfMjpegView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.i
+.PHONY : src/net/DwarfMjpegView.cpp.i
+
+src/net/DwarfMjpegView.s: src/net/DwarfMjpegView.cpp.s
+.PHONY : src/net/DwarfMjpegView.s
+
+# target to generate assembly for a file
+src/net/DwarfMjpegView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DwarfController.dir/build.make CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.s
+.PHONY : src/net/DwarfMjpegView.cpp.s
+
 src/net/DwarfMotorController.o: src/net/DwarfMotorController.cpp.o
 .PHONY : src/net/DwarfMotorController.o
 
@@ -664,6 +712,12 @@ help:
 	@echo "... src/net/DwarfMessageDispatcher.o"
 	@echo "... src/net/DwarfMessageDispatcher.i"
 	@echo "... src/net/DwarfMessageDispatcher.s"
+	@echo "... src/net/DwarfMjpegStream.o"
+	@echo "... src/net/DwarfMjpegStream.i"
+	@echo "... src/net/DwarfMjpegStream.s"
+	@echo "... src/net/DwarfMjpegView.o"
+	@echo "... src/net/DwarfMjpegView.i"
+	@echo "... src/net/DwarfMjpegView.s"
 	@echo "... src/net/DwarfMotorController.o"
 	@echo "... src/net/DwarfMotorController.i"
 	@echo "... src/net/DwarfMotorController.s"

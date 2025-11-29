@@ -582,6 +582,18 @@
 			null
 		],
 		[
+			"/home/lux/programming/pydwarf/src/net/DwarfMjpegStream.h",
+			"MU",
+			"7OIUYE7PDQ/moc_DwarfMjpegStream.cpp",
+			null
+		],
+		[
+			"/home/lux/programming/pydwarf/src/net/DwarfMjpegView.h",
+			"MU",
+			"7OIUYE7PDQ/moc_DwarfMjpegView.cpp",
+			null
+		],
+		[
 			"/home/lux/programming/pydwarf/src/net/DwarfMotorController.h",
 			"MU",
 			"7OIUYE7PDQ/moc_DwarfMotorController.cpp",
@@ -701,6 +713,16 @@
 		],
 		[
 			"/home/lux/programming/pydwarf/src/net/DwarfMessageDispatcher.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/lux/programming/pydwarf/src/net/DwarfMjpegStream.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/lux/programming/pydwarf/src/net/DwarfMjpegView.cpp",
 			"MU",
 			null
 		],

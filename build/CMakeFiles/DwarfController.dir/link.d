@@ -13,6 +13,8 @@ DwarfController: \
   CMakeFiles/DwarfController.dir/src/net/DwarfCameraController.cpp.o \
   CMakeFiles/DwarfController.dir/src/net/DwarfMotorController.cpp.o \
   CMakeFiles/DwarfController.dir/src/net/DwarfFocusController.cpp.o \
+  CMakeFiles/DwarfController.dir/src/net/DwarfMjpegStream.cpp.o \
+  CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o \
   CMakeFiles/DwarfController.dir/astro.pb.cc.o \
   CMakeFiles/DwarfController.dir/base.pb.cc.o \
   CMakeFiles/DwarfController.dir/camera.pb.cc.o \
@@ -164,6 +166,10 @@ CMakeFiles/DwarfController.dir/src/net/DwarfCameraController.cpp.o:
 CMakeFiles/DwarfController.dir/src/net/DwarfMotorController.cpp.o:
 
 CMakeFiles/DwarfController.dir/src/net/DwarfFocusController.cpp.o:
+
+CMakeFiles/DwarfController.dir/src/net/DwarfMjpegStream.cpp.o:
+
+CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o:
 
 CMakeFiles/DwarfController.dir/astro.pb.cc.o:
 

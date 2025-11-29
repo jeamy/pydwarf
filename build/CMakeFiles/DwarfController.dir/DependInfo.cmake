@@ -23,6 +23,8 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/lux/programming/pydwarf/src/net/DwarfFocusController.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfFocusController.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfFocusController.cpp.o.d"
   "/home/lux/programming/pydwarf/src/net/DwarfHttpClient.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfHttpClient.cpp.o.d"
   "/home/lux/programming/pydwarf/src/net/DwarfMessageDispatcher.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfMessageDispatcher.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfMessageDispatcher.cpp.o.d"
+  "/home/lux/programming/pydwarf/src/net/DwarfMjpegStream.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfMjpegStream.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfMjpegStream.cpp.o.d"
+  "/home/lux/programming/pydwarf/src/net/DwarfMjpegView.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfMjpegView.cpp.o.d"
   "/home/lux/programming/pydwarf/src/net/DwarfMotorController.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfMotorController.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfMotorController.cpp.o.d"
   "/home/lux/programming/pydwarf/src/net/DwarfWebSocketClient.cpp" "CMakeFiles/DwarfController.dir/src/net/DwarfWebSocketClient.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/DwarfWebSocketClient.cpp.o.d"
   "/home/lux/programming/pydwarf/src/net/ProtobufHelper.cpp" "CMakeFiles/DwarfController.dir/src/net/ProtobufHelper.cpp.o" "gcc" "CMakeFiles/DwarfController.dir/src/net/ProtobufHelper.cpp.o.d"

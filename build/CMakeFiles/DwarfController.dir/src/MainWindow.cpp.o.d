@@ -523,6 +523,10 @@ CMakeFiles/DwarfController.dir/src/MainWindow.cpp.o: \
  /home/lux/programming/pydwarf/build/motor.pb.h \
  /home/lux/programming/pydwarf/src/net/DwarfFocusController.h \
  /home/lux/programming/pydwarf/build/focus.pb.h \
+ /home/lux/programming/pydwarf/src/net/DwarfMjpegStream.h \
+ /usr/include/qt6/QtGui/QImage /usr/include/qt6/QtGui/qimage.h \
+ /usr/include/qt6/QtCore/QUrl \
+ /home/lux/programming/pydwarf/src/net/DwarfMjpegView.h \
  /usr/include/qt6/QtCore/qnamespace.h /usr/include/qt6/QtCore/QDebug \
  /usr/include/qt6/QtCore/qdebug.h /usr/include/qt6/QtWidgets/QDockWidget \
  /usr/include/qt6/QtWidgets/qdockwidget.h \

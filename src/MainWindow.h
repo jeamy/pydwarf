@@ -21,6 +21,9 @@
 class DwarfCameraController;
 class DwarfMotorController;
 class DwarfFocusController;
+class DwarfMjpegStream;
+class DwarfMjpegView;
+class QPointF;
 
 class ClickableLabel : public QWidget {
   Q_OBJECT
@@ -93,6 +96,7 @@ private slots:
   void onBrightnessSliderChanged(int value);
   void onWbModeChanged(int index);
   void onWbTemperatureChanged(int value);
+  void onMainViewPointClicked(const QPointF &normalizedPos);
 
 private:
   void setupUi();
@@ -120,8 +124,8 @@ private:
   QWidget *m_mainStreamView;
   QLabel *m_streamNameOverlay;
   ClickableLabel *m_pipStreamView;
-  QVideoWidget *m_mainVideoWidget;
-  QVideoWidget *m_pipVideoWidget;
+  DwarfMjpegView *m_mainVideoWidget;
+  DwarfMjpegView *m_pipVideoWidget;
   CameraStream m_mainStream;
   CameraStream m_pipStream;
   void updateCameraStreamViews();
@@ -149,6 +153,6 @@ private:
   QSlider *m_wbTemperatureSlider;
   bool m_isRecording;
 
-  QMediaPlayer *m_telePlayer;
-  QMediaPlayer *m_widePlayer;
+  DwarfMjpegStream *m_teleStream;
+  DwarfMjpegStream *m_wideStream;
 };

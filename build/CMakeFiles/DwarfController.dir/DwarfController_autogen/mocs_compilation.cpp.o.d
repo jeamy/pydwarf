@@ -534,6 +534,12 @@ CMakeFiles/DwarfController.dir/DwarfController_autogen/mocs_compilation.cpp.o: \
  /usr/include/qt6/QtCore/qjsondocument.h \
  /usr/include/qt6/QtCore/qjsonparseerror.h \
  /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMessageDispatcher.cpp \
+ /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMjpegStream.cpp \
+ /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/../../../src/net/DwarfMjpegStream.h \
+ /usr/include/qt6/QtGui/QImage /usr/include/qt6/QtGui/qimage.h \
+ /usr/include/qt6/QtCore/QUrl \
+ /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMjpegView.cpp \
+ /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/../../../src/net/DwarfMjpegView.h \
  /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/moc_DwarfMotorController.cpp \
  /home/lux/programming/pydwarf/build/DwarfController_autogen/7OIUYE7PDQ/../../../src/net/DwarfMotorController.h \
  /home/lux/programming/pydwarf/build/motor.pb.h \

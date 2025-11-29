@@ -2,6 +2,8 @@
 #include "net/DwarfCameraController.h"
 #include "net/DwarfMotorController.h"
 #include "net/DwarfFocusController.h"
+#include "net/DwarfMjpegStream.h"
+#include "net/DwarfMjpegView.h"
 #include "qnamespace.h"
 #include <QDebug>
 #include <QDockWidget>
@@ -12,6 +14,7 @@
 #include <QStyle>
 #include <QTimer>
 #include <QVBoxLayout>
+#include <cmath>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), m_wsClient(nullptr), m_dispatcher(nullptr),
@@ -19,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
       m_motorController(nullptr), m_focusController(nullptr),
       m_isRecording(false),
       m_mainVideoWidget(nullptr), m_pipVideoWidget(nullptr),
-      m_telePlayer(nullptr), m_widePlayer(nullptr) {
+      m_teleStream(nullptr), m_wideStream(nullptr) {
   m_mainStreamView = nullptr;
   m_pipStreamView = nullptr;
   m_teleButton = nullptr;
@@ -29,8 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
   m_cameraController = new DwarfCameraController(this);
   m_motorController = new DwarfMotorController(this);
   m_focusController = new DwarfFocusController(this);
-  m_telePlayer = new QMediaPlayer(this);
-  m_widePlayer = new QMediaPlayer(this);
+  m_teleStream = new DwarfMjpegStream(this);
+  m_wideStream = new DwarfMjpegStream(this);
   m_finder = new DwarfFinder(this);
   connect(m_finder, &DwarfFinder::deviceFound, this,
           &MainWindow::onDeviceFound);
@@ -93,21 +96,17 @@ void MainWindow::updateCameraStreamViews() {
 }
 
 void MainWindow::updateStreamRouting() {
-  if (!m_telePlayer || !m_widePlayer || !m_mainVideoWidget || !m_pipVideoWidget)
+  if (!m_teleStream || !m_wideStream || !m_mainVideoWidget || !m_pipVideoWidget)
     return;
-
-  // Disconnect video outputs first to avoid conflicts
-  m_telePlayer->setVideoOutput(nullptr);
-  m_widePlayer->setVideoOutput(nullptr);
 
   const bool mainIsTele = (m_mainStream == CameraStream::Tele);
   qWarning() << "[MainWindow] updateStreamRouting: mainIsTele=" << mainIsTele;
   if (mainIsTele) {
-    m_telePlayer->setVideoOutput(m_mainVideoWidget);
-    m_widePlayer->setVideoOutput(m_pipVideoWidget);
+    m_mainVideoWidget->setSourceImage(&m_teleStream->currentFrame());
+    m_pipVideoWidget->setSourceImage(&m_wideStream->currentFrame());
   } else {
-    m_telePlayer->setVideoOutput(m_pipVideoWidget);
-    m_widePlayer->setVideoOutput(m_mainVideoWidget);
+    m_mainVideoWidget->setSourceImage(&m_wideStream->currentFrame());
+    m_pipVideoWidget->setSourceImage(&m_teleStream->currentFrame());
   }
 }
 
@@ -124,7 +123,7 @@ void MainWindow::onMotorSpeedSliderChanged(int value) {
 }
 
 void MainWindow::startStreaming(const QString &ip) {
-  if (!m_telePlayer || !m_widePlayer)
+  if (!m_teleStream || !m_wideStream)
     return;
 
   qWarning() << "[MainWindow] startStreaming called for IP" << ip;
@@ -144,10 +143,10 @@ void MainWindow::startStreaming(const QString &ip) {
 }
 
 void MainWindow::stopStreaming() {
-  if (m_telePlayer)
-    m_telePlayer->stop();
-  if (m_widePlayer)
-    m_widePlayer->stop();
+  if (m_teleStream)
+    m_teleStream->stop();
+  if (m_wideStream)
+    m_wideStream->stop();
 }
 
 void MainWindow::setupUi() {
@@ -168,9 +167,8 @@ void MainWindow::setupUi() {
   m_mainStreamView->setObjectName("mainStreamView");
   m_mainStreamView->setMinimumHeight(400);
 
-  // Create Main Video Widget first
-  m_mainVideoWidget = new QVideoWidget(m_mainStreamView);
-  // m_mainVideoWidget->setStyleSheet("background-color: black; border: none;");
+  // Create Main Video Widget first (custom MJPEG view)
+  m_mainVideoWidget = new DwarfMjpegView(m_mainStreamView);
   QVBoxLayout *mainVideoLayout = new QVBoxLayout(m_mainStreamView);
   mainVideoLayout->setContentsMargins(0, 0, 0, 0);
   mainVideoLayout->addWidget(m_mainVideoWidget);
@@ -201,8 +199,8 @@ void MainWindow::setupUi() {
   // Add a stretch to push everything up
   overlayLayout->setRowStretch(1, 1);
 
-  // PiP Video Widget inside PiP View
-  m_pipVideoWidget = new QVideoWidget(m_pipStreamView);
+  // PiP Video Widget inside PiP View (custom MJPEG view)
+  m_pipVideoWidget = new DwarfMjpegView(m_pipStreamView);
   m_pipVideoWidget->setAttribute(Qt::WA_TransparentForMouseEvents, true);
   // m_pipVideoWidget->setStyleSheet("background-color: black; border: none;");
   QVBoxLayout *pipVideoLayout = new QVBoxLayout(m_pipStreamView);
@@ -226,6 +224,10 @@ void MainWindow::setupUi() {
 
   connect(m_pipStreamView, &ClickableLabel::clicked, this,
           &MainWindow::onPipStreamClicked);
+
+  if (m_mainVideoWidget)
+    connect(m_mainVideoWidget, &DwarfMjpegView::pointClicked, this,
+            &MainWindow::onMainViewPointClicked);
 
   // Device List (Hidden by default or shown?)
   // Let's show it always for now, or maybe collapsible.
@@ -565,6 +567,28 @@ void MainWindow::setupUi() {
   dockContents->setLayout(dockLayout);
   controlDock->setWidget(dockContents);
   addDockWidget(Qt::RightDockWidgetArea, controlDock);
+
+  // Connect MJPEG streams to views for repaint on new frames
+  if (m_teleStream) {
+    connect(m_teleStream, &DwarfMjpegStream::frameUpdated, this, [this]() {
+      if (!m_mainVideoWidget || !m_pipVideoWidget)
+        return;
+      if (m_mainStream == CameraStream::Tele)
+        m_mainVideoWidget->update();
+      if (m_pipStream == CameraStream::Tele)
+        m_pipVideoWidget->update();
+    });
+  }
+  if (m_wideStream) {
+    connect(m_wideStream, &DwarfMjpegStream::frameUpdated, this, [this]() {
+      if (!m_mainVideoWidget || !m_pipVideoWidget)
+        return;
+      if (m_mainStream == CameraStream::Wide)
+        m_mainVideoWidget->update();
+      if (m_pipStream == CameraStream::Wide)
+        m_pipVideoWidget->update();
+    });
+  }
 
   statusBar()->showMessage(tr("Ready"));
 }
@@ -1015,18 +1039,67 @@ void MainWindow::onWbTemperatureChanged(int value) {
   m_cameraController->setWhiteBalanceByTemperature(kind, value);
 }
 
+void MainWindow::onMainViewPointClicked(const QPointF &normalizedPos) {
+  if (!m_motorController)
+    return;
+
+  if (m_mainStream != CameraStream::Wide)
+    return;
+
+  double nx = normalizedPos.x();
+  double ny = normalizedPos.y();
+
+  const double deadZone = 0.1;
+
+  double speed = 5.0;
+
+  double absNx = std::fabs(nx);
+  double absNy = std::fabs(ny);
+
+  int baseMs = 800;
+
+  if (absNx > deadZone) {
+    bool dirRight = (nx > 0.0);
+    int durationMs = static_cast<int>(baseMs * absNx);
+    if (durationMs < 150)
+      durationMs = 150;
+    m_motorController->runMotor(DwarfMotorController::Axis::Azimuth, dirRight,
+                                speed);
+    QTimer::singleShot(durationMs, this, [this]() {
+      if (m_motorController)
+        m_motorController->stopMotor(DwarfMotorController::Axis::Azimuth);
+    });
+  }
+
+  if (absNy > deadZone) {
+    bool dirUp = (ny < 0.0);
+    int durationMs = static_cast<int>(baseMs * absNy);
+    if (durationMs < 150)
+      durationMs = 150;
+    m_motorController->runMotor(DwarfMotorController::Axis::Altitude, dirUp,
+                                speed);
+    QTimer::singleShot(durationMs, this, [this]() {
+      if (m_motorController)
+        m_motorController->stopMotor(DwarfMotorController::Axis::Altitude);
+    });
+  }
+}
+
 void MainWindow::onPipStreamClicked() {
-  std::swap(m_mainStream, m_pipStream);
   qWarning() << "[MainWindow] PiP double-click: BEFORE switch mainStream="
              << (m_mainStream == CameraStream::Tele ? "Tele" : "Wide")
              << "pipStream="
              << (m_pipStream == CameraStream::Tele ? "Tele" : "Wide");
 
+  std::swap(m_mainStream, m_pipStream);
+
+  qWarning() << "[MainWindow] PiP double-click: AFTER swap mainStream="
+             << (m_mainStream == CameraStream::Tele ? "Tele" : "Wide")
+             << "pipStream="
+             << (m_pipStream == CameraStream::Tele ? "Tele" : "Wide");
+
   updateCameraStreamViews();
-  if (m_telePlayer)
-    m_telePlayer->play();
-  if (m_widePlayer)
-    m_widePlayer->play();
+  qWarning() << "[MainWindow] PiP double-click: updateCameraStreamViews finished";
 }
 
 void MainWindow::onCameraTeleMessage(uint32_t cmd, const QByteArray &data) {
@@ -1043,9 +1116,8 @@ void MainWindow::onCameraTeleMessage(uint32_t cmd, const QByteArray &data) {
         // RTSP port 554 is often closed/refused, while MJPEG works in Python
         // legacy app
         const QUrl teleUrl(QStringLiteral("http://%1:8092/mainstream").arg(ip));
-        if (m_telePlayer) {
-          m_telePlayer->setSource(teleUrl);
-          m_telePlayer->play();
+        if (m_teleStream) {
+          m_teleStream->start(teleUrl);
         }
         updateStreamRouting();
         // Ensure overlays stay on top after video starts
@@ -1076,9 +1148,8 @@ void MainWindow::onCameraWideMessage(uint32_t cmd, const QByteArray &data) {
         // Use MJPEG stream on port 8092 instead of RTSP on 554
         const QUrl wideUrl(
             QStringLiteral("http://%1:8092/secondstream").arg(ip));
-        if (m_widePlayer) {
-          m_widePlayer->setSource(wideUrl);
-          m_widePlayer->play();
+        if (m_wideStream) {
+          m_wideStream->start(wideUrl);
         }
         updateStreamRouting();
         // Ensure overlays stay on top after video starts
